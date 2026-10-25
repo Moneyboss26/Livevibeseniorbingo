@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>LiveVibe Bingo | Resident Tablet</title>
+  <style>
+    :root {
+      --bg: #0d1021;
+      --card-bg: #151930;
+      --surface: #1e2442;
+      --teal: #00d2be;
+      --pink: #ff2e93;
+      --yellow: #f8c028;
+      --dab: #00d2be;
+      --text: #ffffff;
+      --muted: #a0aec0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 500;
+    }
+    .login-box {
+      background: var(--card-bg);
+      border: 2px solid var(--teal);
+      border-radius: 16px;
+      padding: 34px 26px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 210, 190, 0.2);
+    }
+    .login-box h1 { font-size: 24px; color: var(--teal); margin-bottom: 4px; }
+    .login-box p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .input-group { text-align: left; margin-bottom: 14px; }
+    .input-group label { display: block; font-size: 12px; color: var(--muted); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+    .input-group input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: #090c19;
+      color: #fff;
+      font-size: 17px;
+      outline: none;
+    }
+    .input-group input:focus { border-color: var(--teal); }
+    .btn-enter {
+      width: 100%;
+      padding: 15px;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    header {
+      background: var(--card-bg);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .player-pill {
+      background: rgba(0,210,190,0.15);
+      border: 1px solid var(--teal);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--teal);
+    }
+    .game-pattern-badge {
+      background: rgba(255,46,147,0.15);
+      border: 1px solid var(--pink);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--pink);
+    }
+
+    .broadcast-bar {
+      background: var(--surface);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .current-ball-container { display: flex; align-items: center; gap: 14px; }
+    .big-ball {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ff5cb1, var(--pink));
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 15px rgba(255,46,147,0.4);
+    }
+    .ball-details h3 { font-size: 16px; color: #fff; }
+    .ball-details p { font-size: 12px; color: var(--muted); }
+
+    .called-rack { display: flex; gap: 6px; overflow-x: auto; max-width: 480px; padding: 4px; }
+    .mini-ball {
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #090c19;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--teal);
+    }
+
+    .accessibility-bar {
+      background: #11152a;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .toggle-wrap { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--muted); }
+    .color-picker { display: flex; align-items: center; gap: 8px; }
+    .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+    .color-dot.active { border-color: #fff; transform: scale(1.15); }
+
+    .cards-container {
+      flex: 1;
+      padding: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .bingo-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
+    .col-header {
+      background: #090c19;
+      color: var(--teal);
+      font-weight: 900;
+      font-size: 20px;
+      text-align: center;
+      padding: 8px 0;
+      border-radius: 6px;
+    }
+    .tile {
+      aspect-ratio: 1;
+      background: #090c19;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(16px, 2.5vw, 24px);
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tile.free { background: rgba(255,46,147,0.15); border-color: var(--pink); color: var(--pink); font-size: 13px; }
+    .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; }
+
+    .call-bar {
+      position: sticky;
+      bottom: 0;
+      background: rgba(13, 16, 33, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 100;
+    }
+    .btn-bingo {
+      background: linear-gradient(135deg, #ff2e93, #e01b7c);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      border: none;
+      padding: 16px 60px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 25px rgba(255,46,147,0.5);
+    }
+
+    #winModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .win-box {
+      background: var(--card-bg);
+      border: 3px solid var(--teal);
+      border-radius: 16px;
+      padding: 36px 24px;
+      text-align: center;
+      max-width: 440px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loginScreen">
+    <div class="login-box">
+      <img src="logo.png" alt="LiveVibe Senior Bingo" style="max-height: 50px; margin-bottom: 12px;" onerror="this.style.display='none'">
+      <h1>Resident Tablet</h1>
+      <p>Enter your name & room PIN to play</p>
+      <form onsubmit="joinLobby(event)">
+        <div class="input-group">
+          <label>First Name</label>
+          <input type="text" id="pFirst" required autofocus placeholder="e.g. Mary">
+        </div>
+        <div class="input-group">
+          <label>Last Name</label>
+          <input type="text" id="pLast" required placeholder="e.g. Johnson">
+        </div>
+        <div class="input-group">
+          <label>4-Digit Room PIN</label>
+          <input type="password" id="pPin" required maxlength="4" placeholder="From Host" style="text-align: center; letter-spacing: 4px;">
+        </div>
+        <button type="submit" class="btn-enter">Enter Bingo Room</button>
+      </form>
+    </div>
+  </div>
+
+  <header>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="player-pill" id="playerNameDisplay">Player</span>
+      <span class="game-pattern-badge" id="gamePatternDisplay">Game 1: Regular Bingo</span>
+    </div>
+    <div style="font-size: 12px; color: var(--muted);" id="connectionStatus">● Waiting for Host</div>
+  </header>
+
+  <div class="broadcast-bar">
+    <div class="current-ball-container">
+      <div class="big-ball" id="activeBall">-</div>
+      <div class="ball-details">
+        <h3 id="ballAnnounce">Waiting for Call</h3>
+        <p id="totalDrawnCount">Host hasn't drawn yet</p>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+      <span style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">Recent Calls</span>
+      <div class="called-rack" id="calledRack">
+        <span style="color: var(--muted); font-size: 12px;">No calls yet</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="accessibility-bar">
+    <div class="toggle-wrap">
+      <input type="checkbox" id="autoDabToggle" checked style="width: 18px; height: 18px; cursor: pointer;">
+      <label for="autoDabToggle" style="cursor: pointer;">Auto-Dab Numbers</label>
+    </div>
+    <div class="color-picker">
+      <span style="color: var(--muted); font-weight: 700;">Marker:</span>
+      <div class="color-dot active" style="background: #00d2be;" onclick="setDabColor('#00d2be', this)"></div>
+      <div class="color-dot" style="background: #ff2e93;" onclick="setDabColor('#ff2e93', this)"></div>
+      <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
+    </div>
+  </div>
+
+  <div class="cards-container">
+    <div class="bingo-card">
+      <div class="card-title">Card 1</div>
+      <div class="b-grid" id="cardGrid1"></div>
+    </div>
+    <div class="bingo-card">
+      <div class="card-title">Card 2</div>
+      <div class="b-grid" id="cardGrid2"></div>
+    </div>
+  </div>
+
+  <div class="call-bar">
+    <button class="btn-bingo" onclick="claimBingo()">CALL BINGO!</button>
+  </div>
+
+  <div id="winModal">
+    <div class="win-box">
+      <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 10px;">BINGO!</h2>
+      <p id="modalDesc" style="color: var(--muted); margin-bottom: 20px;">Checking card...</p>
+      <button class="btn-enter" style="margin-top: 0;" onclick="closeModal()">Back to Cards</button>
+    </div>
+  </div>
+
+  <script>
+    const channel = new BroadcastChannel("livevibe_bingo_channel");
+    let calledSet = new Set();
+    let currentRound = 1;
+    let currentRoundName = "Regular Bingo";
+    let card1Data = [], card2Data = [];
+    let activeSessionPin = "7722";
+
+    function joinLobby(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById("pPin").value.trim();
+      
+      // Check stored state to ensure matching host PIN
+      const stored = localStorage.getItem("livevibe_game_state");
+      if (stored) {
+        const state = JSON.parse(stored);
+        if (state.roomPin) activeSessionPin = state.roomPin;
+      }
+
+      if (enteredPin !== activeSessionPin) {
+        alert("Invalid Room PIN. Please ask your host for today's 4-digit code.");
+        return;
+      }
+
+      const first = document.getElementById("pFirst").value.trim();
+      const last = document.getElementById("pLast").value.trim();
+      document.getElementById("playerNameDisplay").innerText = `${first} ${last[0]}.`;
+      document.getElementById("loginScreen").style.display = "none";
+      generateCards();
+      listenToHost();
+    }
+
+    function setDabColor(color, el) {
+      document.documentElement.style.setProperty('--dab', color);
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function generateCards() {
+      card1Data = createCardMatrix();
+      card2Data = createCardMatrix();
+      renderCard("cardGrid1", card1Data, 1);
+      renderCard("cardGrid2", card2Data, 2);
+    }
+
+    function createCardMatrix() {
+      const cols = {
+        0: getColNums(1, 15),
+        1: getColNums(16, 30),
+        2: getColNums(31, 45),
+        3: getColNums(46, 60),
+        4: getColNums(61, 75)
+      };
+      const matrix = [];
+      for (let r = 0; r < 5; r++) {
+        matrix[r] = [];
+        for (let c = 0; c < 5; c++) {
+          if (r === 2 && c === 2) {
+            matrix[r][c] = { val: "FREE", dabbed: true };
+          } else {
+            matrix[r][c] = { val: cols[c][r], dabbed: false };
+          }
+        }
+      }
+      return matrix;
+    }
+
+    function getColNums(min, max) {
+      const arr = [];
+      while (arr.length < 5) {
+        const n = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (!arr.includes(n)) arr.push(n);
+      }
+      return arr;
+    }
+
+    function renderCard(gridId, matrix, cardNum) {
+      const el = document.getElementById(gridId);
+      el.innerHTML = "";
+      ['B','I','N','G','O'].forEach(l => {
+        const h = document.createElement("div");
+        h.className = "col-header";
+        h.innerText = l;
+        el.appendChild(h);
+      });
+
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 5; c++) {
+          const item = matrix[r][c];
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          tile.id = `c${cardNum}_${r}_${c}`;
+          if (item.val === "FREE") {
+            tile.classList.add("free", "dabbed");
+            tile.innerText = "FREE";
+          } else {
+            tile.innerText = item.val;
+            if (item.dabbed) tile.classList.add("dabbed");
+            tile.onclick = () => toggleManualDab(cardNum, r, c);
+          }
+          el.appendChild(tile);
+        }
+      }
+    }
+
+    function toggleManualDab(cardNum, r, c) {
+      const matrix = cardNum === 1 ? card1Data : card2Data;
+      matrix[r][c].dabbed = !matrix[r][c].dabbed;
+      const tile = document.getElementById(`c${cardNum}_${r}_${c}`);
+      tile.classList.toggle("dabbed", matrix[r][c].dabbed);
+    }
+
+    function listenToHost() {
+      channel.onmessage = (e) => handleBroadcast(e.data);
+      window.addEventListener("storage", (e) => {
+        if (e.key === "livevibe_game_state" && e.newValue) {
+          handleBroadcast(JSON.parse(e.newValue));
+        }
+      });
+      const initial = localStorage.getItem("livevibe_game_state");
+      if (initial) handleBroadcast(JSON.parse(initial));
+    }
+
+    function handleBroadcast(data) {
+      if (!data) return;
+      document.getElementById("connectionStatus").innerText = "● Host Connected";
+      document.getElementById("connectionStatus").style.color = "var(--teal)";
+
+      if (data.roomPin) activeSessionPin = data.roomPin;
+
+      if (data.game) {
+        currentRound = data.game.round;
+        currentRoundName = data.game.name;
+        document.getElementById("gamePatternDisplay").innerText = `Game ${currentRound}: ${currentRoundName}`;
+      }
+
+      if (data.latest === "RESET") {
+        calledSet.clear();
+        document.getElementById("activeBall").innerText = "-";
+        document.getElementById("ballAnnounce").innerText = "New Round Started";
+        document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 12px;">New round</span>';
+        generateCards();
+        return;
+      }
+
+      if (data.called) {
+        calledSet = new Set(data.called);
+        document.getElementById("totalDrawnCount").innerText = `${calledSet.size} balls drawn`;
+        renderRack(data.called);
+        if (document.getElementById("autoDabToggle").checked) {
+          applyAutoDab();
+        }
+      }
+
+      if (data.latest && data.latest !== "RESET") {
+        document.getElementById("activeBall").innerText = data.latest;
+        document.getElementById("ballAnnounce").innerText = `Ball Called: ${data.latest}`;
+      }
+    }
+
+    function renderRack(nums) {
+      const rack = document.getElementById("calledRack");
+      rack.innerHTML = "";
+      const rev = [...nums].reverse().slice(0, 8);
+      rev.forEach(n => {
+        const div = document.createElement("div");
+        div.className = "mini-ball";
+        div.innerText = n;
+        rack.appendChild(div);
+      });
+    }
+
+    function applyAutoDab() {
+      [ { mat: card1Data, id: 1 }, { mat: card2Data, id: 2 } ].forEach(({ mat, id }) => {
+        for (let r = 0; r < 5; r++) {
+          for (let c = 0; c < 5; c++) {
+            if (mat[r][c].val !== "FREE" && calledSet.has(mat[r][c].val)) {
+              mat[r][c].dabbed = true;
+              document.getElementById(`c${id}_${r}_${c}`).classList.add("dabbed");
+            }
+          }
+        }
+      });
+    }
+
+    function claimBingo() {
+      const c1Win = checkWin(card1Data, currentRound);
+      const c2Win = checkWin(card2Data, currentRound);
+
+      const modal = document.getElementById("winModal");
+      const title = document.getElementById("modalTitle");
+      const desc = document.getElementById("modalDesc");
+
+      if (c1Win || c2Win) {
+        title.innerText = "BINGO CONFIRMED!";
+        title.style.color = "var(--teal)";
+        desc.innerText = `Congratulations! You achieved a verified ${currentRoundName} on Card ${c1Win ? '1' : '2'}! Wave to the host!`;
+      } else {
+        title.innerText = "Keep Playing!";
+        title.style.color = "var(--pink)";
+        desc.innerText = `You don't have a verified ${currentRoundName} yet. Keep an eye on the host caller!`;
+      }
+      modal.style.display = "flex";
+    }
+
+    function checkWin(matrix, round) {
+      if (round === 1 || round === 2) return countLines(matrix) >= 1;
+      if (round === 3) return countLines(matrix) >= 2;
+      if (round === 4) return matrix[0][0].dabbed && matrix[0][4].dabbed && matrix[4][0].dabbed && matrix[4][4].dabbed;
+      if (round === 5) return matrix.every(row => row.every(cell => cell.dabbed));
+      return false;
+    }
+
+    function countLines(m) {
+      let lines = 0;
+      for (let r = 0; r < 5; r++) if (m[r].every(c => c.dabbed)) lines++;
+      for (let c = 0; c < 5; c++) if ([0,1,2,3,4].every(r => m[r][c].dabbed)) lines++;
+      if ([0,1,2,3,4].every(i => m[i][i].dabbed)) lines++;
+      if ([0,1,2,3,4].every(i => m[i][4-i].dabbed)) lines++;
+      return lines;
+    }
+
+    function closeModal() {
+      document.getElementById("winModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>

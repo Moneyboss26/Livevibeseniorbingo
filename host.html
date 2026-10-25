@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiveVibe Bingo | Host Caller Station</title>
+  <style>
+    :root {
+      --bg: #090c19;
+      --card-bg: #14182f;
+      --teal: #00d2be;
+      --pink: #ff2e93;
+      --yellow: #f8c028;
+      --text: #ffffff;
+      --muted: #9aa5be;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .lock-box {
+      background: var(--card-bg);
+      border: 2px solid var(--pink);
+      padding: 36px 28px;
+      border-radius: 14px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+    .lock-box input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: #090c19;
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      margin: 16px 0;
+    }
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+      transition: transform 0.1s ease;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-teal { background: var(--teal); color: #090c19; }
+    .btn-pink { background: var(--pink); color: #fff; }
+    .btn-danger { background: #e53e3e; color: #fff; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(0,210,190,0.15);
+      color: var(--teal);
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .pin-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #090c19;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .pin-box input {
+      background: transparent;
+      border: none;
+      color: var(--teal);
+      font-size: 20px;
+      font-weight: 900;
+      width: 90px;
+      text-align: center;
+      outline: none;
+    }
+
+    .pattern-btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .p-btn {
+      background: #090c19;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 12px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .p-btn.active { background: var(--teal); color: #090c19; border-color: var(--teal); }
+
+    .tumbler-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .tumbler-cage {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 5px dashed rgba(0, 210, 190, 0.4);
+      background: radial-gradient(circle, rgba(20,24,47,0.8), rgba(9,12,25,0.95));
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .tumbler-cage.spinning {
+      animation: spinCage 0.25s infinite linear;
+      border-color: var(--pink);
+    }
+    @keyframes spinCage {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .tumbler-ball {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 11px;
+      color: #090c19;
+    }
+
+    .ball-spotlight {
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--pink);
+      line-height: 1;
+      margin: 10px 0 20px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .master-grid {
+      display: grid;
+      grid-template-columns: repeat(15, 1fr);
+      gap: 5px;
+      margin-top: 14px;
+    }
+    .grid-num {
+      background: #090c19;
+      padding: 8px 0;
+      text-align: center;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .grid-num.called {
+      background: var(--teal);
+      color: #090c19;
+      border-color: var(--teal);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="lockScreen">
+    <div class="lock-box">
+      <h2 style="color: var(--teal); margin-bottom: 6px;">Host Verification</h2>
+      <p style="color: var(--muted); font-size: 14px;">Enter caller station password</p>
+      <input type="password" id="passCode" placeholder="Enter password" autofocus>
+      <button class="btn btn-teal" style="width: 100%;" onclick="unlockStation()">Enter Caller Station</button>
+      <p id="lockError" style="color: #ff4d4d; font-size: 13px; margin-top: 10px; display: none;">Invalid password</p>
+    </div>
+  </div>
+
+  <div class="container" id="mainDashboard" style="display: none;">
+    <div class="top-bar">
+      <div>
+        <h1 style="font-size: 24px; color: var(--teal);">LiveVibe Caller Station</h1>
+        <span class="badge">● Host Station Active</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="pin-box">
+          <span style="font-size: 13px; color: var(--muted); font-weight: 700;">ROOM PIN:</span>
+          <input type="text" id="roomPinInput" value="7722" maxlength="4" onchange="updateRoomPin()">
+        </div>
+        <button class="btn btn-danger" onclick="lockStation()">Lock</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">1. Choose Active Game Pattern</h3>
+      <div class="pattern-btn-grid">
+        <button class="p-btn active" onclick="setGame(1, 'Regular Bingo', this)">Game 1: Regular</button>
+        <button class="p-btn" onclick="setGame(2, 'Regular Bingo', this)">Game 2: Regular</button>
+        <button class="p-btn" onclick="setGame(3, 'Double Bingo', this)">Game 3: Double</button>
+        <button class="p-btn" onclick="setGame(4, '4 Corners', this)">Game 4: 4 Corners</button>
+        <button class="p-btn" onclick="setGame(5, 'Coverall', this)">Game 5: Coverall</button>
+      </div>
+    </div>
+
+    <div class="section-card tumbler-container">
+      <div class="tumbler-cage" id="tumblerCage">
+        <div class="tumbler-ball" style="background:#00d2be; top:30px; left:40px;">B</div>
+        <div class="tumbler-ball" style="background:#ff2e93; top:70px; left:110px;">I</div>
+        <div class="tumbler-ball" style="background:#f8c028; top:110px; left:30px;">N</div>
+        <div class="tumbler-ball" style="background:#9d4edd; top:120px; left:120px;">G</div>
+        <div class="tumbler-ball" style="background:#ff7a00; top:50px; left:80px;">O</div>
+      </div>
+
+      <div class="ball-spotlight" id="hostBall">-</div>
+      
+      <div class="action-row">
+        <button class="btn btn-teal" id="drawBtn" style="font-size: 18px; padding: 15px 36px;" onclick="shakeAndDraw()">Shake & Draw Ball</button>
+        <button class="btn btn-danger" onclick="resetRound()">Reset Round</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Master 75-Ball Board</h3>
+        <span id="callCounter" style="font-size: 14px; color: var(--teal); font-weight: 800;">0 / 75 Drawn</span>
+      </div>
+      <div class="master-grid" id="masterGrid"></div>
+    </div>
+  </div>
+
+  <script>
+    const MASTER_PASS = "LiveVibe2026";
+    const channel = new BroadcastChannel("livevibe_bingo_channel");
+    let calledSet = new Set();
+    let currentGame = { round: 1, name: "Regular Bingo" };
+    let currentPin = "7722";
+    let isDrawing = false;
+
+    function unlockStation() {
+      const p = document.getElementById("passCode").value;
+      if (p === MASTER_PASS) {
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("mainDashboard").style.display = "block";
+        initGrid();
+        sync();
+      } else {
+        document.getElementById("lockError").style.display = "block";
+      }
+    }
+
+    document.getElementById("passCode").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") unlockStation();
+    });
+
+    function lockStation() {
+      document.getElementById("lockScreen").style.display = "flex";
+      document.getElementById("mainDashboard").style.display = "none";
+      document.getElementById("passCode").value = "";
+    }
+
+    function updateRoomPin() {
+      currentPin = document.getElementById("roomPinInput").value.trim();
+      sync();
+    }
+
+    function initGrid() {
+      const g = document.getElementById("masterGrid");
+      g.innerHTML = "";
+      for (let i = 1; i <= 75; i++) {
+        const d = document.createElement("div");
+        d.className = "grid-num";
+        d.id = `ball_${i}`;
+        d.innerText = i;
+        g.appendChild(d);
+      }
+    }
+
+    function getLetter(n) {
+      if (n <= 15) return "B";
+      if (n <= 30) return "I";
+      if (n <= 45) return "N";
+      if (n <= 60) return "G";
+      return "O";
+    }
+
+    function shakeAndDraw() {
+      if (isDrawing) return;
+      if (calledSet.size >= 75) {
+        alert("All 75 balls drawn!");
+        return;
+      }
+
+      isDrawing = true;
+      const cage = document.getElementById("tumblerCage");
+      const spotlight = document.getElementById("hostBall");
+      const drawBtn = document.getElementById("drawBtn");
+
+      drawBtn.disabled = true;
+      drawBtn.style.opacity = "0.6";
+      cage.classList.add("spinning");
+      spotlight.innerText = "Shaking...";
+      spotlight.style.color = "var(--teal)";
+
+      const balls = document.querySelectorAll(".tumbler-ball");
+      const shakeInterval = setInterval(() => {
+        balls.forEach(b => {
+          b.style.top = `${Math.floor(Math.random() * 130) + 20}px`;
+          b.style.left = `${Math.floor(Math.random() * 130) + 20}px`;
+        });
+      }, 80);
+
+      setTimeout(() => {
+        clearInterval(shakeInterval);
+        cage.classList.remove("spinning");
+        
+        let n;
+        do {
+          n = Math.floor(Math.random() * 75) + 1;
+        } while (calledSet.has(n));
+
+        calledSet.add(n);
+        const str = `${getLetter(n)}-${n}`;
+        spotlight.innerText = str;
+        spotlight.style.color = "var(--pink)";
+        document.getElementById(`ball_${n}`).classList.add("called");
+        document.getElementById("callCounter").innerText = `${calledSet.size} / 75 Drawn`;
+
+        if ('speechSynthesis' in window) {
+          const utter = new SpeechSynthesisUtterance(`${getLetter(n)} ${n}`);
+          utter.rate = 0.9;
+          window.speechSynthesis.speak(utter);
+        }
+
+        sync(str);
+        isDrawing = false;
+        drawBtn.disabled = false;
+        drawBtn.style.opacity = "1";
+      }, 1400);
+    }
+
+    function setGame(round, name, btn) {
+      document.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentGame = { round, name };
+      sync();
+    }
+
+    function resetRound() {
+      if (!confirm("Are you sure you want to reset for a new round?")) return;
+      calledSet.clear();
+      document.getElementById("hostBall").innerText = "-";
+      document.getElementById("callCounter").innerText = "0 / 75 Drawn";
+      document.querySelectorAll(".grid-num").forEach(n => n.classList.remove("called"));
+      sync("RESET");
+    }
+
+    function sync(latest = null) {
+      const data = {
+        roomPin: currentPin,
+        game: currentGame,
+        called: Array.from(calledSet),
+        latest: latest,
+        time: Date.now()
+      };
+      channel.postMessage(data);
+      localStorage.setItem("livevibe_game_state", JSON.stringify(data));
+    }
+  </script>
+</body>
+</html>

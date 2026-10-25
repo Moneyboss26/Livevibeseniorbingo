@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiveVibe Senior Bingo | Live Games. Real Connections. Lasting Smiles.</title>
+  <style>
+    :root {
+      --bg: #0d1021;
+      --card-bg: #151930;
+      --surface: #1e2442;
+      --teal: #00d2be;
+      --pink: #ff2e93;
+      --yellow: #f8c028;
+      --text: #f0f4fc;
+      --muted: #9aa5be;
+      --border: rgba(255, 255, 255, 0.08);
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header {
+      background: rgba(13, 16, 33, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+    .logo-img { height: 44px; width: auto; max-width: 170px; object-fit: contain; }
+    .nav-links { display: flex; gap: 24px; align-items: center; font-size: 15px; font-weight: 600; }
+    .nav-links a:hover { color: var(--teal); }
+
+    .btn {
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      border: none;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-teal { background: var(--teal); color: #08121d; }
+
+    /* Hero */
+    .hero {
+      padding: 70px 20px 40px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .pill-highlight {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(0, 210, 190, 0.12);
+      border: 1px solid var(--teal);
+      color: var(--teal);
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(34px, 5vw, 54px); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+    h1 span.pink { color: var(--pink); }
+    h1 span.teal { color: var(--teal); }
+    .tagline { font-size: clamp(18px, 2.5vw, 24px); color: var(--teal); font-weight: 700; margin-bottom: 16px; }
+    .hero-desc { font-size: 18px; color: var(--muted); max-width: 680px; margin: 0 auto 30px; }
+
+    .bring-everything-box {
+      background: linear-gradient(135deg, rgba(255,46,147,0.15), rgba(0,210,190,0.15));
+      border: 2px solid var(--teal);
+      border-radius: 14px;
+      padding: 24px 30px;
+      margin: 30px auto;
+      max-width: 820px;
+      text-align: center;
+    }
+    .bring-everything-box h3 { font-size: 22px; color: #fff; margin-bottom: 8px; }
+    .bring-everything-box p { color: var(--muted); font-size: 16px; line-height: 1.5; }
+
+    /* Features Grid */
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      max-width: 1000px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+    .feat-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .feat-card .check { color: var(--teal); font-weight: 900; font-size: 18px; margin-right: 6px; }
+    .feat-card h4 { font-size: 16px; margin-bottom: 4px; display: inline; }
+    .feat-card p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    /* Pricing */
+    .section-pricing {
+      padding: 70px 20px;
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .pricing-card {
+      background: var(--card-bg);
+      border: 2px solid var(--pink);
+      border-radius: 18px;
+      padding: 40px 30px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(255,46,147,0.12);
+    }
+    .price-number { font-size: 58px; font-weight: 900; color: #fff; margin: 10px 0; }
+    .price-period { font-size: 18px; color: var(--muted); font-weight: 600; }
+    .pricing-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      text-align: left;
+      margin: 30px 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .pricing-item { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; }
+    .pricing-item .icon { color: var(--teal); font-size: 18px; }
+    .pricing-footer-note {
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Contact */
+    .section-contact {
+      background: var(--surface);
+      padding: 70px 20px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 30px auto 0;
+    }
+    .contact-box {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .contact-box h5 { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .contact-box a { color: var(--teal); font-size: 18px; font-weight: 700; word-break: break-all; }
+
+    /* Footer */
+    footer {
+      background: #080a15;
+      padding: 50px 20px 30px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .footer-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0;
+    }
+    .footer-links button:hover { color: var(--teal); }
+    .copyright-text { font-size: 13px; line-height: 1.6; }
+
+    /* Legal Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      border: 2px solid var(--teal);
+      border-radius: 14px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      color: #e2e8f0;
+      box-shadow: 0 15px 50px rgba(0, 210, 190, 0.2);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .modal-header h3 { color: var(--teal); font-size: 22px; }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close-btn:hover { color: #fff; }
+    .modal-body h4 { color: #fff; margin: 16px 0 6px; font-size: 15px; }
+    .modal-body p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+    .modal-body ul { margin-left: 20px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+    .modal-body li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="logo-badge">
+        <img src="logo.png" alt="LiveVibe Senior Bingo Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-block';">
+        <svg id="logoFallback" width="44" height="44" viewBox="0 0 100 100" style="display:none; vertical-align:middle;">
+          <circle cx="50" cy="50" r="46" fill="#151930" stroke="#00d2be" stroke-width="4"/>
+          <circle cx="50" cy="50" r="36" fill="none" stroke="#ff2e93" stroke-width="3"/>
+          <text x="50" y="44" fill="#00d2be" font-size="14" font-weight="900" text-anchor="middle">LIVEVIBE</text>
+          <text x="50" y="64" fill="#ff2e93" font-size="18" font-weight="900" text-anchor="middle">BINGO</text>
+        </svg>
+        <span>LiveVibe Senior Bingo</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#games">Session Format</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="btn btn-teal">Book a Session</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+      <span class="pill-highlight">Senior Living Entertainment</span>
+      <h1>Live Games. <span class="teal">Real Connections.</span> <span class="pink">Lasting Smiles.</span></h1>
+      <p class="tagline">Interactive bingo entertainment designed specifically for senior living communities.</p>
+      <p class="hero-desc">
+        A turnkey, high-energy event tailored for memory care, assisted living, and independent living residents.
+      </p>
+
+      <div class="bring-everything-box">
+        <h3>We Bring Everything Needed To Play</h3>
+        <p>LiveVibe Senior Bingo provides the tablets, live hosting, game management, and accessibility features. Your community simply provides the space and prizes.</p>
+      </div>
+
+      <div class="features-list">
+        <div class="feat-card">
+          <span class="check">✓</span> <h4>Live Hosted Sessions</h4>
+          <p>Energetic callers keeping all residents engaged, connected, and excited.</p>
+        </div>
+        <div class="feat-card">
+          <span class="check">✓</span> <h4>Tablets Provided</h4>
+          <p>No paper waste or dauber stains. High-contrast digital touchscreens.</p>
+        </div>
+        <div class="feat-card">
+          <span class="check">✓</span> <h4>Auto-Dab Accessibility</h4>
+          <p>Seniors never miss a called number—great for all dexterity levels.</p>
+        </div>
+        <div class="feat-card">
+          <span class="check">✓</span> <h4>Winner Verification</h4>
+          <p>Instant digital check ensures every winning call is accurate.</p>
+        </div>
+        <div class="feat-card">
+          <span class="check">✓</span> <h4>Up To 30 Residents</h4>
+          <p>Accommodates up to 30 simultaneous participants per session.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Session Game Format -->
+    <section id="games" style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+      <h3 style="text-align: center; color: var(--teal); margin-bottom: 12px; font-size: 22px;">5 Thrilling Games Every Session</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; text-align: center;">
+        <div style="background: var(--card-bg); padding: 14px; border-radius: 8px; border: 1px solid var(--border);">
+          <div style="color: var(--teal); font-weight: 800; font-size: 14px;">GAME 1</div>
+          <div style="font-weight: 700; margin: 4px 0;">Regular Bingo</div>
+          <div style="color: var(--muted); font-size: 12px;">Line or Diagonal</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 14px; border-radius: 8px; border: 1px solid var(--border);">
+          <div style="color: var(--teal); font-weight: 800; font-size: 14px;">GAME 2</div>
+          <div style="font-weight: 700; margin: 4px 0;">Regular Bingo</div>
+          <div style="color: var(--muted); font-size: 12px;">Line or Diagonal</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 14px; border-radius: 8px; border: 1px solid var(--border);">
+          <div style="color: var(--pink); font-weight: 800; font-size: 14px;">GAME 3</div>
+          <div style="font-weight: 700; margin: 4px 0;">Double Bingo</div>
+          <div style="color: var(--muted); font-size: 12px;">Any 2 Lines</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 14px; border-radius: 8px; border: 1px solid var(--border);">
+          <div style="color: var(--teal); font-weight: 800; font-size: 14px;">GAME 4</div>
+          <div style="font-weight: 700; margin: 4px 0;">4 Corners</div>
+          <div style="color: var(--muted); font-size: 12px;">Four Outer Corners</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 14px; border-radius: 8px; border: 1px solid var(--border);">
+          <div style="color: var(--pink); font-weight: 800; font-size: 14px;">GAME 5</div>
+          <div style="font-weight: 700; margin: 4px 0;">Coverall</div>
+          <div style="color: var(--muted); font-size: 12px;">Full Card Blackout</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section-pricing" id="pricing">
+      <span class="pill-highlight" style="border-color: var(--pink); color: var(--pink); background: rgba(255,46,147,0.12);">Simple Monthly Pricing</span>
+      <h2>Turnkey Bingo For Your Community</h2>
+
+      <div class="pricing-card">
+        <div class="price-number">$425 <span class="price-period">/ Monthly</span></div>
+        <p style="color: var(--muted);">Complete monthly package designed for senior living residences</p>
+
+        <div class="pricing-items">
+          <div class="pricing-item"><span class="icon">✓</span> 4 Live Sessions Per Month</div>
+          <div class="pricing-item"><span class="icon">✓</span> 5 Games Per Session</div>
+          <div class="pricing-item"><span class="icon">✓</span> Up To 30 Residents</div>
+          <div class="pricing-item"><span class="icon">✓</span> Two Cards Per Player</div>
+          <div class="pricing-item"><span class="icon">✓</span> Tablets Provided</div>
+          <div class="pricing-item"><span class="icon">✓</span> Auto-Dab Included</div>
+        </div>
+
+        <div class="pricing-footer-note">
+          <span>Facility Provides Prizes</span>
+          <span>•</span>
+          <span>Additional Sessions: $100 Each</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section-contact" id="contact">
+      <span class="pill-highlight">Get In Touch</span>
+      <h2 style="margin-top: 8px;">Book LiveVibe For Your Community</h2>
+      <p style="color: var(--muted); max-width: 550px; margin: 10px auto 0;">Ready to elevate your resident activities calendar? Call, email, or schedule a demonstration session.</p>
+
+      <div class="contact-grid">
+        <div class="contact-box">
+          <h5>Phone</h5>
+          <a href="tel:5714354865">571-435-4865</a>
+        </div>
+        <div class="contact-box">
+          <h5>Email</h5>
+          <a href="mailto:cmcbizhub@att.net">cmcbizhub@att.net</a>
+        </div>
+        <div class="contact-box">
+          <h5>Website</h5>
+          <a href="https://LiveVibeSeniorBingo.com">LiveVibeSeniorBingo.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with Legal & Policies -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <button onclick="openModal('termsModal')">Terms & Conditions</button>
+        <span>•</span>
+        <button onclick="openModal('privacyModal')">Privacy Policy</button>
+        <span>•</span>
+        <button onclick="openModal('disclaimerModal')">Entertainment & Gaming Disclaimer</button>
+      </div>
+
+      <div class="copyright-text">
+        <p>&copy; 2026 LiveVibe Senior Bingo. All rights reserved.</p>
+        <p style="color: #64748b; font-size: 12px; margin-top: 4px;">
+          LiveVibe Senior Bingo is an interactive social entertainment service. All logos, graphics, brand names, and digital bingo software interfaces are proprietary assets.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal: Terms & Conditions -->
+  <div class="modal-overlay" id="termsModal" onclick="closeModalOnOutsideClick(event, 'termsModal')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Terms & Conditions</h3>
+        <button class="modal-close-btn" onclick="closeModal('termsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>1. Nature of Service</h4>
+        <p>LiveVibe Senior Bingo provides hosted on-site recreational entertainment, touchscreen tablets, and interactive bingo calling systems to assisted living, memory care, and senior residential facilities.</p>
+        
+        <h4>2. Service Agreements & Billing</h4>
+        <p>The standard monthly service agreement includes 4 scheduled live sessions (up to 30 resident participants per session). Invoices are billed monthly according to the agreed service schedule. Additional sessions may be scheduled upon request at the prevailing single-session rate.</p>
+
+        <h4>3. Facility Obligations</h4>
+        <ul>
+          <li><strong>Space & Seating:</strong> The community provides an accessible activity room or recreation hall with appropriate seating and tables.</li>
+          <li><strong>Prizes:</strong> In compliance with non-gambling social activity standards, any prizes, gift cards, or novelty items awarded to residents are provided entirely by the contracting facility.</li>
+          <li><strong>Staff Supervision:</strong> Community staff or life enrichment personnel remain responsible for overall resident supervision and care.</li>
+        </ul>
+
+        <h4>4. Equipment Care</h4>
+        <p>LiveVibe Senior Bingo supplies, configures, and transports all digital tablets and mobile networking equipment for each scheduled session. The host maintains full custody of the hardware before and after each event.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Privacy Policy -->
+  <div class="modal-overlay" id="privacyModal" onclick="closeModalOnOutsideClick(event, 'privacyModal')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Privacy Policy</h3>
+        <button class="modal-close-btn" onclick="closeModal('privacyModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>1. Resident Data & Identity</h4>
+        <p>LiveVibe Senior Bingo prioritizes senior privacy. During game sessions, tablets only request a participant first name (or preferred nickname) to display on their temporary scorecard. We do not collect, store, or transmit resident personal health information (PHI), dates of birth, financial details, or government identification.</p>
+
+        <h4>2. Facility Contact Details</h4>
+        <p>Contact information submitted through our website or service agreements (such as activity director names, phone numbers, and facility email addresses) is used solely for scheduling, coordination, and billing. We never sell, lease, or rent customer contact information to third parties.</p>
+
+        <h4>3. Local In-Room Network Security</h4>
+        <p>Game tablets communicate over a private, temporary mobile network dedicated exclusively to transmitting game state and called ball numbers. No resident browsing history, personal data, or biometric data is ever captured or stored.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Entertainment & Gaming Disclaimer -->
+  <div class="modal-overlay" id="disclaimerModal" onclick="closeModalOnOutsideClick(event, 'disclaimerModal')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Entertainment Disclaimer</h3>
+        <button class="modal-close-btn" onclick="closeModal('disclaimerModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>Recreational Social Activity Only</h4>
+        <p>LiveVibe Senior Bingo is an auxiliary life-enrichment program and social entertainment service designed exclusively for senior residential communities. LiveVibe Senior Bingo is not a licensed gambling establishment, commercial gaming hall, or casino operator.</p>
+
+        <h4>No Wagering or Paid Stakes</h4>
+        <p>No real money gambling, cash wagers, buy-ins, or player entry fees are collected from residents or players. All games are conducted purely for recreation, cognitive stimulation, and community engagement. Any non-cash novelty prizes or recognition awards are provided directly by the hosting senior facility.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    function closeModalOnOutsideClick(e, id) {
+      if (e.target.id === id) closeModal(id);
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  </script>
+
+</body>
+</html>
