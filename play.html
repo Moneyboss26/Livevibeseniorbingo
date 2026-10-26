@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>LiveVibe Bingo | Resident Tablet</title>
+  <title>LiveVibe Senior Bingo | Resident Arena</title>
   <style>
     :root {
-      --bg: #0d1021;
-      --card-bg: #151930;
-      --surface: #1e2442;
+      --bg: #090c19;
+      --card-bg: #13172c;
+      --surface: #1b213e;
       --teal: #00d2be;
       --pink: #ff2e93;
       --yellow: #f8c028;
       --dab: #00d2be;
       --text: #ffffff;
-      --muted: #a0aec0;
+      --muted: #9aa5be;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
@@ -39,18 +39,18 @@
       text-align: center;
       box-shadow: 0 10px 40px rgba(0, 210, 190, 0.2);
     }
-    .login-box h1 { font-size: 24px; color: var(--teal); margin-bottom: 4px; }
+    .login-box h1 { font-size: 24px; color: var(--teal); margin-bottom: 6px; }
     .login-box p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
     .input-group { text-align: left; margin-bottom: 14px; }
-    .input-group label { display: block; font-size: 12px; color: var(--muted); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+    .input-group label { display: block; font-size: 12px; color: var(--muted); font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
     .input-group input {
       width: 100%;
       padding: 13px;
       border-radius: 8px;
       border: 2px solid rgba(255,255,255,0.15);
-      background: #090c19;
+      background: #060812;
       color: #fff;
-      font-size: 17px;
+      font-size: 18px;
       outline: none;
     }
     .input-group input:focus { border-color: var(--teal); }
@@ -67,6 +67,7 @@
       margin-top: 10px;
     }
 
+    /* Top Bar */
     header {
       background: var(--card-bg);
       padding: 12px 20px;
@@ -96,41 +97,55 @@
       color: var(--pink);
     }
 
+    /* Jumbo Ball Spotlight Display */
     .broadcast-bar {
-      background: var(--surface);
-      padding: 12px 20px;
+      background: #14182f;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      border-bottom: 2px solid var(--teal);
       flex-wrap: wrap;
     }
-    .current-ball-container { display: flex; align-items: center; gap: 14px; }
+    .current-ball-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
     .big-ball {
-      width: 58px;
-      height: 58px;
+      min-width: 68px;
+      height: 68px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ff5cb1, var(--pink));
-      color: white;
-      font-size: 22px;
+      background: radial-gradient(circle at 35% 35%, #ff5cb1, var(--pink));
+      color: #ffffff;
+      font-size: 26px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 3px solid #fff;
-      box-shadow: 0 4px 15px rgba(255,46,147,0.4);
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 20px rgba(255, 46, 147, 0.6);
+      letter-spacing: 1px;
     }
-    .ball-details h3 { font-size: 16px; color: #fff; }
-    .ball-details p { font-size: 12px; color: var(--muted); }
+    .ball-details h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--teal);
+    }
+    .ball-details p {
+      font-size: 13px;
+      color: var(--muted);
+    }
 
     .called-rack { display: flex; gap: 6px; overflow-x: auto; max-width: 480px; padding: 4px; }
     .mini-ball {
-      min-width: 32px;
-      height: 32px;
+      min-width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background: #090c19;
+      background: #060812;
       color: var(--teal);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -139,8 +154,8 @@
     }
 
     .accessibility-bar {
-      background: #11152a;
-      padding: 10px 20px;
+      background: #0f1224;
+      padding: 8px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -149,15 +164,15 @@
       gap: 10px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .toggle-wrap { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--muted); }
     .color-picker { display: flex; align-items: center; gap: 8px; }
-    .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+    .color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
     .color-dot.active { border-color: #fff; transform: scale(1.15); }
 
+    /* Dual Cards Container (2 Cards for Seniors) */
     .cards-container {
       flex: 1;
       padding: 16px;
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       width: 100%;
       display: grid;
@@ -175,14 +190,15 @@
     .card-title {
       font-size: 14px;
       font-weight: 800;
-      color: var(--muted);
+      color: var(--teal);
       text-transform: uppercase;
       margin-bottom: 10px;
       text-align: center;
+      letter-spacing: 0.5px;
     }
     .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
     .col-header {
-      background: #090c19;
+      background: #060812;
       color: var(--teal);
       font-weight: 900;
       font-size: 20px;
@@ -192,7 +208,7 @@
     }
     .tile {
       aspect-ratio: 1;
-      background: #090c19;
+      background: #060812;
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -201,7 +217,7 @@
       font-weight: 900;
       cursor: pointer;
       user-select: none;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .tile.free { background: rgba(255,46,147,0.15); border-color: var(--pink); color: var(--pink); font-size: 13px; }
     .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; }
@@ -209,7 +225,7 @@
     .call-bar {
       position: sticky;
       bottom: 0;
-      background: rgba(13, 16, 33, 0.95);
+      background: rgba(9, 12, 25, 0.95);
       backdrop-filter: blur(10px);
       padding: 14px 20px;
       display: flex;
@@ -220,10 +236,10 @@
     .btn-bingo {
       background: linear-gradient(135deg, #ff2e93, #e01b7c);
       color: #fff;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       border: none;
-      padding: 16px 60px;
+      padding: 14px 60px;
       border-radius: 50px;
       cursor: pointer;
       box-shadow: 0 6px 25px rgba(255,46,147,0.5);
@@ -243,7 +259,7 @@
       background: var(--card-bg);
       border: 3px solid var(--teal);
       border-radius: 16px;
-      padding: 36px 24px;
+      padding: 34px 24px;
       text-align: center;
       max-width: 440px;
       width: 100%;
@@ -252,72 +268,72 @@
 </head>
 <body>
 
+  <!-- Entry / Check-in -->
   <div id="loginScreen">
     <div class="login-box">
-      <img src="logo.png" alt="LiveVibe Senior Bingo" style="max-height: 50px; margin-bottom: 12px;" onerror="this.style.display='none'">
-      <h1>Resident Tablet</h1>
-      <p>Enter your name & room PIN to play</p>
+      <img src="logo.png" alt="LiveVibe Senior Bingo" style="max-height: 48px; margin-bottom: 12px;" onerror="this.style.display='none'">
+      <h1>Resident Bingo Arena</h1>
+      <p>Enter your first name and the Activity PIN</p>
       <form onsubmit="joinLobby(event)">
         <div class="input-group">
-          <label>First Name</label>
-          <input type="text" id="pFirst" required autofocus placeholder="e.g. Mary">
+          <label>Your Name</label>
+          <input type="text" id="pName" required autofocus placeholder="e.g. Dorothy R.">
         </div>
         <div class="input-group">
-          <label>Last Name</label>
-          <input type="text" id="pLast" required placeholder="e.g. Johnson">
+          <label>4-Digit Activity PIN</label>
+          <input type="password" id="pPin" required maxlength="4" placeholder="From Host Screen" style="text-align: center; letter-spacing: 4px;">
         </div>
-        <div class="input-group">
-          <label>4-Digit Room PIN</label>
-          <input type="password" id="pPin" required maxlength="4" placeholder="From Host" style="text-align: center; letter-spacing: 4px;">
-        </div>
-        <button type="submit" class="btn-enter">Enter Bingo Room</button>
+        <button type="submit" class="btn-enter">Unlock Cards & Play</button>
       </form>
     </div>
   </div>
 
   <header>
     <div style="display: flex; align-items: center; gap: 10px;">
-      <span class="player-pill" id="playerNameDisplay">Player</span>
+      <span class="player-pill" id="playerNameDisplay">Resident</span>
       <span class="game-pattern-badge" id="gamePatternDisplay">Game 1: Regular Bingo</span>
     </div>
     <div style="font-size: 12px; color: var(--muted);" id="connectionStatus">● Waiting for Host</div>
   </header>
 
+  <!-- Jumbo Ball Spotlight -->
   <div class="broadcast-bar">
     <div class="current-ball-container">
       <div class="big-ball" id="activeBall">-</div>
       <div class="ball-details">
-        <h3 id="ballAnnounce">Waiting for Call</h3>
+        <h3 id="ballAnnounce">Waiting for First Draw</h3>
         <p id="totalDrawnCount">Host hasn't drawn yet</p>
       </div>
     </div>
     <div style="display: flex; flex-direction: column; align-items: flex-end;">
-      <span style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">Recent Calls</span>
+      <span style="font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Recent Calls</span>
       <div class="called-rack" id="calledRack">
         <span style="color: var(--muted); font-size: 12px;">No calls yet</span>
       </div>
     </div>
   </div>
 
+  <!-- Settings Bar -->
   <div class="accessibility-bar">
-    <div class="toggle-wrap">
+    <div style="display: flex; align-items: center; gap: 8px;">
       <input type="checkbox" id="autoDabToggle" checked style="width: 18px; height: 18px; cursor: pointer;">
-      <label for="autoDabToggle" style="cursor: pointer;">Auto-Dab Numbers</label>
+      <label for="autoDabToggle" style="cursor: pointer; font-weight: 700; color: var(--muted);">Auto-Dab (Both Cards)</label>
     </div>
     <div class="color-picker">
-      <span style="color: var(--muted); font-weight: 700;">Marker:</span>
+      <span style="color: var(--muted); font-weight: 700;">Dabber Color:</span>
       <div class="color-dot active" style="background: #00d2be;" onclick="setDabColor('#00d2be', this)"></div>
       <div class="color-dot" style="background: #ff2e93;" onclick="setDabColor('#ff2e93', this)"></div>
       <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
     </div>
   </div>
 
+  <!-- 2 Cards for Seniors -->
   <div class="cards-container">
-    <div class="bingo-card">
+    <div class="bingo-card" id="cardWrap1">
       <div class="card-title">Card 1</div>
       <div class="b-grid" id="cardGrid1"></div>
     </div>
-    <div class="bingo-card">
+    <div class="bingo-card" id="cardWrap2">
       <div class="card-title">Card 2</div>
       <div class="b-grid" id="cardGrid2"></div>
     </div>
@@ -330,38 +346,37 @@
   <div id="winModal">
     <div class="win-box">
       <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 10px;">BINGO!</h2>
-      <p id="modalDesc" style="color: var(--muted); margin-bottom: 20px;">Checking card...</p>
+      <p id="modalDesc" style="color: var(--muted); margin-bottom: 20px;">Verifying claim with host...</p>
       <button class="btn-enter" style="margin-top: 0;" onclick="closeModal()">Back to Cards</button>
     </div>
   </div>
 
   <script>
-    const channel = new BroadcastChannel("livevibe_bingo_channel");
+    const channel = new BroadcastChannel("livevibesenior_channel");
     let calledSet = new Set();
     let currentRound = 1;
     let currentRoundName = "Regular Bingo";
-    let card1Data = [], card2Data = [];
     let activeSessionPin = "7722";
+    let cards = [[], []];
+    let residentName = "";
 
     function joinLobby(e) {
       e.preventDefault();
       const enteredPin = document.getElementById("pPin").value.trim();
       
-      // Check stored state to ensure matching host PIN
-      const stored = localStorage.getItem("livevibe_game_state");
+      const stored = localStorage.getItem("livevibesenior_state");
       if (stored) {
         const state = JSON.parse(stored);
         if (state.roomPin) activeSessionPin = state.roomPin;
       }
 
       if (enteredPin !== activeSessionPin) {
-        alert("Invalid Room PIN. Please ask your host for today's 4-digit code.");
+        alert("Invalid PIN. Please check the code shown on the host screen.");
         return;
       }
 
-      const first = document.getElementById("pFirst").value.trim();
-      const last = document.getElementById("pLast").value.trim();
-      document.getElementById("playerNameDisplay").innerText = `${first} ${last[0]}.`;
+      residentName = document.getElementById("pName").value.trim();
+      document.getElementById("playerNameDisplay").innerText = residentName;
       document.getElementById("loginScreen").style.display = "none";
       generateCards();
       listenToHost();
@@ -374,10 +389,10 @@
     }
 
     function generateCards() {
-      card1Data = createCardMatrix();
-      card2Data = createCardMatrix();
-      renderCard("cardGrid1", card1Data, 1);
-      renderCard("cardGrid2", card2Data, 2);
+      for (let i = 0; i < 2; i++) {
+        cards[i] = createCardMatrix();
+        renderCard(`cardGrid${i+1}`, cards[i], i+1);
+      }
     }
 
     function createCardMatrix() {
@@ -433,28 +448,27 @@
           } else {
             tile.innerText = item.val;
             if (item.dabbed) tile.classList.add("dabbed");
-            tile.onclick = () => toggleManualDab(cardNum, r, c);
+            tile.onclick = () => toggleManualDab(cardNum - 1, r, c, tile);
           }
           el.appendChild(tile);
         }
       }
     }
 
-    function toggleManualDab(cardNum, r, c) {
-      const matrix = cardNum === 1 ? card1Data : card2Data;
-      matrix[r][c].dabbed = !matrix[r][c].dabbed;
-      const tile = document.getElementById(`c${cardNum}_${r}_${c}`);
-      tile.classList.toggle("dabbed", matrix[r][c].dabbed);
+    function toggleManualDab(cardIdx, r, c, tile) {
+      const m = cards[cardIdx];
+      m[r][c].dabbed = !m[r][c].dabbed;
+      tile.classList.toggle("dabbed", m[r][c].dabbed);
     }
 
     function listenToHost() {
       channel.onmessage = (e) => handleBroadcast(e.data);
       window.addEventListener("storage", (e) => {
-        if (e.key === "livevibe_game_state" && e.newValue) {
+        if (e.key === "livevibesenior_state" && e.newValue) {
           handleBroadcast(JSON.parse(e.newValue));
         }
       });
-      const initial = localStorage.getItem("livevibe_game_state");
+      const initial = localStorage.getItem("livevibesenior_state");
       if (initial) handleBroadcast(JSON.parse(initial));
     }
 
@@ -489,9 +503,10 @@
         }
       }
 
+      // High-contrast jumbo display update
       if (data.latest && data.latest !== "RESET") {
         document.getElementById("activeBall").innerText = data.latest;
-        document.getElementById("ballAnnounce").innerText = `Ball Called: ${data.latest}`;
+        document.getElementById("ballAnnounce").innerText = `CALLED: ${data.latest}`;
       }
     }
 
@@ -508,43 +523,58 @@
     }
 
     function applyAutoDab() {
-      [ { mat: card1Data, id: 1 }, { mat: card2Data, id: 2 } ].forEach(({ mat, id }) => {
+      for (let i = 0; i < 2; i++) {
+        const mat = cards[i];
         for (let r = 0; r < 5; r++) {
           for (let c = 0; c < 5; c++) {
             if (mat[r][c].val !== "FREE" && calledSet.has(mat[r][c].val)) {
               mat[r][c].dabbed = true;
-              document.getElementById(`c${id}_${r}_${c}`).classList.add("dabbed");
+              const tile = document.getElementById(`c${i+1}_${r}_${c}`);
+              if (tile) tile.classList.add("dabbed");
             }
           }
         }
-      });
+      }
     }
 
     function claimBingo() {
-      const c1Win = checkWin(card1Data, currentRound);
-      const c2Win = checkWin(card2Data, currentRound);
+      let winningCardNum = null;
+      for (let i = 0; i < 2; i++) {
+        if (checkWin(cards[i], currentRound)) {
+          winningCardNum = i + 1;
+          break;
+        }
+      }
 
       const modal = document.getElementById("winModal");
       const title = document.getElementById("modalTitle");
       const desc = document.getElementById("modalDesc");
 
-      if (c1Win || c2Win) {
+      if (winningCardNum) {
         title.innerText = "BINGO CONFIRMED!";
         title.style.color = "var(--teal)";
-        desc.innerText = `Congratulations! You achieved a verified ${currentRoundName} on Card ${c1Win ? '1' : '2'}! Wave to the host!`;
+        desc.innerText = `Verified ${currentRoundName} on Card #${winningCardNum}! The host has been notified!`;
+
+        channel.postMessage({
+          type: "SENIOR_BINGO_CLAIM",
+          name: residentName,
+          cardNum: winningCardNum,
+          roundName: currentRoundName,
+          time: Date.now()
+        });
       } else {
         title.innerText = "Keep Playing!";
         title.style.color = "var(--pink)";
-        desc.innerText = `You don't have a verified ${currentRoundName} yet. Keep an eye on the host caller!`;
+        desc.innerText = `You don't have a verified ${currentRoundName} yet. Keep watching!`;
       }
       modal.style.display = "flex";
     }
 
     function checkWin(matrix, round) {
       if (round === 1 || round === 2) return countLines(matrix) >= 1;
-      if (round === 3) return countLines(matrix) >= 2;
-      if (round === 4) return matrix[0][0].dabbed && matrix[0][4].dabbed && matrix[4][0].dabbed && matrix[4][4].dabbed;
-      if (round === 5) return matrix.every(row => row.every(cell => cell.dabbed));
+      if (round === 3) return matrix[0][0].dabbed && matrix[0][4].dabbed && matrix[4][0].dabbed && matrix[4][4].dabbed; // 4 Corners
+      if (round === 4) return countLines(matrix) >= 2; // Double
+      if (round === 5) return matrix.every(row => row.every(cell => cell.dabbed)); // Coverall
       return false;
     }
 
@@ -557,9 +587,7 @@
       return lines;
     }
 
-    function closeModal() {
-      document.getElementById("winModal").style.display = "none";
-    }
+    function closeModal() { document.getElementById("winModal").style.display = "none"; }
   </script>
 </body>
 </html>

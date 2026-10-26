@@ -1,14 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LiveVibe Bingo | Host Caller Station</title>
+  <title>LiveVibe Senior Bingo | Host Caller Station</title>
   <style>
     :root {
       --bg: #090c19;
-      --card-bg: #14182f;
+      --card-bg: #13172c;
       --teal: #00d2be;
       --pink: #ff2e93;
       --yellow: #f8c028;
@@ -43,23 +42,23 @@
       padding: 14px;
       border-radius: 8px;
       border: 2px solid rgba(255,255,255,0.15);
-      background: #090c19;
+      background: #060812;
       color: #fff;
       font-size: 18px;
       text-align: center;
       margin: 16px 0;
     }
     .btn {
-      padding: 12px 24px;
+      padding: 12px 20px;
       border-radius: 8px;
       font-weight: 800;
       cursor: pointer;
       border: none;
-      font-size: 16px;
+      font-size: 14px;
       transition: transform 0.1s ease;
     }
     .btn:active { transform: scale(0.97); }
-    .btn-teal { background: var(--teal); color: #090c19; }
+    .btn-teal { background: var(--teal); color: #060812; }
     .btn-pink { background: var(--pink); color: #fff; }
     .btn-danger { background: #e53e3e; color: #fff; }
 
@@ -91,9 +90,9 @@
     .pin-box {
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: #090c19;
-      padding: 10px 16px;
+      gap: 10px;
+      background: #060812;
+      padding: 8px 14px;
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
     }
@@ -101,9 +100,9 @@
       background: transparent;
       border: none;
       color: var(--teal);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 900;
-      width: 90px;
+      width: 70px;
       text-align: center;
       outline: none;
     }
@@ -115,7 +114,7 @@
       margin-top: 12px;
     }
     .p-btn {
-      background: #090c19;
+      background: #060812;
       border: 1px solid rgba(255,255,255,0.1);
       color: #fff;
       padding: 12px 10px;
@@ -125,8 +124,9 @@
       cursor: pointer;
       text-align: center;
     }
-    .p-btn.active { background: var(--teal); color: #090c19; border-color: var(--teal); }
+    .p-btn.active { background: var(--teal); color: #060812; border-color: var(--teal); }
 
+    /* Shaker Animation Cage */
     .tumbler-container {
       display: flex;
       flex-direction: column;
@@ -162,7 +162,7 @@
       justify-content: center;
       font-weight: 900;
       font-size: 11px;
-      color: #090c19;
+      color: #060812;
     }
 
     .ball-spotlight {
@@ -179,6 +179,25 @@
 
     .action-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
+    /* Live Bingo Claims Banner */
+    .claims-log {
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .claim-item {
+      padding: 10px 14px;
+      border-radius: 6px;
+      background: rgba(0,210,190,0.08);
+      border: 1px solid var(--teal);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .master-grid {
       display: grid;
       grid-template-columns: repeat(15, 1fr);
@@ -186,7 +205,7 @@
       margin-top: 14px;
     }
     .grid-num {
-      background: #090c19;
+      background: #060812;
       padding: 8px 0;
       text-align: center;
       border-radius: 4px;
@@ -195,21 +214,17 @@
       color: var(--muted);
       border: 1px solid rgba(255,255,255,0.04);
     }
-    .grid-num.called {
-      background: var(--teal);
-      color: #090c19;
-      border-color: var(--teal);
-    }
+    .grid-num.called { background: var(--teal); color: #060812; border-color: var(--teal); }
   </style>
 </head>
 <body>
 
   <div id="lockScreen">
     <div class="lock-box">
-      <h2 style="color: var(--teal); margin-bottom: 6px;">Host Verification</h2>
+      <h2 style="color: var(--teal); margin-bottom: 6px;">Live Host Access</h2>
       <p style="color: var(--muted); font-size: 14px;">Enter caller station password</p>
       <input type="password" id="passCode" placeholder="Enter password" autofocus>
-      <button class="btn btn-teal" style="width: 100%;" onclick="unlockStation()">Enter Caller Station</button>
+      <button class="btn btn-teal" style="width: 100%;" onclick="unlockStation()">Enter Station</button>
       <p id="lockError" style="color: #ff4d4d; font-size: 13px; margin-top: 10px; display: none;">Invalid password</p>
     </div>
   </div>
@@ -217,29 +232,42 @@
   <div class="container" id="mainDashboard" style="display: none;">
     <div class="top-bar">
       <div>
-        <h1 style="font-size: 24px; color: var(--teal);">LiveVibe Caller Station</h1>
-        <span class="badge">● Host Station Active</span>
+        <h1 style="font-size: 24px; color: var(--teal);">LiveVibe Senior Caller Station</h1>
+        <span class="badge">● Active Session Live</span>
       </div>
-      <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <!-- Voice Toggle Switch -->
+        <button class="btn" id="voiceToggleBtn" onclick="toggleCallerVoice()" style="background: #2d3748; color: #fff;">
+          🔊 Voice: ON
+        </button>
+
         <div class="pin-box">
-          <span style="font-size: 13px; color: var(--muted); font-weight: 700;">ROOM PIN:</span>
+          <span style="font-size: 12px; color: var(--muted); font-weight: 700;">ACTIVITY PIN:</span>
           <input type="text" id="roomPinInput" value="7722" maxlength="4" onchange="updateRoomPin()">
         </div>
         <button class="btn btn-danger" onclick="lockStation()">Lock</button>
       </div>
     </div>
 
+    <!-- Live Resident Claims Log -->
+    <div class="section-card" id="claimsSection" style="display: none;">
+      <h3 style="font-size: 14px; color: var(--pink); text-transform: uppercase;">Resident Bingo Calls</h3>
+      <div class="claims-log" id="claimsLog"></div>
+    </div>
+
+    <!-- 5 Game Round Selector -->
     <div class="section-card">
-      <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">1. Choose Active Game Pattern</h3>
+      <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Active Game Pattern</h3>
       <div class="pattern-btn-grid">
         <button class="p-btn active" onclick="setGame(1, 'Regular Bingo', this)">Game 1: Regular</button>
         <button class="p-btn" onclick="setGame(2, 'Regular Bingo', this)">Game 2: Regular</button>
-        <button class="p-btn" onclick="setGame(3, 'Double Bingo', this)">Game 3: Double</button>
-        <button class="p-btn" onclick="setGame(4, '4 Corners', this)">Game 4: 4 Corners</button>
+        <button class="p-btn" onclick="setGame(3, '4 Corners', this)">Game 3: 4 Corners</button>
+        <button class="p-btn" onclick="setGame(4, 'Double Bingo', this)">Game 4: Double</button>
         <button class="p-btn" onclick="setGame(5, 'Coverall', this)">Game 5: Coverall</button>
       </div>
     </div>
 
+    <!-- Shaker Cage & Ball Spotlight -->
     <div class="section-card tumbler-container">
       <div class="tumbler-cage" id="tumblerCage">
         <div class="tumbler-ball" style="background:#00d2be; top:30px; left:40px;">B</div>
@@ -257,6 +285,7 @@
       </div>
     </div>
 
+    <!-- Master 75-Ball Board -->
     <div class="section-card">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Master 75-Ball Board</h3>
@@ -268,11 +297,12 @@
 
   <script>
     const MASTER_PASS = "LiveVibe2026";
-    const channel = new BroadcastChannel("livevibe_bingo_channel");
+    const channel = new BroadcastChannel("livevibesenior_channel");
     let calledSet = new Set();
     let currentGame = { round: 1, name: "Regular Bingo" };
     let currentPin = "7722";
     let isDrawing = false;
+    let callerVoiceEnabled = true;
 
     function unlockStation() {
       const p = document.getElementById("passCode").value;
@@ -294,6 +324,18 @@
       document.getElementById("lockScreen").style.display = "flex";
       document.getElementById("mainDashboard").style.display = "none";
       document.getElementById("passCode").value = "";
+    }
+
+    function toggleCallerVoice() {
+      callerVoiceEnabled = !callerVoiceEnabled;
+      const btn = document.getElementById("voiceToggleBtn");
+      if (callerVoiceEnabled) {
+        btn.innerText = "🔊 Voice: ON";
+        btn.style.background = "#2d3748";
+      } else {
+        btn.innerText = "🔇 Voice: MUTED (Live Calling)";
+        btn.style.background = "#e53e3e";
+      }
     }
 
     function updateRoomPin() {
@@ -363,7 +405,8 @@
         document.getElementById(`ball_${n}`).classList.add("called");
         document.getElementById("callCounter").innerText = `${calledSet.size} / 75 Drawn`;
 
-        if ('speechSynthesis' in window) {
+        // Automated speech only speaks when NOT muted
+        if (callerVoiceEnabled && 'speechSynthesis' in window) {
           const utter = new SpeechSynthesisUtterance(`${getLetter(n)} ${n}`);
           utter.rate = 0.9;
           window.speechSynthesis.speak(utter);
@@ -392,6 +435,24 @@
       sync("RESET");
     }
 
+    channel.onmessage = (e) => {
+      const msg = e.data;
+      if (msg && msg.type === "SENIOR_BINGO_CLAIM") {
+        document.getElementById("claimsSection").style.display = "block";
+        const log = document.getElementById("claimsLog");
+        const item = document.createElement("div");
+        item.className = "claim-item";
+        item.innerHTML = `
+          <div>
+            <strong style="color: #fff; font-size: 15px;">${msg.name}</strong> 
+            <span style="color: var(--muted); font-size: 13px; margin-left: 8px;">Claimed on Card #${msg.cardNum} (${msg.roundName})</span>
+          </div>
+          <span style="color: var(--teal); font-weight: 800; font-size: 13px;">✓ VERIFIED BINGO</span>
+        `;
+        log.prepend(item);
+      }
+    };
+
     function sync(latest = null) {
       const data = {
         roomPin: currentPin,
@@ -401,7 +462,7 @@
         time: Date.now()
       };
       channel.postMessage(data);
-      localStorage.setItem("livevibe_game_state", JSON.stringify(data));
+      localStorage.setItem("livevibesenior_state", JSON.stringify(data));
     }
   </script>
 </body>
