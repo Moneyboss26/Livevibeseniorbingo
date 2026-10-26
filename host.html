@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LiveVibe Senior Bingo | Host Caller Station</title>
+  <title>LiveVibe Bingo | Live Host Caller Station</title>
   <style>
     :root {
       --bg: #090c19;
@@ -61,6 +61,7 @@
     .btn-teal { background: var(--teal); color: #060812; }
     .btn-pink { background: var(--pink); color: #fff; }
     .btn-danger { background: #e53e3e; color: #fff; }
+    .btn-lock { background: #3182ce; color: #fff; }
 
     .top-bar {
       display: flex;
@@ -79,6 +80,7 @@
       background: rgba(0,210,190,0.15);
       color: var(--teal);
     }
+    .badge-locked { background: rgba(229,62,62,0.15); color: #fc8181; }
 
     .section-card {
       background: var(--card-bg);
@@ -87,24 +89,35 @@
       margin-bottom: 18px;
       border: 1px solid rgba(255,255,255,0.08);
     }
-    .pin-box {
+    .top-input-box {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #060812;
-      padding: 8px 14px;
+      padding: 8px 12px;
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
     }
-    .pin-box input {
+    .top-input-box input {
       background: transparent;
       border: none;
       color: var(--teal);
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 900;
-      width: 70px;
-      text-align: center;
       outline: none;
+    }
+
+    .guest-list-input {
+      width: 100%;
+      height: 70px;
+      background: #060812;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      color: #fff;
+      padding: 10px;
+      font-size: 13px;
+      margin-top: 8px;
+      resize: vertical;
     }
 
     .pattern-btn-grid {
@@ -126,7 +139,6 @@
     }
     .p-btn.active { background: var(--teal); color: #060812; border-color: var(--teal); }
 
-    /* Shaker Animation Cage */
     .tumbler-container {
       display: flex;
       flex-direction: column;
@@ -179,9 +191,8 @@
 
     .action-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-    /* Live Bingo Claims Banner */
     .claims-log {
-      max-height: 180px;
+      max-height: 200px;
       overflow-y: auto;
       margin-top: 10px;
       display: flex;
@@ -191,12 +202,14 @@
     .claim-item {
       padding: 10px 14px;
       border-radius: 6px;
-      background: rgba(0,210,190,0.08);
-      border: 1px solid var(--teal);
+      background: #060812;
+      border: 1px solid rgba(255,255,255,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+    .claim-valid { border-color: var(--teal); background: rgba(0,210,190,0.06); }
+    .claim-invalid { border-color: #e53e3e; background: rgba(229,62,62,0.1); }
 
     .master-grid {
       display: grid;
@@ -232,38 +245,57 @@
   <div class="container" id="mainDashboard" style="display: none;">
     <div class="top-bar">
       <div>
-        <h1 style="font-size: 24px; color: var(--teal);">LiveVibe Senior Caller Station</h1>
-        <span class="badge">● Active Session Live</span>
+        <h1 style="font-size: 24px; color: var(--teal);">LiveVibe Caller Station</h1>
+        <span class="badge" id="lobbyStatusBadge">● Lobby Open (Players Joining)</span>
       </div>
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <!-- Voice Toggle Switch -->
+        <!-- Live Host Name Field (Defaults to CC) -->
+        <div class="top-input-box">
+          <span style="font-size: 12px; color: var(--yellow); font-weight: 800;">🎙️ HOST:</span>
+          <input type="text" id="hostNameInput" value="CC" style="width: 70px;" onchange="updateHostName()" placeholder="Host Name">
+        </div>
+
         <button class="btn" id="voiceToggleBtn" onclick="toggleCallerVoice()" style="background: #2d3748; color: #fff;">
           🔊 Voice: ON
         </button>
 
-        <div class="pin-box">
-          <span style="font-size: 12px; color: var(--muted); font-weight: 700;">ACTIVITY PIN:</span>
-          <input type="text" id="roomPinInput" value="7722" maxlength="4" onchange="updateRoomPin()">
+        <div class="top-input-box">
+          <span style="font-size: 12px; color: var(--muted); font-weight: 700;">PIN:</span>
+          <input type="text" id="roomPinInput" value="7722" maxlength="4" style="width: 55px; text-align: center;" onchange="updateRoomPin()">
         </div>
-        <button class="btn btn-danger" onclick="lockStation()">Lock</button>
+
+        <button class="btn btn-lock" id="toggleLockBtn" onclick="toggleDoorLock()">Lock Out Late Players</button>
+        <button class="btn btn-danger" onclick="lockStation()">Exit Console</button>
       </div>
     </div>
 
-    <!-- Live Resident Claims Log -->
+    <!-- Authorized Guest List Management -->
+    <div class="section-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 14px; color: var(--teal); text-transform: uppercase;">Stripe Paid Ticket Roster</h3>
+        <span style="font-size: 12px; color: var(--muted);" id="rosterCount">0 Paid Attendees Loaded</span>
+      </div>
+      <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">
+        Paste paid customer names, emails, or $Cashtags directly from Stripe (separated by commas or new lines). Unverified callers will be flagged automatically upon calling Bingo.
+      </p>
+      <textarea id="guestListArea" class="guest-list-input" placeholder="e.g. Mary Johnson, David Miller, Sarah Lee, $MaryWins" onchange="updateGuestList()"></textarea>
+    </div>
+
+    <!-- Active Claims Log -->
     <div class="section-card" id="claimsSection" style="display: none;">
-      <h3 style="font-size: 14px; color: var(--pink); text-transform: uppercase;">Resident Bingo Calls</h3>
+      <h3 style="font-size: 14px; color: var(--pink); text-transform: uppercase;">Live Bingo Claims Log</h3>
       <div class="claims-log" id="claimsLog"></div>
     </div>
 
-    <!-- 5 Game Round Selector -->
+    <!-- Active Game Round & Cash Prizes -->
     <div class="section-card">
-      <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Active Game Pattern</h3>
+      <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Active Round & Cash Prize</h3>
       <div class="pattern-btn-grid">
-        <button class="p-btn active" onclick="setGame(1, 'Regular Bingo', this)">Game 1: Regular</button>
-        <button class="p-btn" onclick="setGame(2, 'Regular Bingo', this)">Game 2: Regular</button>
-        <button class="p-btn" onclick="setGame(3, '4 Corners', this)">Game 3: 4 Corners</button>
-        <button class="p-btn" onclick="setGame(4, 'Double Bingo', this)">Game 4: Double</button>
-        <button class="p-btn" onclick="setGame(5, 'Coverall', this)">Game 5: Coverall</button>
+        <button class="p-btn active" onclick="setGame(1, 'Regular Bingo', '$25', this)">Game 1: Regular ($25)</button>
+        <button class="p-btn" onclick="setGame(2, 'Regular Bingo', '$25', this)">Game 2: Regular ($25)</button>
+        <button class="p-btn" onclick="setGame(3, '4 Corners', '$25', this)">Game 3: 4 Corners ($25)</button>
+        <button class="p-btn" onclick="setGame(4, 'Double Bingo', '$50', this)">Game 4: Double ($50)</button>
+        <button class="p-btn" onclick="setGame(5, 'Coverall', '$150', this)">Game 5: Coverall ($150)</button>
       </div>
     </div>
 
@@ -297,18 +329,31 @@
 
   <script>
     const MASTER_PASS = "LiveVibe2026";
-    const channel = new BroadcastChannel("livevibesenior_channel");
+    const channel = new BroadcastChannel("livevibebingo_online_channel");
     let calledSet = new Set();
-    let currentGame = { round: 1, name: "Regular Bingo" };
+    let currentGame = { round: 1, name: "Regular Bingo", prize: "$25" };
     let currentPin = "7722";
+    let isLobbyLocked = false;
     let isDrawing = false;
     let callerVoiceEnabled = true;
+    let hostName = "CC";
+    let paidGuestList = [];
 
     function unlockStation() {
       const p = document.getElementById("passCode").value;
       if (p === MASTER_PASS) {
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("mainDashboard").style.display = "block";
+        isLobbyLocked = false;
+        
+        const badge = document.getElementById("lobbyStatusBadge");
+        if (badge) {
+          badge.innerText = "● Lobby Open (Players Joining)";
+          badge.className = "badge";
+        }
+        const lockBtn = document.getElementById("toggleLockBtn");
+        if (lockBtn) lockBtn.innerText = "Lock Out Late Players";
+
         initGrid();
         sync();
       } else {
@@ -326,6 +371,11 @@
       document.getElementById("passCode").value = "";
     }
 
+    function updateHostName() {
+      hostName = document.getElementById("hostNameInput").value.trim() || "CC";
+      sync();
+    }
+
     function toggleCallerVoice() {
       callerVoiceEnabled = !callerVoiceEnabled;
       const btn = document.getElementById("voiceToggleBtn");
@@ -333,13 +383,35 @@
         btn.innerText = "🔊 Voice: ON";
         btn.style.background = "#2d3748";
       } else {
-        btn.innerText = "🔇 Voice: MUTED (Live Calling)";
+        btn.innerText = "🔇 Voice: MUTED (Live Host Calling)";
         btn.style.background = "#e53e3e";
       }
     }
 
     function updateRoomPin() {
       currentPin = document.getElementById("roomPinInput").value.trim();
+      sync();
+    }
+
+    function updateGuestList() {
+      const val = document.getElementById("guestListArea").value;
+      paidGuestList = val.split(/[,\n]/).map(s => s.trim().toLowerCase()).filter(Boolean);
+      document.getElementById("rosterCount").innerText = `${paidGuestList.length} Paid Attendees Loaded`;
+    }
+
+    function toggleDoorLock() {
+      isLobbyLocked = !isLobbyLocked;
+      const badge = document.getElementById("lobbyStatusBadge");
+      const btn = document.getElementById("toggleLockBtn");
+      if (isLobbyLocked) {
+        badge.innerText = "● Doors Locked (No Late Entry)";
+        badge.className = "badge badge-locked";
+        btn.innerText = "Re-Open Lobby Doors";
+      } else {
+        badge.innerText = "● Lobby Open (Players Joining)";
+        badge.className = "badge";
+        btn.innerText = "Lock Out Late Players";
+      }
       sync();
     }
 
@@ -405,7 +477,6 @@
         document.getElementById(`ball_${n}`).classList.add("called");
         document.getElementById("callCounter").innerText = `${calledSet.size} / 75 Drawn`;
 
-        // Automated speech only speaks when NOT muted
         if (callerVoiceEnabled && 'speechSynthesis' in window) {
           const utter = new SpeechSynthesisUtterance(`${getLetter(n)} ${n}`);
           utter.rate = 0.9;
@@ -419,10 +490,10 @@
       }, 1400);
     }
 
-    function setGame(round, name, btn) {
+    function setGame(round, name, prize, btn) {
       document.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      currentGame = { round, name };
+      currentGame = { round, name, prize };
       sync();
     }
 
@@ -437,17 +508,28 @@
 
     channel.onmessage = (e) => {
       const msg = e.data;
-      if (msg && msg.type === "SENIOR_BINGO_CLAIM") {
+      if (msg && msg.type === "BINGO_CLAIM") {
         document.getElementById("claimsSection").style.display = "block";
         const log = document.getElementById("claimsLog");
+        
+        const cleanName = (msg.name || "").toLowerCase().trim();
+        const cleanTag = (msg.cashtag || "").toLowerCase().trim();
+        const isVerified = paidGuestList.some(guest => cleanName.includes(guest) || cleanTag.includes(guest) || guest.includes(cleanName));
+
         const item = document.createElement("div");
-        item.className = "claim-item";
+        item.className = `claim-item ${isVerified ? 'claim-valid' : 'claim-invalid'}`;
         item.innerHTML = `
           <div>
-            <strong style="color: #fff; font-size: 15px;">${msg.name}</strong> 
-            <span style="color: var(--muted); font-size: 13px; margin-left: 8px;">Claimed on Card #${msg.cardNum} (${msg.roundName})</span>
+            <strong style="color: #fff; font-size: 14px;">${msg.name}</strong> 
+            <span style="color: var(--teal); font-size: 13px;">(${msg.cashtag})</span>
+            <span style="color: var(--muted); font-size: 12px; margin-left: 8px;">Claimed Card #${msg.cardNum} (${msg.roundName} - ${msg.prize})</span>
           </div>
-          <span style="color: var(--teal); font-weight: 800; font-size: 13px;">✓ VERIFIED BINGO</span>
+          <div>
+            ${isVerified ? 
+              '<span style="color: var(--teal); font-weight: 800; font-size: 12px;">✓ PAID TICKET HOLDER</span>' : 
+              '<span style="color: #fc8181; font-weight: 800; font-size: 12px;">⚠️ NOT ON GUEST LIST</span>'
+            }
+          </div>
         `;
         log.prepend(item);
       }
@@ -455,14 +537,16 @@
 
     function sync(latest = null) {
       const data = {
+        hostName: hostName,
         roomPin: currentPin,
         game: currentGame,
         called: Array.from(calledSet),
         latest: latest,
+        lobbyLocked: isLobbyLocked,
         time: Date.now()
       };
       channel.postMessage(data);
-      localStorage.setItem("livevibesenior_state", JSON.stringify(data));
+      localStorage.setItem("livevibebingo_state", JSON.stringify(data));
     }
   </script>
 </body>
