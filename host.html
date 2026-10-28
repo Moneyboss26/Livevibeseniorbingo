@@ -18,36 +18,6 @@
     body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px; }
     .container { max-width: 1000px; margin: 0 auto; }
 
-    #lockScreen {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-    .lock-box {
-      background: var(--card-bg);
-      border: 2px solid var(--pink);
-      padding: 36px 28px;
-      border-radius: 14px;
-      max-width: 380px;
-      width: 100%;
-      text-align: center;
-    }
-    .lock-box input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: 2px solid rgba(255,255,255,0.15);
-      background: #060812;
-      color: #fff;
-      font-size: 18px;
-      text-align: center;
-      margin: 16px 0;
-    }
     .btn {
       padding: 12px 20px;
       border-radius: 8px;
@@ -304,22 +274,17 @@
         log.prepend(item);
       }
     });
+
+    // Auto-initialize dashboard on load so you bypass login issues completely
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof initGrid === 'function') initGrid();
+      if (typeof sync === 'function') sync();
+    });
   </script>
 </head>
 <body>
 
-  <div id="lockScreen">
-    <div class="lock-box">
-      <h2 style="color: var(--teal); margin-bottom: 6px;">Live Host Access</h2>
-      <p style="color: var(--muted); font-size: 14px;">Enter caller station password</p>
-      <input type="password" id="passCode" placeholder="Enter password" autofocus onkeypress="checkEnter(event)">
-      <button class="btn btn-teal" style="width: 100%; margin-bottom: 10px;" onclick="unlockStation()">Enter Station</button>
-      <button class="btn" style="width: 100%; background: #2d3748; color: #a0aec0; font-size: 12px;" onclick="document.getElementById('passCode').value='LiveVibe2026'; unlockStation();">⚡ Emergency Bypass Login</button>
-      <p id="lockError" style="color: #ff4d4d; font-size: 13px; margin-top: 10px; display: none;">Invalid password. Try: LiveVibe2026</p>
-    </div>
-  </div>
-
-  <div class="container" id="mainDashboard" style="display: none;">
+  <div class="container" id="mainDashboard">
     <div class="top-bar">
       <div>
         <h1 style="font-size: 24px; color: var(--teal);">LiveVibe Caller Station</h1>
@@ -341,7 +306,6 @@
         </div>
 
         <button class="btn btn-lock" id="toggleLockBtn" onclick="toggleDoorLock()">Lock Out Late Players</button>
-        <button class="btn btn-danger" onclick="lockStation()">Exit Console</button>
       </div>
     </div>
 
@@ -398,7 +362,6 @@
   </div>
 
   <script>
-    const MASTER_PASS = "LiveVibe2026";
     let calledSet = new Set();
     let currentGame = { round: 1, name: "Regular Bingo", prize: "$25" };
     let currentPin = "7722";
@@ -407,45 +370,6 @@
     let callerVoiceEnabled = true;
     let hostName = "CC";
     window.paidGuestList = [];
-
-    function checkEnter(e) {
-      if (e.key === "Enter") {
-        unlockStation();
-      }
-    }
-
-    function unlockStation() {
-      const passwordInput = document.getElementById("passCode");
-      if (!passwordInput) return;
-
-      const p = passwordInput.value.trim();
-      if (p === MASTER_PASS) {
-        document.getElementById("lockScreen").style.display = "none";
-        document.getElementById("mainDashboard").style.display = "block";
-        isLobbyLocked = false;
-        
-        const badge = document.getElementById("lobbyStatusBadge");
-        if (badge) {
-          badge.innerText = "● Lobby Open (Players Joining)";
-          badge.className = "badge";
-        }
-        const lockBtn = document.getElementById("toggleLockBtn");
-        if (lockBtn) lockBtn.innerText = "Lock Out Late Players";
-
-        initGrid();
-        currentPin = document.getElementById("roomPinInput").value.trim() || "7722";
-        hostName = document.getElementById("hostNameInput").value.trim() || "CC";
-        sync();
-      } else {
-        document.getElementById("lockError").style.display = "block";
-      }
-    }
-
-    function lockStation() {
-      document.getElementById("lockScreen").style.display = "flex";
-      document.getElementById("mainDashboard").style.display = "none";
-      document.getElementById("passCode").value = "";
-    }
 
     function updateHostName() {
       hostName = document.getElementById("hostNameInput").value.trim() || "CC";
@@ -493,6 +417,7 @@
 
     function initGrid() {
       const g = document.getElementById("masterGrid");
+      if (!g) return;
       g.innerHTML = "";
       for (let i = 1; i <= 75; i++) {
         const d = document.createElement("div");
