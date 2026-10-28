@@ -139,7 +139,6 @@
     }
     .p-btn.active { background: var(--teal); color: #060812; border-color: var(--teal); }
 
-    /* Vibrant 3D Realistic Rotating Wire Tumbler Cage */
     .tumbler-container {
       display: flex;
       flex-direction: column;
@@ -313,9 +312,10 @@
     <div class="lock-box">
       <h2 style="color: var(--teal); margin-bottom: 6px;">Live Host Access</h2>
       <p style="color: var(--muted); font-size: 14px;">Enter caller station password</p>
-      <input type="password" id="passCode" placeholder="Enter password" autofocus>
-      <button class="btn btn-teal" style="width: 100%;">Enter Station</button>
-      <p id="lockError" style="color: #ff4d4d; font-size: 13px; margin-top: 10px; display: none;">Invalid password</p>
+      <!-- Explicit inline onclick added so it cannot fail to bind -->
+      <input type="password" id="passCode" placeholder="Enter password" autofocus onkeypress="checkEnter(event)">
+      <button class="btn btn-teal" style="width: 100%;" onclick="unlockStation()">Enter Station</button>
+      <p id="lockError" style="color: #ff4d4d; font-size: 13px; margin-top: 10px; display: none;">Invalid password. Try: LiveVibe2026</p>
     </div>
   </div>
 
@@ -408,25 +408,19 @@
     let hostName = "CC";
     window.paidGuestList = [];
 
-    // Bulletproof click listener for unlock button and enter key
-    window.addEventListener('DOMContentLoaded', () => {
-      const enterBtn = document.querySelector('.lock-box button');
-      if (enterBtn) {
-        enterBtn.addEventListener('click', unlockStation);
+    function checkEnter(e) {
+      if (e.key === "Enter") {
+        unlockStation();
       }
-      const passInput = document.getElementById("passCode");
-      if (passInput) {
-        passInput.addEventListener("keypress", (e) => {
-          if (e.key === "Enter") unlockStation();
-        });
-      }
-    });
+    }
 
     function unlockStation() {
       const passwordInput = document.getElementById("passCode");
       if (!passwordInput) return;
 
       const p = passwordInput.value.trim();
+      console.log("Attempting unlock with password:", p);
+
       if (p === MASTER_PASS) {
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("mainDashboard").style.display = "block";
