@@ -138,7 +138,6 @@
     }
     .p-btn.active { background: var(--teal); color: #060812; border-color: var(--teal); }
 
-    /* Upgraded Shaker Animation Cage */
     .tumbler-container {
       display: flex;
       flex-direction: column;
@@ -240,7 +239,6 @@
     }
     .grid-num.called { background: var(--teal); color: #060812; border-color: var(--teal); }
 
-    /* Side Card Inspector Panel */
     #sideInspectorPanel {
       background: var(--card-bg);
       border-radius: 12px;
@@ -295,16 +293,14 @@
 
         <div class="pin-box">
           <span style="font-size: 12px; color: var(--muted); font-weight: 700;">PIN:</span>
-          <input type="text" id="roomPinInput" value="7722" maxlength="4" onchange="updateRoomPin()">
+          <input type="text" id="roomPinInput" value="7722" maxlength="4" oninput="updateRoomPin()">
         </div>
         <button class="btn btn-danger" onclick="lockStation()">Lock</button>
       </div>
     </div>
 
     <div class="main-layout">
-      <!-- Left Column: Controls & Board -->
       <div>
-        <!-- Resident Bingo Claims Log -->
         <div class="section-card" id="claimsSection" style="display: none;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <h3 style="font-size: 14px; color: var(--pink); text-transform: uppercase;">Resident Bingo Calls</h3>
@@ -313,7 +309,6 @@
           <div class="claims-log" id="claimsLog"></div>
         </div>
 
-        <!-- 5 Game Round Selector -->
         <div class="section-card">
           <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Active Game Pattern</h3>
           <div class="pattern-btn-grid">
@@ -325,7 +320,6 @@
           </div>
         </div>
 
-        <!-- Upgraded 3D Shaker Cage & Ball Spotlight -->
         <div class="section-card tumbler-container">
           <div class="tumbler-cage" id="tumblerCage">
             <div class="tumbler-ball" style="background:#00d2be; top:30px; left:40px;">B</div>
@@ -343,7 +337,6 @@
           </div>
         </div>
 
-        <!-- Master 75-Ball Board -->
         <div class="section-card">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <h3 style="font-size: 15px; color: var(--muted); text-transform: uppercase;">Master 75-Ball Board</h3>
@@ -353,7 +346,6 @@
         </div>
       </div>
 
-      <!-- Right Column: Side Card Inspector (Never covers master board) -->
       <div id="sideInspectorPanel">
         <h3 style="color: var(--teal); font-size: 15px; margin-bottom: 4px; text-transform: uppercase;">🔍 Card Inspector</h3>
         <p style="color: var(--muted); font-size: 11px; margin-bottom: 12px;">Inspect resident winning cards side-by-side.</p>

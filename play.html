@@ -300,7 +300,6 @@
 </head>
 <body>
 
-  <!-- Entry / Check-in -->
   <div id="loginScreen">
     <div class="login-box">
       <h1>Resident Bingo Arena</h1>
@@ -312,7 +311,7 @@
         </div>
         <div class="input-group">
           <label>4-Digit Activity PIN</label>
-          <input type="password" id="pPin" required maxlength="4" placeholder="7722" style="text-align: center; letter-spacing: 6px;">
+          <input type="password" id="pPin" required maxlength="4" placeholder="••••" style="text-align: center; letter-spacing: 6px;">
         </div>
         <button type="submit" class="btn-enter">🔊 Unlock Audio & Play</button>
       </form>
@@ -330,7 +329,6 @@
     </div>
   </header>
 
-  <!-- Jumbo Ball Spotlight -->
   <div class="broadcast-bar">
     <div class="current-ball-container">
       <div class="big-ball" id="activeBall">-</div>
@@ -351,7 +349,6 @@
     Monitoring your 2 cards...
   </div>
 
-  <!-- Settings Bar -->
   <div class="accessibility-bar">
     <div style="display: flex; align-items: center; gap: 8px;">
       <input type="checkbox" id="autoDabToggle" checked style="width: 18px; height: 18px; cursor: pointer;">
@@ -365,7 +362,6 @@
     </div>
   </div>
 
-  <!-- 2 Cards for Seniors -->
   <div class="cards-container">
     <div class="bingo-card" id="cardWrap1">
       <div class="card-header-flex"><span class="card-title">Card 1</span><span class="card-serial" id="serial1">SR-001</span></div>
@@ -417,14 +413,17 @@
       e.preventDefault();
       const enteredPin = document.getElementById("pPin").value.trim();
       
+      // Pull live session state from localStorage
       const stored = localStorage.getItem("livevibesenior_state");
       if (stored) {
         const state = JSON.parse(stored);
-        if (state.roomPin) activeSessionPin = state.roomPin;
+        if (state.roomPin) activeSessionPin = String(state.roomPin).trim();
       }
 
+      // Secure check: Generic error message only, never reveals the actual PIN
       if (enteredPin !== activeSessionPin) {
-        alert("Invalid PIN. Please check the code shown on the host screen.");
+        alert("Invalid Activity PIN. Please check the code shown on the host screen.");
+        document.getElementById("pPin").value = "";
         return;
       }
 
@@ -545,7 +544,7 @@
       document.getElementById("connectionStatus").innerText = "● Host Connected";
       document.getElementById("connectionStatus").style.color = "var(--teal)";
 
-      if (data.roomPin) activeSessionPin = data.roomPin;
+      if (data.roomPin) activeSessionPin = String(data.roomPin).trim();
 
       if (data.game) {
         currentRound = data.game.round;
@@ -577,7 +576,6 @@
         document.getElementById("activeBall").innerText = data.latest;
         document.getElementById("ballAnnounce").innerText = `CALLED: ${data.latest}`;
 
-        // Speech Synthesis Out Loud
         if ('speechSynthesis' in window) {
           const cleanText = data.latest.replace("-", " ");
           const utter = new SpeechSynthesisUtterance(cleanText);
