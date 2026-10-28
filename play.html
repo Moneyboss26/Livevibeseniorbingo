@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>LiveVibe Bingo | Live Player Arena (4 Cards)</title>
+  <title>LiveVibe Senior Bingo | Resident Arena</title>
   <style>
     :root {
       --bg: #090c19;
@@ -31,38 +31,36 @@
     }
     .login-box {
       background: var(--card-bg);
-      border: 2px solid var(--teal);
-      border-radius: 16px;
-      padding: 34px 26px;
-      max-width: 420px;
+      border: 3px solid var(--teal);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 480px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0, 210, 190, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 210, 190, 0.3);
     }
-    .login-box h1 { font-size: 24px; color: var(--teal); margin-bottom: 4px; }
-    .login-box p { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
-    .input-group { text-align: left; margin-bottom: 14px; }
-    .input-group label { display: block; font-size: 12px; color: var(--muted); font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
+    .login-box h1 { font-size: 28px; color: var(--teal); margin-bottom: 6px; }
+    .login-box p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+    .input-group { text-align: left; margin-bottom: 18px; }
+    .input-group label { display: block; font-size: 14px; color: var(--muted); font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
     .input-group input {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 2px solid rgba(255,255,255,0.15);
+      padding: 16px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.2);
       background: #060812;
       color: #fff;
-      font-size: 16px;
+      font-size: 20px;
       outline: none;
     }
-    .input-group input:focus { border-color: var(--teal); }
-    .input-hint { font-size: 11px; color: var(--pink); margin-top: 4px; display: block; }
     .btn-enter {
       width: 100%;
-      padding: 14px;
+      padding: 18px;
       background: var(--pink);
       color: #fff;
       border: none;
-      border-radius: 10px;
-      font-size: 17px;
+      border-radius: 12px;
+      font-size: 20px;
       font-weight: 900;
       cursor: pointer;
       margin-top: 10px;
@@ -70,51 +68,41 @@
 
     header {
       background: var(--card-bg);
-      padding: 12px 20px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 2px solid rgba(255,255,255,0.08);
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
     .player-pill {
       background: rgba(0,210,190,0.15);
       border: 1px solid var(--teal);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 800;
       color: var(--teal);
     }
     .game-pattern-badge {
       background: rgba(255,46,147,0.15);
       border: 1px solid var(--pink);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 900;
       color: var(--pink);
-    }
-    .caller-badge {
-      background: rgba(248, 192, 40, 0.15);
-      border: 1px solid var(--yellow);
-      color: #ffd875;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
     }
 
     .broadcast-bar {
       background: #14182f;
-      padding: 14px 20px;
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      border-bottom: 2px solid var(--teal);
+      border-bottom: 3px solid var(--teal);
       flex-wrap: wrap;
     }
     .current-ball-container {
@@ -123,160 +111,164 @@
       gap: 16px;
     }
     .big-ball {
-      min-width: 68px;
-      height: 68px;
+      min-width: 78px;
+      height: 78px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ff5cb1, var(--pink));
       color: #ffffff;
-      font-size: 26px;
+      font-size: 30px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 3px solid #ffffff;
-      box-shadow: 0 0 20px rgba(255, 46, 147, 0.6);
-      letter-spacing: 1px;
+      box-shadow: 0 0 25px rgba(255, 46, 147, 0.7);
     }
     .ball-details h3 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 900;
       color: var(--teal);
     }
     .ball-details p {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
     }
 
-    .called-rack { display: flex; gap: 6px; overflow-x: auto; max-width: 480px; padding: 4px; }
+    .called-rack { display: flex; gap: 8px; overflow-x: auto; max-width: 500px; padding: 4px; }
     .mini-ball {
-      min-width: 34px;
-      height: 34px;
+      min-width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: #060812;
       color: var(--teal);
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--teal);
+      border: 2px solid var(--teal);
+    }
+
+    .status-banner {
+      background: #14172a;
+      text-align: center;
+      padding: 14px;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--muted);
+      border-bottom: 2px solid rgba(255,255,255,0.08);
+      letter-spacing: 0.5px;
+    }
+    .status-banner.need-one { background: rgba(248,192,40,0.2); color: var(--yellow); }
+    .status-banner.bingo-ready { background: rgba(255,46,147,0.25); color: var(--pink); animation: pulseReady 1s infinite alternate; }
+    @keyframes pulseReady {
+      0% { opacity: 0.85; }
+      100% { opacity: 1; }
     }
 
     .accessibility-bar {
       background: #0f1224;
-      padding: 8px 20px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 13px;
+      font-size: 14px;
       flex-wrap: wrap;
       gap: 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .color-picker { display: flex; align-items: center; gap: 8px; }
-    .color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+    .color-picker { display: flex; align-items: center; gap: 10px; }
+    .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
     .color-dot.active { border-color: #fff; transform: scale(1.15); }
-
-    .card-tabs-bar {
-      display: flex;
-      gap: 8px;
-      padding: 8px 20px;
-      background: #080a15;
-      overflow-x: auto;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .tab-btn {
-      padding: 6px 14px;
-      border-radius: 6px;
-      background: #14172a;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .tab-btn.active { background: var(--teal); color: #060812; border-color: var(--teal); }
 
     .cards-container {
       flex: 1;
-      padding: 14px;
-      max-width: 1400px;
+      padding: 16px;
+      max-width: 1200px;
       margin: 0 auto;
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
     }
     .bingo-card {
       background: var(--card-bg);
-      border-radius: 12px;
-      padding: 12px;
-      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 16px;
+      border: 3px solid rgba(255,255,255,0.15);
       display: flex;
       flex-direction: column;
     }
+    .card-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
     .card-title {
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 900;
       color: var(--teal);
       text-transform: uppercase;
-      margin-bottom: 8px;
-      text-align: center;
     }
-    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; flex: 1; }
+    .card-serial {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--yellow);
+    }
+    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
     .col-header {
       background: #060812;
       color: var(--teal);
       font-weight: 900;
-      font-size: 18px;
+      font-size: 20px;
       text-align: center;
-      padding: 6px 0;
-      border-radius: 4px;
+      padding: 8px 0;
+      border-radius: 6px;
     }
     .tile {
       aspect-ratio: 1;
       background: #060812;
-      border-radius: 6px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(14px, 2vw, 20px);
+      font-size: clamp(18px, 3vw, 26px);
       font-weight: 900;
       cursor: pointer;
       user-select: none;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,255,255,0.08);
     }
-    .tile.free { background: rgba(255,46,147,0.15); border-color: var(--pink); color: var(--pink); font-size: 11px; }
+    .tile.free { background: rgba(255,46,147,0.2); border-color: var(--pink); color: var(--pink); font-size: 13px; }
     .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; }
 
     .call-bar {
       position: sticky;
       bottom: 0;
-      background: rgba(9, 12, 25, 0.95);
+      background: rgba(9, 12, 25, 0.96);
       backdrop-filter: blur(10px);
-      padding: 12px 20px;
+      padding: 16px 24px;
       display: flex;
       justify-content: center;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 2px solid rgba(255,255,255,0.15);
       z-index: 100;
     }
     .btn-bingo {
       background: linear-gradient(135deg, #ff2e93, #e01b7c);
       color: #fff;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 900;
       border: none;
-      padding: 14px 60px;
+      padding: 16px 70px;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 6px 25px rgba(255,46,147,0.5);
+      box-shadow: 0 6px 25px rgba(255,46,147,0.6);
     }
 
     #winModal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.88);
       display: none;
       align-items: center;
       justify-content: center;
@@ -285,112 +277,103 @@
     }
     .win-box {
       background: var(--card-bg);
-      border: 3px solid var(--teal);
-      border-radius: 16px;
-      padding: 34px 24px;
+      border: 4px solid var(--teal);
+      border-radius: 20px;
+      padding: 40px 30px;
       text-align: center;
-      max-width: 440px;
+      max-width: 480px;
       width: 100%;
     }
   </style>
+
+  <script>
+    const channel = new BroadcastChannel("livevibesenior_channel");
+
+    channel.onmessage = (e) => {
+      const data = e.data;
+      if (data) {
+        window.latestCachedState = data;
+        if (window.handleBroadcast) window.handleBroadcast(data);
+      }
+    };
+  </script>
 </head>
 <body>
 
+  <!-- Entry / Check-in -->
   <div id="loginScreen">
     <div class="login-box">
-      <img src="logo.png" alt="LiveVibe Bingo" style="max-height: 48px; margin-bottom: 12px;" onerror="this.style.display='none'">
-      <h1>Live Player Arena</h1>
-      <p>Enter your details, $Cashtag & Event PIN</p>
+      <h1>Resident Bingo Arena</h1>
+      <p>Enter your first name and the Activity PIN</p>
       <form onsubmit="joinLobby(event)">
         <div class="input-group">
-          <label>Full Name (Matches Ticket)</label>
-          <input type="text" id="pName" required autofocus placeholder="e.g. Mary Johnson">
+          <label>Your Name / Room</label>
+          <input type="text" id="pName" required autofocus placeholder="e.g. Dorothy R. / Rm 114">
         </div>
         <div class="input-group">
-          <label>Cash App $Cashtag (Mandatory For Prizes)</label>
-          <input 
-            type="text" 
-            id="pCashtag" 
-            required 
-            placeholder="$YourCashAppName" 
-            pattern="^\$[A-Za-z0-9_]{1,19}$" 
-            title="Must begin with a $ followed by your Cash App handle (e.g. $MaryJohnson)"
-            oninput="autoPrependDollar(this)">
-          <span class="input-hint">Must start with $ (e.g. $MaryWins)</span>
+          <label>4-Digit Activity PIN</label>
+          <input type="password" id="pPin" required maxlength="4" placeholder="7722" style="text-align: center; letter-spacing: 6px;">
         </div>
-        <div class="input-group">
-          <label>4-Digit Event PIN</label>
-          <input type="password" id="pPin" required maxlength="4" placeholder="From Confirmation" style="text-align: center; letter-spacing: 4px;">
-        </div>
-        <button type="submit" class="btn-enter">Unlock 4 Cards & Enter</button>
+        <button type="submit" class="btn-enter">🔊 Unlock Audio & Play</button>
       </form>
     </div>
   </div>
 
   <header>
-    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-      <span class="player-pill" id="playerNameDisplay">Player</span>
-      <span class="player-pill" style="border-color: var(--pink); color: var(--pink);" id="playerCashtagDisplay">$Cashtag</span>
-      <span class="game-pattern-badge" id="gamePatternDisplay">Game 1: Regular ($25)</span>
-      <!-- Live Host Display Badge Defaulted to CC -->
-      <span class="caller-badge" id="hostNameBadge">🎙️ Host: CC</span>
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+      <span class="player-pill" id="playerNameDisplay">Resident</span>
+      <span class="game-pattern-badge" id="gamePatternDisplay">Game 1: Regular Bingo</span>
     </div>
-    <div style="font-size: 12px; color: var(--muted);" id="connectionStatus">● Connected</div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button onclick="enableAudioEngine()" style="background: var(--teal); color: #06111a; border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 900; cursor: pointer;">🔊 Test Audio</button>
+      <div style="font-size: 13px; color: var(--muted);" id="connectionStatus">● Waiting for Host</div>
+    </div>
   </header>
 
+  <!-- Jumbo Ball Spotlight -->
   <div class="broadcast-bar">
     <div class="current-ball-container">
       <div class="big-ball" id="activeBall">-</div>
       <div class="ball-details">
         <h3 id="ballAnnounce">Waiting for First Draw</h3>
-        <p id="totalDrawnCount">Host is preparing the tumbler</p>
+        <p id="totalDrawnCount">Host hasn't drawn yet</p>
       </div>
     </div>
     <div style="display: flex; flex-direction: column; align-items: flex-end;">
-      <span style="font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Recent Calls</span>
+      <span style="font-size: 12px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 800;">Recent Calls</span>
       <div class="called-rack" id="calledRack">
-        <span style="color: var(--muted); font-size: 12px;">No calls yet</span>
+        <span style="color: var(--muted); font-size: 13px;">No calls yet</span>
       </div>
     </div>
   </div>
 
+  <div class="status-banner" id="statusBanner">
+    Monitoring your 2 cards...
+  </div>
+
+  <!-- Settings Bar -->
   <div class="accessibility-bar">
     <div style="display: flex; align-items: center; gap: 8px;">
-      <input type="checkbox" id="autoDabToggle" checked style="width: 17px; height: 17px; cursor: pointer;">
-      <label for="autoDabToggle" style="cursor: pointer; font-weight: 700; color: var(--muted);">Auto-Dab (4 Cards)</label>
+      <input type="checkbox" id="autoDabToggle" checked style="width: 18px; height: 18px; cursor: pointer;">
+      <label for="autoDabToggle" style="cursor: pointer; font-weight: 800; color: var(--muted);">Auto-Dab (Both Cards)</label>
     </div>
     <div class="color-picker">
-      <span style="color: var(--muted); font-weight: 700;">Marker:</span>
+      <span style="color: var(--muted); font-weight: 800;">Dabber Color:</span>
       <div class="color-dot active" style="background: #00d2be;" onclick="setDabColor('#00d2be', this)"></div>
       <div class="color-dot" style="background: #ff2e93;" onclick="setDabColor('#ff2e93', this)"></div>
       <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
     </div>
   </div>
 
-  <div class="card-tabs-bar">
-    <button class="tab-btn active" onclick="filterCardView('ALL', this)">View All 4</button>
-    <button class="tab-btn" onclick="filterCardView(1, this)">Card 1</button>
-    <button class="tab-btn" onclick="filterCardView(2, this)">Card 2</button>
-    <button class="tab-btn" onclick="filterCardView(3, this)">Card 3</button>
-    <button class="tab-btn" onclick="filterCardView(4, this)">Card 4</button>
-  </div>
-
+  <!-- 2 Cards for Seniors -->
   <div class="cards-container">
     <div class="bingo-card" id="cardWrap1">
-      <div class="card-title">Card 1</div>
+      <div class="card-header-flex"><span class="card-title">Card 1</span><span class="card-serial" id="serial1">SR-001</span></div>
       <div class="b-grid" id="cardGrid1"></div>
     </div>
     <div class="bingo-card" id="cardWrap2">
-      <div class="card-title">Card 2</div>
+      <div class="card-header-flex"><span class="card-title">Card 2</span><span class="card-serial" id="serial2">SR-002</span></div>
       <div class="b-grid" id="cardGrid2"></div>
-    </div>
-    <div class="bingo-card" id="cardWrap3">
-      <div class="card-title">Card 3</div>
-      <div class="b-grid" id="cardGrid3"></div>
-    </div>
-    <div class="bingo-card" id="cardWrap4">
-      <div class="card-title">Card 4</div>
-      <div class="b-grid" id="cardGrid4"></div>
     </div>
   </div>
 
@@ -400,71 +383,63 @@
 
   <div id="winModal">
     <div class="win-box">
-      <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 10px;">BINGO!</h2>
-      <p id="modalDesc" style="color: var(--muted); margin-bottom: 20px;">Verifying claim with host...</p>
-      <button class="btn-enter" style="margin-top: 0;" onclick="closeModal()">Back to Cards</button>
+      <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 12px; font-size: 26px;">BINGO!</h2>
+      <p id="modalDesc" style="color: var(--muted); margin-bottom: 24px; font-size: 16px;">Verifying claim with host...</p>
+      <button class="btn-enter" style="margin-top: 0; padding: 14px;" onclick="closeModal()">Back to Cards</button>
     </div>
   </div>
 
   <script>
-    const channel = new BroadcastChannel("livevibebingo_online_channel");
+    const channel = new BroadcastChannel("livevibesenior_channel");
     let calledSet = new Set();
     let currentRound = 1;
     let currentRoundName = "Regular Bingo";
-    let currentPrize = "$25";
     let activeSessionPin = "7722";
-    let isLobbyLocked = false;
-    let currentHostName = "CC";
-    let cards = [[], [], [], []];
-    let playerFullName = "";
-    let playerCashtag = "";
+    let cards = [[], []];
+    let cardSerials = [];
+    let residentName = "";
+    window.latestCachedState = null;
+    let lastSpokenBall = "";
 
-    function autoPrependDollar(input) {
-      if (input.value.length > 0 && !input.value.startsWith('$')) {
-        input.value = '$' + input.value.replace(/\$/g, '');
+    function enableAudioEngine() {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance("Audio is enabled. Ready for bingo calls!");
+        utter.rate = 0.9;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+        alert("Audio speaker test active!");
+      } else {
+        alert("Speech synthesis not supported on this device.");
       }
     }
 
     function joinLobby(e) {
       e.preventDefault();
       const enteredPin = document.getElementById("pPin").value.trim();
-      const enteredTag = document.getElementById("pCashtag").value.trim();
-
-      if (!enteredTag.startsWith('$') || enteredTag.length < 2) {
-        alert("Please enter a valid Cash App name starting with $ (e.g. $YourName).");
-        return;
-      }
       
-      const stored = localStorage.getItem("livevibebingo_state");
+      const stored = localStorage.getItem("livevibesenior_state");
       if (stored) {
-        try {
-          const state = JSON.parse(stored);
-          if (state.roomPin) activeSessionPin = state.roomPin;
-          if (state.hostName) currentHostName = state.hostName;
-          isLobbyLocked = state.lobbyLocked === true;
-        } catch(err) {
-          isLobbyLocked = false;
-        }
+        const state = JSON.parse(stored);
+        if (state.roomPin) activeSessionPin = state.roomPin;
       }
 
       if (enteredPin !== activeSessionPin) {
-        alert("Invalid Event PIN. Please check the code provided upon completing ticket checkout.");
+        alert("Invalid PIN. Please check the code shown on the host screen.");
         return;
       }
 
-      if (isLobbyLocked) {
-        alert("Doors Locked: Game is currently in progress. As stated in event rules, no mid-game entry is permitted.");
-        return;
+      if ('speechSynthesis' in window) {
+        const dummy = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(dummy);
       }
 
-      playerFullName = document.getElementById("pName").value.trim();
-      playerCashtag = enteredTag;
-      document.getElementById("playerNameDisplay").innerText = playerFullName;
-      document.getElementById("playerCashtagDisplay").innerText = playerCashtag;
-      document.getElementById("hostNameBadge").innerText = `🎙️ Host: ${currentHostName}`;
+      residentName = document.getElementById("pName").value.trim();
+      document.getElementById("playerNameDisplay").innerText = residentName;
       document.getElementById("loginScreen").style.display = "none";
-      generateAll4Cards();
+      generateCards();
       listenToHost();
+
+      if (window.latestCachedState) handleBroadcast(window.latestCachedState);
     }
 
     function setDabColor(color, el) {
@@ -473,20 +448,16 @@
       el.classList.add('active');
     }
 
-    function filterCardView(view, btn) {
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      for (let i = 1; i <= 4; i++) {
-        const wrap = document.getElementById(`cardWrap${i}`);
-        wrap.style.display = (view === 'ALL' || view === i) ? "flex" : "none";
-      }
-    }
-
-    function generateAll4Cards() {
-      for (let i = 0; i < 4; i++) {
+    function generateCards() {
+      cardSerials = [];
+      for (let i = 0; i < 2; i++) {
         cards[i] = createCardMatrix();
+        const serial = 'SR-' + Math.floor(100 + Math.random() * 900) + '-C' + (i+1);
+        cardSerials.push(serial);
+        document.getElementById(`serial${i+1}`).innerText = serial;
         renderCard(`cardGrid${i+1}`, cards[i], i+1);
       }
+      evaluatePlayerStatus();
     }
 
     function createCardMatrix() {
@@ -542,7 +513,10 @@
           } else {
             tile.innerText = item.val;
             if (item.dabbed) tile.classList.add("dabbed");
-            tile.onclick = () => toggleManualDab(cardNum - 1, r, c, tile);
+            tile.onclick = () => {
+              toggleManualDab(cardNum - 1, r, c, tile);
+              evaluatePlayerStatus();
+            };
           }
           el.appendChild(tile);
         }
@@ -556,34 +530,28 @@
     }
 
     function listenToHost() {
-      channel.onmessage = (e) => handleBroadcast(e.data);
       window.addEventListener("storage", (e) => {
-        if (e.key === "livevibebingo_state" && e.newValue) {
+        if (e.key === "livevibesenior_state" && e.newValue) {
           handleBroadcast(JSON.parse(e.newValue));
         }
       });
-      const initial = localStorage.getItem("livevibebingo_state");
+      const initial = localStorage.getItem("livevibesenior_state");
       if (initial) handleBroadcast(JSON.parse(initial));
     }
 
     function handleBroadcast(data) {
       if (!data) return;
-      document.getElementById("connectionStatus").innerText = "● Host Live";
+      window.latestCachedState = data;
+      document.getElementById("connectionStatus").innerText = "● Host Connected";
       document.getElementById("connectionStatus").style.color = "var(--teal)";
 
-      if (data.hostName) {
-        currentHostName = data.hostName;
-        document.getElementById("hostNameBadge").innerText = `🎙️ Host: ${currentHostName}`;
-      }
-
       if (data.roomPin) activeSessionPin = data.roomPin;
-      if (data.lobbyLocked !== undefined) isLobbyLocked = data.lobbyLocked === true;
 
       if (data.game) {
         currentRound = data.game.round;
         currentRoundName = data.game.name;
-        currentPrize = data.game.prize;
-        document.getElementById("gamePatternDisplay").innerText = `Game ${currentRound}: ${currentRoundName} (${currentPrize})`;
+        document.getElementById("gamePatternDisplay").innerText = `Game ${currentRound}: ${currentRoundName}`;
+        evaluatePlayerStatus();
       }
 
       if (data.latest === "RESET") {
@@ -591,22 +559,32 @@
         document.getElementById("activeBall").innerText = "-";
         document.getElementById("ballAnnounce").innerText = "New Round Started";
         document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 12px;">New round</span>';
-        generateAll4Cards();
+        generateCards();
         return;
       }
 
       if (data.called) {
         calledSet = new Set(data.called);
-        document.getElementById("totalDrawnCount").innerText = `${calledSet.size} balls drawn`;
+        document.getElementById("totalDrawnCount").innerText = `${calledSet.size} / 75 drawn`;
         renderRack(data.called);
         if (document.getElementById("autoDabToggle").checked) {
           applyAutoDab();
         }
       }
 
-      if (data.latest && data.latest !== "RESET") {
+      if (data.latest && data.latest !== "RESET" && data.latest !== lastSpokenBall) {
+        lastSpokenBall = data.latest;
         document.getElementById("activeBall").innerText = data.latest;
         document.getElementById("ballAnnounce").innerText = `CALLED: ${data.latest}`;
+
+        // Speech Synthesis Out Loud
+        if ('speechSynthesis' in window) {
+          const cleanText = data.latest.replace("-", " ");
+          const utter = new SpeechSynthesisUtterance(cleanText);
+          utter.rate = 0.85;
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(utter);
+        }
       }
     }
 
@@ -623,7 +601,7 @@
     }
 
     function applyAutoDab() {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 2; i++) {
         const mat = cards[i];
         for (let r = 0; r < 5; r++) {
           for (let c = 0; c < 5; c++) {
@@ -635,11 +613,72 @@
           }
         }
       }
+      evaluatePlayerStatus();
+    }
+
+    function evaluatePlayerStatus() {
+      const banner = document.getElementById("statusBanner");
+      let readyCards = [];
+      let needOneCards = [];
+      let closestCard = 1;
+      let minNeeded = 99;
+
+      for (let i = 0; i < 2; i++) {
+        const needed = getCardsNeededCount(cards[i], currentRound);
+        if (needed < minNeeded) {
+          minNeeded = needed;
+          closestCard = i + 1;
+        }
+        if (needed === 0) readyCards.push(i + 1);
+        else if (needed === 1) needOneCards.push(i + 1);
+      }
+
+      if (readyCards.length > 0) {
+        banner.className = "status-banner bingo-ready";
+        banner.innerText = `🔥 BINGO READY ON CARD(S) #${readyCards.join(', #')}! HIT CALL BINGO! 🔥`;
+      } else if (needOneCards.length > 0) {
+        banner.className = "status-banner need-one";
+        banner.innerText = `⚠️ NEED 1 NUMBER ON CARD(S) #${needOneCards.join(', #')} (${currentRoundName})!`;
+      } else {
+        banner.className = "status-banner";
+        banner.innerText = `Playing ${currentRoundName} — Closest is Card #${closestCard} (${minNeeded} away)`;
+      }
+    }
+
+    function getCardsNeededCount(matrix, round) {
+      if (round === 1 || round === 2) {
+        let minMissing = 99;
+        for (let r = 0; r < 5; r++) {
+          let missing = matrix[r].filter(cell => !cell.dabbed).length;
+          if (missing < minMissing) minMissing = missing;
+        }
+        for (let c = 0; c < 5; c++) {
+          let missing = 0;
+          for (let r = 0; r < 5; r++) if (!matrix[r][c].dabbed) missing++;
+          if (missing < minMissing) minMissing = missing;
+        }
+        let diag1 = 0; for (let i = 0; i < 5; i++) if (!matrix[i][i].dabbed) diag1++;
+        if (diag1 < minMissing) minMissing = diag1;
+        let diag2 = 0; for (let i = 0; i < 5; i++) if (!matrix[i][4-i].dabbed) diag2++;
+        if (diag2 < minMissing) minMissing = diag2;
+        return minMissing;
+      } else if (round === 3) {
+        let corners = [matrix[0][0], matrix[0][4], matrix[4][0], matrix[4][4]];
+        return corners.filter(c => !c.dabbed).length;
+      } else if (round === 4) {
+        let linesComplete = countLines(matrix);
+        return linesComplete >= 2 ? 0 : (2 - linesComplete);
+      } else if (round === 5) {
+        let totalMissing = 0;
+        matrix.forEach(row => row.forEach(cell => { if (!cell.dabbed) totalMissing++; }));
+        return totalMissing;
+      }
+      return 99;
     }
 
     function claimBingo() {
       let winningCardNum = null;
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 2; i++) {
         if (checkWin(cards[i], currentRound)) {
           winningCardNum = i + 1;
           break;
@@ -653,21 +692,22 @@
       if (winningCardNum) {
         title.innerText = "BINGO CONFIRMED!";
         title.style.color = "var(--teal)";
-        desc.innerText = `Verified ${currentRoundName} on Card #${winningCardNum}! Your win has been sent to the caller console for Cash App verification!`;
+        desc.innerText = `Verified ${currentRoundName} on Card #${winningCardNum} (${cardSerials[winningCardNum-1]}). Host notified!`;
 
         channel.postMessage({
-          type: "BINGO_CLAIM",
-          name: playerFullName,
-          cashtag: playerCashtag,
+          type: "SENIOR_BINGO_CLAIM",
+          name: residentName,
           cardNum: winningCardNum,
+          serialNum: cardSerials[winningCardNum-1],
           roundName: currentRoundName,
-          prize: currentPrize,
+          cardsSnapshot: cards,
+          cardSerials: cardSerials,
           time: Date.now()
         });
       } else {
         title.innerText = "Keep Playing!";
         title.style.color = "var(--pink)";
-        desc.innerText = `You don't have a verified ${currentRoundName} on any card yet. Keep watching the live caller!`;
+        desc.innerText = `You don't have a verified ${currentRoundName} on your cards yet.`;
       }
       modal.style.display = "flex";
     }
