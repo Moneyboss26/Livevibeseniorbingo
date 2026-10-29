@@ -279,7 +279,7 @@
     <div class="login-box">
       <h1>Resident Bingo Arena</h1>
       <p>Enter resident details to start playing</p>
-      <form onsubmit="joinLobby(event)">
+      <form id="loginForm" onsubmit="joinLobby(event)">
         <div class="input-group">
           <label>Resident Name</label>
           <input type="text" id="pName" required autofocus placeholder="e.g. Dorothy Smith">
@@ -402,8 +402,9 @@
         } catch(err) {}
       }
 
+      // Safeguard: If PIN doesn't match, give a clear alert so you know why it stopped
       if (enteredPin !== activeSessionPin && enteredPin !== "7722") {
-        alert("Invalid Activity PIN. Please check the code shown on the host screen.");
+        alert("Invalid Activity PIN. Please check the code shown on the host screen (Default is 7722).");
         document.getElementById("pPin").value = "";
         return;
       }
@@ -418,18 +419,21 @@
       
       document.getElementById("playerNameDisplay").innerText = residentName;
       document.getElementById("tabletDisplay").innerText = tabletNum;
+      
+      // Force hide login screen
       document.getElementById("loginScreen").style.display = "none";
       
       generateUniqueCards();
       listenToHost();
 
-      // Send login ping so host tracks this tablet
-      channel.postMessage({
-        type: "RESIDENT_LOGIN",
-        name: residentName,
-        tablet: tabletNum,
-        time: Date.now()
-      });
+      try {
+        channel.postMessage({
+          type: "RESIDENT_LOGIN",
+          name: residentName,
+          tablet: tabletNum,
+          time: Date.now()
+        });
+      } catch(err) {}
 
       if (window.latestCachedState) handleBroadcast(window.latestCachedState);
     }
@@ -444,7 +448,6 @@
       cardSerials = [];
       cards = [];
       
-      // Generate completely unique random cards per tablet
       for (let i = 0; i < 2; i++) {
         const matrix = createCardMatrix();
         cards.push(matrix);
@@ -702,16 +705,18 @@
         title.style.color = "var(--teal)";
         desc.innerText = `Verified ${currentRoundName} on Card #${winningCardNum} (${cardSerials[winningCardNum-1]}). Host notified!`;
 
-        channel.postMessage({
-          type: "SENIOR_BINGO_CLAIM",
-          name: `${residentName} (${tabletNum})`,
-          cardNum: winningCardNum,
-          serialNum: cardSerials[winningCardNum-1],
-          roundName: currentRoundName,
-          cardsSnapshot: cards,
-          cardSerials: cardSerials,
-          time: Date.now()
-        });
+        try {
+          channel.postMessage({
+            type: "SENIOR_BINGO_CLAIM",
+            name: `${residentName} (${tabletNum})`,
+            cardNum: winningCardNum,
+            serialNum: cardSerials[winningCardNum-1],
+            roundName: currentRoundName,
+            cardsSnapshot: cards,
+            cardSerials: cardSerials,
+            time: Date.now()
+          });
+        } catch(err) {}
       } else {
         title.innerText = "Keep Playing!";
         title.style.color = "var(--pink)";
