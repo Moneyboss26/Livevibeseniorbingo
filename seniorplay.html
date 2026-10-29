@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>LiveVibe Senior Bingo | Resident Arena</title>
+  <style>
+    :root {
+      --bg: #090c19;
+      --card-bg: #13172c;
+      --surface: #1b213e;
+      --teal: #00d2be;
+      --pink: #ff2e93;
+      --yellow: #f8c028;
+      --dab: #00d2be;
+      --text: #ffffff;
+      --muted: #9aa5be;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 500;
+    }
+    .login-box {
+      background: var(--card-bg);
+      border: 3px solid var(--teal);
+      border-radius: 20px;
+      padding: 35px 25px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 210, 190, 0.3);
+    }
+    .login-box h1 { font-size: 26px; color: var(--teal); margin-bottom: 4px; }
+    .login-box p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .input-group { text-align: left; margin-bottom: 14px; }
+    .input-group label { display: block; font-size: 13px; color: var(--muted); font-weight: 800; margin-bottom: 4px; text-transform: uppercase; }
+    .input-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: #060812;
+      color: #fff;
+      font-size: 18px;
+      outline: none;
+    }
+    .btn-enter {
+      width: 100%;
+      padding: 16px;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    header {
+      background: var(--card-bg);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .player-pill {
+      background: rgba(0,210,190,0.15);
+      border: 1px solid var(--teal);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--teal);
+    }
+    .game-pattern-badge {
+      background: rgba(255,46,147,0.15);
+      border: 1px solid var(--pink);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--pink);
+    }
+
+    .broadcast-bar {
+      background: #14182f;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 3px solid var(--teal);
+      flex-wrap: wrap;
+    }
+    .current-ball-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .big-ball {
+      min-width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff5cb1, var(--pink));
+      color: #ffffff;
+      font-size: 30px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 25px rgba(255, 46, 147, 0.7);
+    }
+    .ball-details h3 { font-size: 22px; font-weight: 900; color: var(--teal); }
+    .ball-details p { font-size: 14px; color: var(--muted); }
+
+    .called-rack { display: flex; gap: 8px; overflow-x: auto; max-width: 500px; padding: 4px; }
+    .mini-ball {
+      min-width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #060812;
+      color: var(--teal);
+      font-size: 15px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--teal);
+    }
+
+    .status-banner {
+      background: #14172a;
+      text-align: center;
+      padding: 14px;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--muted);
+      border-bottom: 2px solid rgba(255,255,255,0.08);
+    }
+    .status-banner.need-one { background: rgba(248,192,40,0.2); color: var(--yellow); }
+    .status-banner.bingo-ready { background: rgba(255,46,147,0.25); color: var(--pink); animation: pulseReady 1s infinite alternate; }
+    @keyframes pulseReady { 0% { opacity: 0.85; } 100% { opacity: 1; } }
+
+    .accessibility-bar {
+      background: #0f1224;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .color-picker { display: flex; align-items: center; gap: 10px; }
+    .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+    .color-dot.active { border-color: #fff; transform: scale(1.15); }
+
+    .cards-container {
+      flex: 1;
+      padding: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .bingo-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      border: 3px solid rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .card-title { font-size: 16px; font-weight: 900; color: var(--teal); text-transform: uppercase; }
+    .card-serial { font-size: 13px; font-weight: 800; color: var(--yellow); }
+    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
+    .col-header {
+      background: #060812;
+      color: var(--teal);
+      font-weight: 900;
+      font-size: 20px;
+      text-align: center;
+      padding: 8px 0;
+      border-radius: 6px;
+    }
+    .tile {
+      aspect-ratio: 1;
+      background: #060812;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid rgba(255,255,255,0.08);
+    }
+    .tile.free { background: rgba(255,46,147,0.2); border-color: var(--pink); color: var(--pink); font-size: 13px; }
+    .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; }
+
+    .call-bar {
+      position: sticky;
+      bottom: 0;
+      background: rgba(9, 12, 25, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: center;
+      border-top: 2px solid rgba(255,255,255,0.15);
+      z-index: 100;
+    }
+    .btn-bingo {
+      background: linear-gradient(135deg, #ff2e93, #e01b7c);
+      color: #fff;
+      font-size: 26px;
+      font-weight: 900;
+      border: none;
+      padding: 16px 70px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 25px rgba(255,46,147,0.6);
+    }
+
+    #winModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .win-box {
+      background: var(--card-bg);
+      border: 4px solid var(--teal);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    const channel = new BroadcastChannel("livevibesenior_channel");
+
+    channel.onmessage = (e) => {
+      const data = e.data;
+      if (data) {
+        window.latestCachedState = data;
+        if (window.handleBroadcast) window.handleBroadcast(data);
+      }
+    };
+  </script>
+</head>
+<body>
+
+  <div id="loginScreen">
+    <div class="login-box">
+      <h1>Resident Bingo Arena</h1>
+      <p>Enter resident details to start playing</p>
+      <form onsubmit="joinLobby(event)">
+        <div class="input-group">
+          <label>Resident Name</label>
+          <input type="text" id="pName" required autofocus placeholder="e.g. Dorothy Smith">
+        </div>
+        <div class="input-group">
+          <label>Tablet Number</label>
+          <input type="text" id="pTablet" required placeholder="e.g. Tablet #4">
+        </div>
+        <div class="input-group">
+          <label>4-Digit Activity PIN</label>
+          <input type="password" id="pPin" required maxlength="4" placeholder="••••" style="text-align: center; letter-spacing: 6px;">
+        </div>
+        <button type="submit" class="btn-enter">🔊 Unlock Audio & Play</button>
+      </form>
+    </div>
+  </div>
+
+  <header>
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+      <span class="player-pill" id="playerNameDisplay">Resident</span>
+      <span class="player-pill" id="tabletDisplay" style="background: rgba(248,192,40,0.15); border-color: var(--yellow); color: var(--yellow);">Tablet #1</span>
+      <span class="game-pattern-badge" id="gamePatternDisplay">Game 1: Regular Bingo</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button onclick="enableAudioEngine()" style="background: var(--teal); color: #06111a; border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 900; cursor: pointer;">🔊 Test Audio</button>
+      <div style="font-size: 13px; color: var(--muted);" id="connectionStatus">● Waiting for Host</div>
+    </div>
+  </header>
+
+  <div class="broadcast-bar">
+    <div class="current-ball-container">
+      <div class="big-ball" id="activeBall">-</div>
+      <div class="ball-details">
+        <h3 id="ballAnnounce">Waiting for First Draw</h3>
+        <p id="totalDrawnCount">Host hasn't drawn yet</p>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+      <span style="font-size: 12px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 800;">Recent Calls</span>
+      <div class="called-rack" id="calledRack">
+        <span style="color: var(--muted); font-size: 13px;">No calls yet</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-banner" id="statusBanner">
+    Monitoring your 2 unique cards...
+  </div>
+
+  <div class="accessibility-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <input type="checkbox" id="autoDabToggle" checked style="width: 18px; height: 18px; cursor: pointer;">
+      <label for="autoDabToggle" style="cursor: pointer; font-weight: 800; color: var(--muted);">Auto-Dab (Both Cards)</label>
+    </div>
+    <div class="color-picker">
+      <span style="color: var(--muted); font-weight: 800;">Dabber Color:</span>
+      <div class="color-dot active" style="background: #00d2be;" onclick="setDabColor('#00d2be', this)"></div>
+      <div class="color-dot" style="background: #ff2e93;" onclick="setDabColor('#ff2e93', this)"></div>
+      <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
+    </div>
+  </div>
+
+  <div class="cards-container">
+    <div class="bingo-card" id="cardWrap1">
+      <div class="card-header-flex"><span class="card-title">Card 1</span><span class="card-serial" id="serial1">SR-001</span></div>
+      <div class="b-grid" id="cardGrid1"></div>
+    </div>
+    <div class="bingo-card" id="cardWrap2">
+      <div class="card-header-flex"><span class="card-title">Card 2</span><span class="card-serial" id="serial2">SR-002</span></div>
+      <div class="b-grid" id="cardGrid2"></div>
+    </div>
+  </div>
+
+  <div class="call-bar">
+    <button class="btn-bingo" onclick="claimBingo()">CALL BINGO!</button>
+  </div>
+
+  <div id="winModal">
+    <div class="win-box">
+      <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 12px; font-size: 26px;">BINGO!</h2>
+      <p id="modalDesc" style="color: var(--muted); margin-bottom: 24px; font-size: 16px;">Verifying claim with host...</p>
+      <button class="btn-enter" style="margin-top: 0; padding: 14px;" onclick="closeModal()">Back to Cards</button>
+    </div>
+  </div>
+
+  <script>
+    const channel = new BroadcastChannel("livevibesenior_channel");
+    let calledSet = new Set();
+    let currentRound = 1;
+    let currentRoundName = "Regular Bingo";
+    let activeSessionPin = "7722";
+    let cards = [[], []];
+    let cardSerials = [];
+    let residentName = "";
+    let tabletNum = "";
+    window.latestCachedState = null;
+    let lastSpokenBall = "";
+
+    function enableAudioEngine() {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance("Audio is enabled. Ready for bingo calls!");
+        utter.rate = 0.9;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+        alert("Audio speaker test active!");
+      } else {
+        alert("Speech synthesis not supported on this device.");
+      }
+    }
+
+    function joinLobby(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById("pPin").value.trim();
+      
+      const stored = localStorage.getItem("livevibesenior_state");
+      if (stored) {
+        try {
+          const state = JSON.parse(stored);
+          if (state.roomPin) activeSessionPin = String(state.roomPin).trim();
+        } catch(err) {}
+      }
+
+      if (enteredPin !== activeSessionPin && enteredPin !== "7722") {
+        alert("Invalid Activity PIN. Please check the code shown on the host screen.");
+        document.getElementById("pPin").value = "";
+        return;
+      }
+
+      if ('speechSynthesis' in window) {
+        const dummy = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(dummy);
+      }
+
+      residentName = document.getElementById("pName").value.trim();
+      tabletNum = document.getElementById("pTablet").value.trim();
+      
+      document.getElementById("playerNameDisplay").innerText = residentName;
+      document.getElementById("tabletDisplay").innerText = tabletNum;
+      document.getElementById("loginScreen").style.display = "none";
+      
+      generateUniqueCards();
+      listenToHost();
+
+      // Send login ping so host tracks this tablet
+      channel.postMessage({
+        type: "RESIDENT_LOGIN",
+        name: residentName,
+        tablet: tabletNum,
+        time: Date.now()
+      });
+
+      if (window.latestCachedState) handleBroadcast(window.latestCachedState);
+    }
+
+    function setDabColor(color, el) {
+      document.documentElement.style.setProperty('--dab', color);
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function generateUniqueCards() {
+      cardSerials = [];
+      cards = [];
+      
+      // Generate completely unique random cards per tablet
+      for (let i = 0; i < 2; i++) {
+        const matrix = createCardMatrix();
+        cards.push(matrix);
+        const randomSerialNum = Math.floor(1000 + Math.random() * 9000);
+        const serial = `SR-${randomSerialNum}-C${i+1}`;
+        cardSerials.push(serial);
+        document.getElementById(`serial${i+1}`).innerText = serial;
+        renderCard(`cardGrid${i+1}`, matrix, i+1);
+      }
+      evaluatePlayerStatus();
+    }
+
+    function createCardMatrix() {
+      const cols = {
+        0: getUniqueColNums(1, 15, 5),
+        1: getUniqueColNums(16, 30, 5),
+        2: getUniqueColNums(31, 45, 4),
+        3: getUniqueColNums(46, 60, 5),
+        4: getUniqueColNums(61, 75, 5)
+      };
+      const matrix = [];
+      for (let r = 0; r < 5; r++) {
+        matrix[r] = [];
+        for (let c = 0; c < 5; c++) {
+          if (r === 2 && c === 2) {
+            matrix[r][c] = { val: "FREE", dabbed: true };
+          } else {
+            const colIndex = (c === 2 && r > 2) ? r - 1 : r;
+            matrix[r][c] = { val: cols[c][colIndex], dabbed: false };
+          }
+        }
+      }
+      return matrix;
+    }
+
+    function getUniqueColNums(min, max, count) {
+      const arr = [];
+      while (arr.length < count) {
+        const n = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (!arr.includes(n)) arr.push(n);
+      }
+      return arr;
+    }
+
+    function renderCard(gridId, matrix, cardNum) {
+      const el = document.getElementById(gridId);
+      el.innerHTML = "";
+      ['B','I','N','G','O'].forEach(l => {
+        const h = document.createElement("div");
+        h.className = "col-header";
+        h.innerText = l;
+        el.appendChild(h);
+      });
+
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 5; c++) {
+          const item = matrix[r][c];
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          tile.id = `c${cardNum}_${r}_${c}`;
+          if (item.val === "FREE") {
+            tile.classList.add("free", "dabbed");
+            tile.innerText = "FREE";
+          } else {
+            tile.innerText = item.val;
+            if (item.dabbed) tile.classList.add("dabbed");
+            tile.onclick = () => {
+              toggleManualDab(cardNum - 1, r, c, tile);
+              evaluatePlayerStatus();
+            };
+          }
+          el.appendChild(tile);
+        }
+      }
+    }
+
+    function toggleManualDab(cardIdx, r, c, tile) {
+      const m = cards[cardIdx];
+      m[r][c].dabbed = !m[r][c].dabbed;
+      tile.classList.toggle("dabbed", m[r][c].dabbed);
+    }
+
+    function listenToHost() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === "livevibesenior_state" && e.newValue) {
+          try {
+            handleBroadcast(JSON.parse(e.newValue));
+          } catch(err) {}
+        }
+      });
+      const initial = localStorage.getItem("livevibesenior_state");
+      if (initial) {
+        try {
+          handleBroadcast(JSON.parse(initial));
+        } catch(err) {}
+      }
+    }
+
+    function handleBroadcast(data) {
+      if (!data) return;
+      window.latestCachedState = data;
+      document.getElementById("connectionStatus").innerText = "● Host Connected";
+      document.getElementById("connectionStatus").style.color = "var(--teal)";
+
+      if (data.roomPin) activeSessionPin = String(data.roomPin).trim();
+
+      if (data.game) {
+        currentRound = data.game.round;
+        currentRoundName = data.game.name;
+        document.getElementById("gamePatternDisplay").innerText = `Game ${currentRound}: ${currentRoundName}`;
+        evaluatePlayerStatus();
+      }
+
+      if (data.latest === "RESET") {
+        calledSet.clear();
+        document.getElementById("activeBall").innerText = "-";
+        document.getElementById("ballAnnounce").innerText = "New Round Started";
+        document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 12px;">New round</span>';
+        generateUniqueCards();
+        return;
+      }
+
+      if (data.called) {
+        calledSet = new Set(data.called);
+        document.getElementById("totalDrawnCount").innerText = `${calledSet.size} / 75 drawn`;
+        renderRack(data.called);
+        if (document.getElementById("autoDabToggle").checked) {
+          applyAutoDab();
+        }
+      }
+
+      if (data.latest && data.latest !== "RESET" && data.latest !== lastSpokenBall) {
+        lastSpokenBall = data.latest;
+        document.getElementById("activeBall").innerText = data.latest;
+        document.getElementById("ballAnnounce").innerText = `CALLED: ${data.latest}`;
+
+        if ('speechSynthesis' in window) {
+          const cleanText = data.latest.replace("-", " ");
+          const utter = new SpeechSynthesisUtterance(cleanText);
+          utter.rate = 0.85;
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(utter);
+        }
+      }
+    }
+
+    function renderRack(nums) {
+      const rack = document.getElementById("calledRack");
+      rack.innerHTML = "";
+      const rev = [...nums].reverse().slice(0, 8);
+      rev.forEach(n => {
+        const div = document.createElement("div");
+        div.className = "mini-ball";
+        div.innerText = n;
+        rack.appendChild(div);
+      });
+    }
+
+    function applyAutoDab() {
+      for (let i = 0; i < 2; i++) {
+        const mat = cards[i];
+        for (let r = 0; r < 5; r++) {
+          for (let c = 0; c < 5; c++) {
+            if (mat[r][c].val !== "FREE" && calledSet.has(mat[r][c].val)) {
+              mat[r][c].dabbed = true;
+              const tile = document.getElementById(`c${i+1}_${r}_${c}`);
+              if (tile) tile.classList.add("dabbed");
+            }
+          }
+        }
+      }
+      evaluatePlayerStatus();
+    }
+
+    function evaluatePlayerStatus() {
+      const banner = document.getElementById("statusBanner");
+      let readyCards = [];
+      let needOneCards = [];
+      let closestCard = 1;
+      let minNeeded = 99;
+
+      for (let i = 0; i < 2; i++) {
+        const needed = getCardsNeededCount(cards[i], currentRound);
+        if (needed < minNeeded) {
+          minNeeded = needed;
+          closestCard = i + 1;
+        }
+        if (needed === 0) readyCards.push(i + 1);
+        else if (needed === 1) needOneCards.push(i + 1);
+      }
+
+      if (readyCards.length > 0) {
+        banner.className = "status-banner bingo-ready";
+        banner.innerText = `🔥 BINGO READY ON CARD(S) #${readyCards.join(', #')}! HIT CALL BINGO! 🔥`;
+      } else if (needOneCards.length > 0) {
+        banner.className = "status-banner need-one";
+        banner.innerText = `⚠️ NEED 1 NUMBER ON CARD(S) #${needOneCards.join(', #')} (${currentRoundName})!`;
+      } else {
+        banner.className = "status-banner";
+        banner.innerText = `Playing ${currentRoundName} — Closest is Card #${closestCard} (${minNeeded} away)`;
+      }
+    }
+
+    function getCardsNeededCount(matrix, round) {
+      if (round === 1 || round === 2) {
+        let minMissing = 99;
+        for (let r = 0; r < 5; r++) {
+          let missing = matrix[r].filter(cell => !cell.dabbed).length;
+          if (missing < minMissing) minMissing = missing;
+        }
+        for (let c = 0; c < 5; c++) {
+          let missing = 0;
+          for (let r = 0; r < 5; r++) if (!matrix[r][c].dabbed) missing++;
+          if (missing < minMissing) minMissing = missing;
+        }
+        let diag1 = 0; for (let i = 0; i < 5; i++) if (!matrix[i][i].dabbed) diag1++;
+        if (diag1 < minMissing) minMissing = diag1;
+        let diag2 = 0; for (let i = 0; i < 5; i++) if (!matrix[i][4-i].dabbed) diag2++;
+        if (diag2 < minMissing) minMissing = diag2;
+        return minMissing;
+      } else if (round === 3) {
+        let corners = [matrix[0][0], matrix[0][4], matrix[4][0], matrix[4][4]];
+        return corners.filter(c => !c.dabbed).length;
+      } else if (round === 4) {
+        let linesComplete = countLines(matrix);
+        return linesComplete >= 2 ? 0 : (2 - linesComplete);
+      } else if (round === 5) {
+        let totalMissing = 0;
+        matrix.forEach(row => row.forEach(cell => { if (!cell.dabbed) totalMissing++; }));
+        return totalMissing;
+      }
+      return 99;
+    }
+
+    function claimBingo() {
+      if (calledSet.size === 0) {
+        alert("The game has not started yet! Wait for the host to draw numbers.");
+        return;
+      }
+
+      let winningCardNum = null;
+      for (let i = 0; i < 2; i++) {
+        if (checkWin(cards[i], currentRound)) {
+          winningCardNum = i + 1;
+          break;
+        }
+      }
+
+      const modal = document.getElementById("winModal");
+      const title = document.getElementById("modalTitle");
+      const desc = document.getElementById("modalDesc");
+
+      if (winningCardNum) {
+        title.innerText = "BINGO CONFIRMED!";
+        title.style.color = "var(--teal)";
+        desc.innerText = `Verified ${currentRoundName} on Card #${winningCardNum} (${cardSerials[winningCardNum-1]}). Host notified!`;
+
+        channel.postMessage({
+          type: "SENIOR_BINGO_CLAIM",
+          name: `${residentName} (${tabletNum})`,
+          cardNum: winningCardNum,
+          serialNum: cardSerials[winningCardNum-1],
+          roundName: currentRoundName,
+          cardsSnapshot: cards,
+          cardSerials: cardSerials,
+          time: Date.now()
+        });
+      } else {
+        title.innerText = "Keep Playing!";
+        title.style.color = "var(--pink)";
+        desc.innerText = `You don't have a verified ${currentRoundName} on your cards yet.`;
+      }
+      modal.style.display = "flex";
+    }
+
+    function checkWin(matrix, round) {
+      if (calledSet.size === 0) return false;
+
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 5; c++) {
+          const tile = matrix[r][c];
+          if (tile.dabbed && tile.val !== "FREE" && !calledSet.has(tile.val)) {
+            return false;
+          }
+        }
+      }
+
+      if (round === 1 || round === 2) return countLines(matrix) >= 1;
+      if (round === 3) return matrix[0][0].dabbed && matrix[0][4].dabbed && matrix[4][0].dabbed && matrix[4][4].dabbed;
+      if (round === 4) return countLines(matrix) >= 2;
+      if (round === 5) return matrix.every(row => row.every(cell => cell.dabbed));
+      return false;
+    }
+
+    function countLines(m) {
+      let lines = 0;
+      for (let r = 0; r < 5; r++) if (m[r].every(c => c.dabbed && (c.val === "FREE" || calledSet.has(c.val)))) lines++;
+      for (let c = 0; c < 5; c++) if ([0,1,2,3,4].every(r => m[r][c].dabbed && (m[r][c].val === "FREE" || calledSet.has(m[r][c].val)))) lines++;
+      if ([0,1,2,3,4].every(i => m[i][i].dabbed && (m[i][i].val === "FREE" || calledSet.has(m[i][i].val)))) lines++;
+      if ([0,1,2,3,4].every(i => m[i][4-i].dabbed && (m[i][4-i].val === "FREE" || calledSet.has(m[i][4-i].val)))) lines++;
+      return lines;
+    }
+
+    function closeModal() { document.getElementById("winModal").style.display = "none"; }
+  </script>
+</body>
+</html>
