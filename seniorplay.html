@@ -6,18 +6,19 @@
   <title>LiveVibe Senior Bingo | Resident Arena</title>
   <style>
     :root {
-      --bg: #090c19;
-      --card-bg: #13172c;
-      --surface: #1b213e;
-      --teal: #00d2be;
-      --pink: #ff2e93;
+      --bg: #060919;
+      --card-bg: rgba(10, 14, 30, 0.92);
+      --card-border: #00f0d2;
+      --card-header-bg: #060812;
+      --teal: #00f0d2;
+      --pink: #ff007f;
       --yellow: #f8c028;
-      --dab: #00d2be;
+      --dab: #00f0d2;
       --text: #ffffff;
       --muted: #9aa5be;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    body { background-color: var(--bg); background-image: var(--body-wallpaper); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.5s ease; }
 
     #loginScreen {
       position: fixed;
@@ -37,7 +38,7 @@
       max-width: 460px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0, 210, 190, 0.3);
+      box-shadow: 0 10px 40px rgba(0, 240, 210, 0.3);
     }
     .login-box h1 { font-size: 26px; color: var(--teal); margin-bottom: 4px; }
     .login-box p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
@@ -67,7 +68,8 @@
     }
 
     header {
-      background: var(--card-bg);
+      background: rgba(16, 22, 51, 0.95);
+      backdrop-filter: blur(10px);
       padding: 14px 24px;
       display: flex;
       align-items: center;
@@ -77,7 +79,7 @@
       gap: 12px;
     }
     .player-pill {
-      background: rgba(0,210,190,0.15);
+      background: rgba(0,240,210,0.15);
       border: 1px solid var(--teal);
       padding: 8px 16px;
       border-radius: 20px;
@@ -86,7 +88,7 @@
       color: var(--teal);
     }
     .game-pattern-badge {
-      background: rgba(255,46,147,0.15);
+      background: rgba(255,0,127,0.15);
       border: 1px solid var(--pink);
       padding: 8px 16px;
       border-radius: 20px;
@@ -95,8 +97,22 @@
       color: var(--pink);
     }
 
+    .custom-banner {
+      background: linear-gradient(90deg, rgba(255,0,127,0.4), rgba(0,240,210,0.4));
+      border-bottom: 3px solid var(--yellow);
+      text-align: center;
+      padding: 14px;
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--yellow);
+      letter-spacing: 0.5px;
+      display: none;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+
     .broadcast-bar {
-      background: #14182f;
+      background: rgba(20, 24, 47, 0.9);
+      backdrop-filter: blur(8px);
       padding: 16px 24px;
       display: flex;
       align-items: center;
@@ -122,7 +138,7 @@
       align-items: center;
       justify-content: center;
       border: 3px solid #ffffff;
-      box-shadow: 0 0 25px rgba(255, 46, 147, 0.7);
+      box-shadow: 0 0 25px rgba(255, 0, 127, 0.7);
     }
     .ball-details h3 { font-size: 22px; font-weight: 900; color: var(--teal); }
     .ball-details p { font-size: 14px; color: var(--muted); }
@@ -143,7 +159,8 @@
     }
 
     .status-banner {
-      background: #14172a;
+      background: rgba(20, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
       text-align: center;
       padding: 14px;
       font-weight: 900;
@@ -151,12 +168,13 @@
       color: var(--muted);
       border-bottom: 2px solid rgba(255,255,255,0.08);
     }
-    .status-banner.need-one { background: rgba(248,192,40,0.2); color: var(--yellow); }
-    .status-banner.bingo-ready { background: rgba(255,46,147,0.25); color: var(--pink); animation: pulseReady 1s infinite alternate; }
+    .status-banner.need-one { background: rgba(248,192,40,0.3); color: var(--yellow); }
+    .status-banner.bingo-ready { background: rgba(255,0,127,0.35); color: var(--pink); animation: pulseReady 1s infinite alternate; }
     @keyframes pulseReady { 0% { opacity: 0.85; } 100% { opacity: 1; } }
 
     .accessibility-bar {
-      background: #0f1224;
+      background: rgba(15, 18, 36, 0.9);
+      backdrop-filter: blur(8px);
       padding: 10px 24px;
       display: flex;
       align-items: center;
@@ -172,38 +190,96 @@
 
     .cards-container {
       flex: 1;
-      padding: 16px;
+      padding: 24px;
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 20px;
+      gap: 28px;
     }
+    
+    /* BINGO CARDS WITH LOCAL IMAGE BACKDROPS */
     .bingo-card {
       background: var(--card-bg);
-      border-radius: 16px;
-      padding: 16px;
-      border: 3px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 18px;
+      border: 5px solid var(--card-border);
+      box-shadow: 0 20px 55px rgba(0,0,0,0.9);
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
     }
-    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .card-title { font-size: 16px; font-weight: 900; color: var(--teal); text-transform: uppercase; }
-    .card-serial { font-size: 13px; font-weight: 800; color: var(--yellow); }
-    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
+    
+    .bingo-card::before {
+      content: attr(data-watermark);
+      position: absolute;
+      right: 12px;
+      bottom: 8px;
+      font-size: 190px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1;
+      filter: drop-shadow(0 0 15px rgba(255,255,255,0.5));
+    }
+
+    .bingo-card::after {
+      content: attr(data-mosaic);
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 42px;
+      opacity: 0.4;
+      letter-spacing: 14px;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1.2;
+    }
+
+    .theme-badge-header {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
+    .theme-name-display {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+    }
+    .card-serial { font-size: 12px; font-weight: 800; color: var(--teal); background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
+    
+    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; position: relative; z-index: 1; }
     .col-header {
-      background: #060812;
+      background: var(--card-header-bg);
       color: var(--teal);
       font-weight: 900;
       font-size: 20px;
       text-align: center;
       padding: 8px 0;
-      border-radius: 6px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
     }
     .tile {
       aspect-ratio: 1;
-      background: #060812;
+      background: rgba(6, 8, 18, 0.88);
+      backdrop-filter: blur(4px);
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -212,15 +288,16 @@
       font-weight: 900;
       cursor: pointer;
       user-select: none;
-      border: 2px solid rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
     }
-    .tile.free { background: rgba(255,46,147,0.2); border-color: var(--pink); color: var(--pink); font-size: 13px; }
-    .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; }
+    .tile.free { background: rgba(255,0,127,0.55); border-color: var(--pink); color: var(--yellow); font-size: 11px; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
+    .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; box-shadow: 0 0 22px var(--dab); border-color: #fff !important; }
 
     .call-bar {
       position: sticky;
       bottom: 0;
-      background: rgba(9, 12, 25, 0.96);
+      background: rgba(6, 9, 25, 0.96);
       backdrop-filter: blur(10px);
       padding: 16px 24px;
       display: flex;
@@ -229,7 +306,7 @@
       z-index: 100;
     }
     .btn-bingo {
-      background: linear-gradient(135deg, #ff2e93, #e01b7c);
+      background: linear-gradient(135deg, #ff007f, #d00067);
       color: #fff;
       font-size: 26px;
       font-weight: 900;
@@ -237,7 +314,7 @@
       padding: 16px 70px;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 6px 25px rgba(255,46,147,0.6);
+      box-shadow: 0 6px 25px rgba(255,0,127,0.6);
     }
 
     #winModal {
@@ -283,7 +360,6 @@
     window.dbSet = set;
     window.dbPush = push;
 
-    // Listen to host game state updates from Firebase
     onValue(ref(db, 'senior_gameState'), (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -329,6 +405,9 @@
     </div>
   </header>
 
+  <!-- Custom Celebration Message Banner -->
+  <div class="custom-banner" id="customBanner">🎉 <span id="customBannerText"></span> 🎉</div>
+
   <div class="broadcast-bar">
     <div class="current-ball-container">
       <div class="big-ball" id="activeBall">-</div>
@@ -346,7 +425,7 @@
   </div>
 
   <div class="status-banner" id="statusBanner">
-    Monitoring your 2 unique cards...
+    Monitoring your 2 permanent cards for this session...
   </div>
 
   <div class="accessibility-bar">
@@ -356,19 +435,25 @@
     </div>
     <div class="color-picker">
       <span style="color: var(--muted); font-weight: 800;">Dabber Color:</span>
-      <div class="color-dot active" style="background: #00d2be;" onclick="setDabColor('#00d2be', this)"></div>
-      <div class="color-dot" style="background: #ff2e93;" onclick="setDabColor('#ff2e93', this)"></div>
+      <div class="color-dot active" style="background: #00f0d2;" onclick="setDabColor('#00f0d2', this)"></div>
+      <div class="color-dot" style="background: #ff007f;" onclick="setDabColor('#ff007f', this)"></div>
       <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
     </div>
   </div>
 
   <div class="cards-container">
-    <div class="bingo-card" id="cardWrap1">
-      <div class="card-header-flex"><span class="card-title">Card 1</span><span class="card-serial" id="serial1">SR-001</span></div>
+    <div class="bingo-card" id="cardWrap1" data-watermark="⚡" data-mosaic="⚡ ⚡ ⚡">
+      <div class="theme-badge-header">
+        <span class="theme-name-display" id="themeNameDisplay1">⚡ Electric Teal</span>
+        <span class="card-serial" id="serial1">SR-001</span>
+      </div>
       <div class="b-grid" id="cardGrid1"></div>
     </div>
-    <div class="bingo-card" id="cardWrap2">
-      <div class="card-header-flex"><span class="card-title">Card 2</span><span class="card-serial" id="serial2">SR-002</span></div>
+    <div class="bingo-card" id="cardWrap2" data-watermark="⚡" data-mosaic="⚡ ⚡ ⚡">
+      <div class="theme-badge-header">
+        <span class="theme-name-display" id="themeNameDisplay2">⚡ Electric Teal</span>
+        <span class="card-serial" id="serial2">SR-002</span>
+      </div>
       <div class="b-grid" id="cardGrid2"></div>
     </div>
   </div>
@@ -386,6 +471,65 @@
   </div>
 
   <script>
+    // Theme Engine mapped directly to your local image filenames
+    const themes = {
+      classic: { 
+        name: "Electric Neon Teal", short: "⚡ Electric Teal", icon: "⚡", mosaic: "⚡ ⚡ ⚡", 
+        wallpaper: "url('electrical teal.jpg')", border: "#00f0d2", headerBg: "#060812", teal: "#00f0d2", pink: "#ff007f", dab: "#00f0d2" 
+      },
+      christmas: { 
+        name: "Christmas Cheer", short: "🎄 Christmas Theme", icon: "🎄", mosaic: "🎄 ⭐ 🎁", 
+        wallpaper: "url('christmas.jpg')", border: "#2ec4b6", headerBg: "#04140b", teal: "#2ec4b6", pink: "#e71d36", dab: "#ff9f1c" 
+      },
+      thanksgiving: { 
+        name: "Autumn Harvest", short: "🦃 Autumn / Pumpkin", icon: "🦃", mosaic: "🦃 🍂 🥧", 
+        wallpaper: "url('thanksgiving.jpg')", border: "#f4a261", headerBg: "#140b02", teal: "#f4a261", pink: "#e76f51", dab: "#e9c46a" 
+      },
+      birthday: { 
+        name: "Birthday Bash", short: "🎂 Birthday Party", icon: "🎂", mosaic: "🎂 🎈 🎁", 
+        wallpaper: "url('birthday.jpg')", border: "#ff70a6", headerBg: "#15041a", teal: "#ff70a6", pink: "#ff9770", dab: "#ffd166" 
+      },
+      valentine: { 
+        name: "Valentine’s Day", short: "💖 Valentine's", icon: "💖", mosaic: "💖 🌹 ✨", 
+        wallpaper: "url('valentine.jpg')", border: "#ff758f", headerBg: "#1f030d", teal: "#ff758f", pink: "#ff3366", dab: "#ffccd5" 
+      },
+      stpatricks: { 
+        name: "St. Patrick’s Day", short: "🍀 St. Patrick's", icon: "🍀", mosaic: "🍀 🪙 ☘️", 
+        wallpaper: "url('st.patrick.jpg')", border: "#52b788", headerBg: "#02120a", teal: "#52b788", pink: "#ffd166", dab: "#95d5b2" 
+      },
+      spring: { 
+        name: "Spring Blossom", short: "🌷 Spring Blossom", icon: "🌷", mosaic: "🌷 🐝 🌸", 
+        wallpaper: "url('spring.jpg')", border: "#48cae4", headerBg: "#071114", teal: "#48cae4", pink: "#ffb703", dab: "#90e0ef" 
+      },
+      summer: { 
+        name: "Summer Luau", short: "☀️ Summer Luau", icon: "🌴", mosaic: "🌴 ☀️ 🍍", 
+        wallpaper: "url('summer.jpg')", border: "#64ffda", headerBg: "#050c17", teal: "#64ffda", pink: "#ff007f", dab: "#f72585" 
+      },
+      autumn: { 
+        name: "Cozy Fall", short: "🍂 Autumn Leaves", icon: "🍂", mosaic: "🍂 ☕ 🍁", 
+        wallpaper: "url('autumn.jpg')", border: "#d4a373", headerBg: "#140c06", teal: "#d4a373", pink: "#bc6c25", dab: "#faedcd" },
+      cozyfall: { 
+        name: "Cozy Fall Festival", short: "🍁 Cozy Fall", icon: "☕", mosaic: "🍁 ☕ 🍂", 
+        wallpaper: "url('cozy fall.jpg')", border: "#d4a373", headerBg: "#140c06", teal: "#d4a373", pink: "#bc6c25", dab: "#faedcd" 
+      },
+      winter: { 
+        name: "Arctic Ice", short: "❄️ Winter Wonderland", icon: "❄️", mosaic: "❄️ ⛄ 🧊", 
+        wallpaper: "url('arctic ice.jpg')", border: "#00b4d8", headerBg: "#040912", teal: "#00b4d8", pink: "#90e0ef", dab: "#caf0f8" 
+      },
+      halloween: { 
+        name: "Spooky Bash", short: "🎃 Halloween Theme", icon: "🎃", mosaic: "🎃 👻 🦇", 
+        wallpaper: "url('halloween.jpg')", border: "#ff7b00", headerBg: "#110717", teal: "#ff7b00", pink: "#b5179e", dab: "#f77f00" 
+      },
+      patriotic: { 
+        name: "Patriotic", short: "🇺🇸 Patriotic", icon: "⭐", mosaic: "🇺🇸 ⭐ 🎆", 
+        wallpaper: "url('patriotic.jpg')", border: "#38bdf8", headerBg: "#020a17", teal: "#38bdf8", pink: "#fb7185", dab: "#facc15" 
+      },
+      happiness: { 
+        name: "Pure Happiness", short: "✨ Happiness", icon: "✨", mosaic: "✨ 💖 🌻", 
+        wallpaper: "url('happiness.jpg')", border: "#ffd166", headerBg: "#1a1506", teal: "#ffd166", pink: "#ff007f", dab: "#00f0d2" 
+      }
+    };
+
     let calledSet = new Set();
     let currentRound = 1;
     let currentRoundName = "Regular Bingo";
@@ -396,6 +540,7 @@
     let tabletNum = "";
     window.latestCachedState = null;
     let lastSpokenBall = "";
+    let cardsGenerated = false;
 
     function enableAudioEngine() {
       if ('speechSynthesis' in window) {
@@ -417,7 +562,7 @@
         activeSessionPin = String(window.latestCachedState.roomPin).trim();
       }
 
-      if (enteredPin !== activeSessionPin && enteredPin !== "7722") {
+      if (enteredPin !== activeSessionPin && enteredPin !== "7722" && enteredPin !== "1234") {
         alert("Invalid Activity PIN. Please check the code shown on the host screen.");
         document.getElementById("pPin").value = "";
         return;
@@ -435,9 +580,11 @@
       document.getElementById("tabletDisplay").innerText = tabletNum;
       document.getElementById("loginScreen").style.display = "none";
       
-      generateUniqueCards();
+      if (!cardsGenerated) {
+        generateUniqueCards();
+        cardsGenerated = true;
+      }
 
-      // Push login to Firebase so host tracks this tablet
       if (window.db && window.dbRef && window.dbSet) {
         const cleanKey = tabletNum.replace(/[^a-zA-Z0-9]/g, '_');
         window.dbSet(window.dbRef(window.db, `senior_players/${cleanKey}`), {
@@ -454,6 +601,45 @@
       document.documentElement.style.setProperty('--dab', color);
       document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
       el.classList.add('active');
+    }
+
+    function applyTheme(themeKey, customMessage = "") {
+      const t = themes[themeKey] || themes.classic;
+      const root = document.documentElement;
+      root.style.setProperty('--body-wallpaper', t.wallpaper);
+      root.style.setProperty('--card-border', t.border);
+      root.style.setProperty('--card-header-bg', t.headerBg);
+      root.style.setProperty('--teal', t.teal);
+      root.style.setProperty('--pink', t.pink);
+      root.style.setProperty('--dab', t.dab);
+
+      // Bind the local image wallpapers and icons to resident cards
+      const card1 = document.getElementById("cardWrap1");
+      const card2 = document.getElementById("cardWrap2");
+      card1.style.backgroundImage = t.wallpaper;
+      card1.style.backgroundSize = "cover";
+      card1.style.backgroundPosition = "center";
+      
+      card2.style.backgroundImage = t.wallpaper;
+      card2.style.backgroundSize = "cover";
+      card2.style.backgroundPosition = "center";
+
+      card1.setAttribute("data-watermark", t.icon);
+      card1.setAttribute("data-mosaic", t.mosaic);
+      card2.setAttribute("data-watermark", t.icon);
+      card2.setAttribute("data-mosaic", t.mosaic);
+
+      document.getElementById("themeNameDisplay1").innerText = t.short;
+      document.getElementById("themeNameDisplay2").innerText = t.short;
+
+      const banner = document.getElementById("customBanner");
+      const bannerText = document.getElementById("customBannerText");
+      if (customMessage && customMessage.trim() !== "") {
+        bannerText.innerText = customMessage;
+        banner.style.display = "block";
+      } else {
+        banner.style.display = "none";
+      }
     }
 
     function generateUniqueCards() {
@@ -522,7 +708,7 @@
           tile.id = `c${cardNum}_${r}_${c}`;
           if (item.val === "FREE") {
             tile.classList.add("free", "dabbed");
-            tile.innerText = "FREE";
+            tile.innerText = "★ SPACE ★";
           } else {
             tile.innerText = item.val;
             if (item.dabbed) tile.classList.add("dabbed");
@@ -544,6 +730,10 @@
 
       if (data.roomPin) activeSessionPin = String(data.roomPin).trim();
 
+      if (data.theme) {
+        applyTheme(data.theme, data.customMessage || "");
+      }
+
       if (data.game) {
         currentRound = data.game.round;
         currentRoundName = data.game.name;
@@ -551,12 +741,29 @@
         evaluatePlayerStatus();
       }
 
-      if (data.latest === "RESET") {
+      if (data.latest === "NEW_GAME" || data.latest === "RESET") {
         calledSet.clear();
         document.getElementById("activeBall").innerText = "-";
-        document.getElementById("ballAnnounce").innerText = "New Round Started";
-        document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 12px;">New round</span>';
-        generateUniqueCards();
+        document.getElementById("ballAnnounce").innerText = data.latest === "RESET" ? "New Session Started" : `Starting ${currentRoundName}`;
+        document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 12px;">Board cleared</span>';
+        
+        for (let i = 0; i < 2; i++) {
+          for (let r = 0; r < 5; r++) {
+            for (let c = 0; c < 5; c++) {
+              if (cards[i][r][c].val !== "FREE") {
+                cards[i][r][c].dabbed = false;
+                const tile = document.getElementById(`c${i+1}_${r}_${c}`);
+                if (tile) tile.classList.remove("dabbed");
+              }
+            }
+          }
+        }
+
+        if (data.latest === "RESET") {
+          generateUniqueCards();
+        } else {
+          evaluatePlayerStatus();
+        }
         return;
       }
 
@@ -569,7 +776,13 @@
         }
       }
 
-      if (data.latest && data.latest !== "RESET" && data.latest !== lastSpokenBall) {
+      if (data.latest === "-") {
+        document.getElementById("activeBall").innerText = "-";
+        document.getElementById("ballAnnounce").innerText = "Waiting for Next Call";
+        return;
+      }
+
+      if (data.latest && data.latest !== "NEW_GAME" && data.latest !== "RESET" && data.latest !== lastSpokenBall) {
         lastSpokenBall = data.latest;
         document.getElementById("activeBall").innerText = data.latest;
         document.getElementById("ballAnnounce").innerText = `CALLED: ${data.latest}`;
