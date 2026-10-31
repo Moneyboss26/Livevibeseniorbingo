@@ -199,9 +199,11 @@
       gap: 28px;
     }
     
-    /* BINGO CARDS WITH LOCAL IMAGE BACKDROPS */
     .bingo-card {
       background: var(--card-bg);
+      background-image: var(--card-wallpaper);
+      background-size: cover;
+      background-position: center;
       border-radius: 20px;
       padding: 18px;
       border: 5px solid var(--card-border);
@@ -240,7 +242,7 @@
     }
 
     .theme-badge-header {
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(6px);
       border: 2px solid var(--card-border);
       border-radius: 12px;
@@ -471,7 +473,6 @@
   </div>
 
   <script>
-    // Theme Engine mapped directly to your local image filenames
     const themes = {
       classic: { 
         name: "Electric Neon Teal", short: "⚡ Electric Teal", icon: "⚡", mosaic: "⚡ ⚡ ⚡", 
@@ -482,7 +483,7 @@
         wallpaper: "url('christmas.jpg')", border: "#2ec4b6", headerBg: "#04140b", teal: "#2ec4b6", pink: "#e71d36", dab: "#ff9f1c" 
       },
       thanksgiving: { 
-        name: "Autumn Harvest", short: "🦃 Autumn / Pumpkin", icon: "🦃", mosaic: "🦃 🍂 🥧", 
+        name: "Thanksgiving", short: "🦃 Thanksgiving", icon: "🦃", mosaic: "🦃 🍂 🥧", 
         wallpaper: "url('thanksgiving.jpg')", border: "#f4a261", headerBg: "#140b02", teal: "#f4a261", pink: "#e76f51", dab: "#e9c46a" 
       },
       birthday: { 
@@ -613,7 +614,6 @@
       root.style.setProperty('--pink', t.pink);
       root.style.setProperty('--dab', t.dab);
 
-      // Bind the local image wallpapers and icons to resident cards
       const card1 = document.getElementById("cardWrap1");
       const card2 = document.getElementById("cardWrap2");
       card1.style.backgroundImage = t.wallpaper;
