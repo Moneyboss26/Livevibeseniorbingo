@@ -70,133 +70,333 @@
     header {
       background: rgba(16, 22, 51, 0.95);
       backdrop-filter: blur(10px);
-      padding: 14px 24px;
+      padding: 7px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid rgba(255,255,255,0.08);
+      border-bottom: 1.5px solid rgba(255,255,255,0.08);
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 8px;
     }
     .player-pill {
       background: rgba(0,240,210,0.15);
       border: 1px solid var(--teal);
-      padding: 8px 16px;
+      padding: 4px 11px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 800;
       color: var(--teal);
     }
     .game-pattern-badge {
       background: rgba(255,0,127,0.15);
       border: 1px solid var(--pink);
-      padding: 8px 16px;
+      padding: 4px 11px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 900;
       color: var(--pink);
     }
 
     .custom-banner {
       background: linear-gradient(90deg, rgba(255,0,127,0.4), rgba(0,240,210,0.4));
-      border-bottom: 3px solid var(--yellow);
+      border-bottom: 2px solid var(--yellow);
       text-align: center;
-      padding: 14px;
-      font-size: 21px;
+      padding: 6px;
+      font-size: 15px;
       font-weight: 900;
       color: var(--yellow);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       display: none;
       text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
-    .broadcast-bar {
-      background: rgba(20, 24, 47, 0.9);
+    /* Tablet 8"-10" Zero-Scroll Landscape Grid */
+    .tablet-arena-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 8px 12px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .tablet-arena-grid {
+        grid-template-columns: 310px minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .host-stage-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: sticky;
+      top: 8px;
+    }
+
+    /* Host Camera + 3D Shaker Split Card */
+    .live-stage-card {
+      background: rgba(11, 15, 32, 0.96);
       backdrop-filter: blur(8px);
-      padding: 16px 24px;
+      padding: 7px;
+      border-radius: 12px;
+      border: 2px solid var(--pink);
+    }
+    .stage-split-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      align-items: stretch;
+    }
+    .host-cam-box {
+      aspect-ratio: 4 / 3;
+      background: #060812;
+      border: 2px solid var(--teal);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .host-cam-box iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .player-tumbler-box {
+      aspect-ratio: 4 / 3;
+      background: radial-gradient(circle at 50% 40%, #1a2142 0%, #060812 85%);
+      border: 2px solid var(--pink);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #playerTumblerCanvas {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+    }
+    .cam-label-tag {
+      position: absolute;
+      bottom: 3px;
+      left: 4px;
+      background: rgba(6, 8, 18, 0.88);
+      color: #fff;
+      font-size: 8.5px;
+      font-weight: 800;
+      padding: 1.5px 5px;
+      border-radius: 4px;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .live-dot-badge {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      background: #e53e3e;
+      color: #fff;
+      font-size: 8px;
+      font-weight: 900;
+      padding: 1.5px 5px;
+      border-radius: 4px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* Compact Ball Call Spotlight Bar for 8"-10" Tablets */
+    .broadcast-bar {
+      background: rgba(20, 24, 47, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 8px 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      border-bottom: 3px solid var(--teal);
-      flex-wrap: wrap;
+      gap: 8px;
+      border: 2px solid var(--teal);
     }
     .current-ball-container {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 9px;
+      min-width: 0;
     }
     .big-ball {
-      min-width: 78px;
-      height: 78px;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      flex-shrink: 0;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ff5cb1, var(--pink));
       color: #ffffff;
-      font-size: 30px;
+      font-size: 18px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 3px solid #ffffff;
-      box-shadow: 0 0 25px rgba(255, 0, 127, 0.7);
+      white-space: nowrap;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 0 16px rgba(255, 0, 127, 0.7);
     }
-    .ball-details h3 { font-size: 22px; font-weight: 900; color: var(--teal); }
-    .ball-details p { font-size: 14px; color: var(--muted); }
+    .ball-details h3 { font-size: 14px; font-weight: 900; color: var(--teal); line-height: 1.2; }
+    .ball-details p { font-size: 11px; color: var(--muted); }
 
-    .called-rack { display: flex; gap: 8px; overflow-x: auto; max-width: 500px; padding: 4px; }
+    .called-rack { display: flex; gap: 3px; overflow-x: auto; max-width: 110px; padding: 2px; }
     .mini-ball {
-      min-width: 38px;
-      height: 38px;
+      min-width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: #060812;
       color: var(--teal);
-      font-size: 15px;
+      font-size: 10px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid var(--teal);
+      border: 1px solid var(--teal);
+      flex-shrink: 0;
+    }
+
+    /* Master 75-Ball Board + Verified Card Mirror */
+    .board-and-verify-wrap {
+      display: flex;
+      gap: 6px;
+      align-items: stretch;
+      width: 100%;
+    }
+    .player-master-card {
+      flex: 1;
+      min-width: 0;
+      background: rgba(11, 15, 32, 0.96);
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(0, 240, 210, 0.45);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .player-master-grid {
+      display: grid;
+      grid-template-columns: repeat(15, 1fr);
+      gap: 1.5px;
+      margin-top: 4px;
+    }
+    .p-grid-num {
+      background: #13172c;
+      padding: 2px 0;
+      text-align: center;
+      border-radius: 2px;
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+    .p-grid-num.called {
+      background: var(--teal);
+      color: #06111a;
+      font-weight: 900;
+    }
+
+    .verified-card-mirror {
+      width: 120px;
+      flex-shrink: 0;
+      background: rgba(11, 15, 32, 0.96);
+      border: 2px solid var(--yellow);
+      border-radius: 10px;
+      padding: 5px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mirror-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5px;
+      margin-top: 3px;
+    }
+    .mirror-tile {
+      aspect-ratio: 1;
+      background: #13172c;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7.5px;
+      font-weight: 900;
+    }
+    .mirror-tile.dabbed { background: var(--teal); color: #06111a; }
+    .mirror-tile.free { background: rgba(255,0,127,0.3); color: var(--yellow); font-size: 6.5px; }
+
+    /* Right Column: Side-by-Side Tablet Resident Cards & Controls */
+    .cards-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+      width: 100%;
     }
 
     .status-banner {
-      background: rgba(20, 23, 42, 0.9);
+      background: rgba(20, 23, 42, 0.92);
       backdrop-filter: blur(8px);
       text-align: center;
-      padding: 14px;
+      padding: 7px 10px;
+      border-radius: 10px;
       font-weight: 900;
-      font-size: 16px;
-      color: var(--muted);
-      border-bottom: 2px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+      color: #ffffff;
+      border: 1.5px solid rgba(255,255,255,0.12);
     }
-    .status-banner.need-one { background: rgba(248,192,40,0.3); color: var(--yellow); }
-    .status-banner.bingo-ready { background: rgba(255,0,127,0.35); color: var(--pink); animation: pulseReady 1s infinite alternate; }
+    .status-banner.need-one { background: rgba(248,192,40,0.35); border-color: var(--yellow); color: #fff; }
+    .status-banner.bingo-ready { background: rgba(255,0,127,0.45); border-color: var(--pink); color: #fff; animation: pulseReady 1s infinite alternate; }
     @keyframes pulseReady { 0% { opacity: 0.85; } 100% { opacity: 1; } }
 
     .accessibility-bar {
-      background: rgba(15, 18, 36, 0.9);
+      background: rgba(15, 18, 36, 0.92);
       backdrop-filter: blur(8px);
-      padding: 10px 24px;
+      padding: 6px 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 14px;
+      font-size: 12.5px;
       flex-wrap: wrap;
-      gap: 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .color-picker { display: flex; align-items: center; gap: 10px; }
-    .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+    .color-picker { display: flex; align-items: center; gap: 6px; }
+    .color-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
     .color-dot.active { border-color: #fff; transform: scale(1.15); }
 
+    .btn-bingo-top {
+      background: linear-gradient(135deg, #ff007f, #d00067);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      border: 2px solid rgba(255,255,255,0.35);
+      padding: 7px 22px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255,0,127,0.6);
+    }
+
+    /* Side-by-Side 2 Cards Sized for 8"-10" Tablets */
     .cards-container {
-      flex: 1;
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(2, minmax(215px, 265px));
+      gap: 10px;
+      width: 100%;
+      justify-content: start;
+    }
+    @media (max-width: 500px) {
+      .cards-container {
+        grid-template-columns: 1fr;
+      }
     }
     
     .bingo-card {
@@ -204,120 +404,108 @@
       background-image: var(--card-wallpaper);
       background-size: cover;
       background-position: center;
-      border-radius: 20px;
-      padding: 18px;
-      border: 5px solid var(--card-border);
-      box-shadow: 0 20px 55px rgba(0,0,0,0.9);
+      border-radius: 14px;
+      padding: 8px;
+      border: 3px solid var(--card-border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
       transition: all 0.4s ease;
     }
+
+    .card-alert-strip {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 3px 6px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      letter-spacing: 0.3px;
+      display: none;
+    }
+    .card-alert-strip.one-away {
+      display: block;
+      background: #f8c028;
+      color: #060812;
+      box-shadow: 0 0 12px rgba(248, 192, 40, 0.95);
+      animation: flashOneAway 0.55s infinite alternate;
+    }
+    .card-alert-strip.bingo-hit {
+      display: block;
+      background: #ff007f;
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(255, 0, 127, 0.95);
+      animation: flashOneAway 0.45s infinite alternate;
+    }
+    @keyframes flashOneAway {
+      0% { transform: scale(0.98); opacity: 0.88; }
+      100% { transform: scale(1.01); opacity: 1; }
+    }
     
     .bingo-card::before {
       content: attr(data-watermark);
       position: absolute;
-      right: 12px;
-      bottom: 8px;
-      font-size: 190px;
-      opacity: 0.25;
+      right: 8px;
+      bottom: 4px;
+      font-size: 100px;
+      opacity: 0.16;
       pointer-events: none;
       z-index: 0;
       line-height: 1;
-      filter: drop-shadow(0 0 15px rgba(255,255,255,0.5));
-    }
-
-    .bingo-card::after {
-      content: attr(data-mosaic);
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      font-size: 42px;
-      opacity: 0.4;
-      letter-spacing: 14px;
-      pointer-events: none;
-      z-index: 0;
-      line-height: 1.2;
     }
 
     .theme-badge-header {
       background: rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(6px);
-      border: 2px solid var(--card-border);
-      border-radius: 12px;
-      padding: 10px 14px;
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 5px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 6px;
       position: relative;
       z-index: 1;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
     }
     .theme-name-display {
-      font-size: 16px;
+      font-size: 11.5px;
       font-weight: 900;
       color: var(--yellow);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+      letter-spacing: 0.4px;
     }
-    .card-serial { font-size: 12px; font-weight: 800; color: var(--teal); background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
+    .card-serial { font-size: 9.5px; font-weight: 800; color: var(--teal); background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.2); }
     
-    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; position: relative; z-index: 1; }
+    .b-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3.5px; flex: 1; position: relative; z-index: 1; }
     .col-header {
       background: var(--card-header-bg);
       color: var(--teal);
       font-weight: 900;
-      font-size: 20px;
+      font-size: 14px;
       text-align: center;
-      padding: 8px 0;
-      border-radius: 8px;
-      border: 2px solid rgba(255,255,255,0.2);
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+      padding: 4px 0;
+      border-radius: 5px;
+      border: 1.5px solid rgba(255,255,255,0.2);
     }
     .tile {
       aspect-ratio: 1;
-      background: rgba(6, 8, 18, 0.88);
-      backdrop-filter: blur(4px);
-      border-radius: 8px;
+      background: rgba(6, 8, 18, 0.9);
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(18px, 3vw, 26px);
+      font-size: clamp(15px, 2vw, 20px);
       font-weight: 900;
       cursor: pointer;
       user-select: none;
-      border: 2px solid rgba(255,255,255,0.2);
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
+      border: 1.5px solid rgba(255,255,255,0.2);
     }
-    .tile.free { background: rgba(255,0,127,0.55); border-color: var(--pink); color: var(--yellow); font-size: 11px; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
-    .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; box-shadow: 0 0 22px var(--dab); border-color: #fff !important; }
-
-    .call-bar {
-      position: sticky;
-      bottom: 0;
-      background: rgba(6, 9, 25, 0.96);
-      backdrop-filter: blur(10px);
-      padding: 16px 24px;
-      display: flex;
-      justify-content: center;
-      border-top: 2px solid rgba(255,255,255,0.15);
-      z-index: 100;
-    }
-    .btn-bingo {
-      background: linear-gradient(135deg, #ff007f, #d00067);
-      color: #fff;
-      font-size: 26px;
-      font-weight: 900;
-      border: none;
-      padding: 16px 70px;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 6px 25px rgba(255,0,127,0.6);
-    }
+    .tile.free { background: rgba(255,0,127,0.55); border-color: var(--pink); color: var(--yellow); font-size: 8.5px; }
+    .tile.dabbed { background: var(--dab) !important; color: #06111a !important; font-weight: 900; box-shadow: 0 0 14px var(--dab); border-color: #fff !important; }
 
     #winModal {
       position: fixed;
@@ -333,9 +521,9 @@
       background: var(--card-bg);
       border: 4px solid var(--teal);
       border-radius: 20px;
-      padding: 40px 30px;
+      padding: 36px 26px;
       text-align: center;
-      max-width: 480px;
+      max-width: 460px;
       width: 100%;
     }
   </style>
@@ -390,83 +578,129 @@
           <label>4-Digit Activity PIN</label>
           <input type="password" id="pPin" required maxlength="4" placeholder="••••" style="text-align: center; letter-spacing: 6px;">
         </div>
-        <button type="submit" class="btn-enter">🔊 Unlock Audio & Play</button>
+        <button type="submit" class="btn-enter">🔊 Unlock Audio &amp; Play</button>
       </form>
     </div>
   </div>
 
   <header>
-    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
       <span class="player-pill" id="playerNameDisplay">Resident</span>
       <span class="player-pill" id="tabletDisplay" style="background: rgba(248,192,40,0.15); border-color: var(--yellow); color: var(--yellow);">Tablet #1</span>
       <span class="game-pattern-badge" id="gamePatternDisplay">Game 1: Regular Bingo</span>
     </div>
-    <div style="display: flex; align-items: center; gap: 14px;">
-      <button onclick="enableAudioEngine()" style="background: var(--teal); color: #06111a; border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 900; cursor: pointer;">🔊 Test Audio</button>
-      <div style="font-size: 13px; color: var(--muted);" id="connectionStatus">● Waiting for Host</div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button onclick="enableAudioEngine()" style="background: var(--teal); color: #06111a; border: none; padding: 5px 12px; border-radius: 14px; font-size: 12px; font-weight: 900; cursor: pointer;">🔊 Test Audio</button>
+      <div style="font-size: 12px; color: var(--muted);" id="connectionStatus">● Waiting for Host</div>
     </div>
   </header>
 
-  <!-- Custom Celebration Message Banner -->
   <div class="custom-banner" id="customBanner">🎉 <span id="customBannerText"></span> 🎉</div>
 
-  <div class="broadcast-bar">
-    <div class="current-ball-container">
-      <div class="big-ball" id="activeBall">-</div>
-      <div class="ball-details">
-        <h3 id="ballAnnounce">Waiting for First Draw</h3>
-        <p id="totalDrawnCount">Host hasn't drawn yet</p>
+  <!-- Tablet 8"-10" Zero-Scroll Landscape Dual View Arena -->
+  <div class="tablet-arena-grid">
+    <!-- Left Column: Host Live Camera + 3D Ball Shaker + Ball Call Spotlight + Master Board & Verified Card -->
+    <div class="host-stage-column">
+      <div class="live-stage-card">
+        <div class="stage-split-row">
+          <div class="host-cam-box">
+            <span class="live-dot-badge" id="hostCamStatusBadge" style="background:#4a5568;">● CAM OFF</span>
+            <span id="hostCamOfflineText" style="color: var(--muted); font-size: 10px; text-align: center; padding: 0 6px;">Host cam offline</span>
+            <iframe id="hostCamViewIframe" allow="autoplay;fullscreen" style="display: none;"></iframe>
+            <span class="cam-label-tag">🎙️ Live Host</span>
+          </div>
+
+          <div class="player-tumbler-box">
+            <span class="live-dot-badge" style="background: var(--teal); color: #06111a;">● 3D SHAKER</span>
+            <canvas id="playerTumblerCanvas" width="164" height="164"></canvas>
+            <span class="cam-label-tag" id="shakerStatusTag">Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compact Ball Call Spotlight Bar -->
+      <div class="broadcast-bar">
+        <div class="current-ball-container">
+          <div class="big-ball" id="activeBall">-</div>
+          <div class="ball-details">
+            <h3 id="ballAnnounce">Waiting...</h3>
+            <p id="totalDrawnCount">0 / 75 drawn</p>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end;">
+          <span style="font-size: 9px; color: var(--muted); margin-bottom: 2px; text-transform: uppercase; font-weight: 800;">Recent</span>
+          <div class="called-rack" id="calledRack">
+            <span style="color: var(--muted); font-size: 10px;">None</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master 75-Ball Board + Live Verified Card Mirror -->
+      <div class="board-and-verify-wrap">
+        <div class="player-master-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 9.5px; color: var(--teal); font-weight: 900; text-transform: uppercase;">Master Board</span>
+            <span id="playerMasterCounter" style="font-size: 9.5px; color: var(--muted); font-weight: 700;">0 / 75</span>
+          </div>
+          <div class="player-master-grid" id="playerMasterGrid"></div>
+        </div>
+
+        <div class="verified-card-mirror" id="verifiedCardMirror">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 3px;">
+            <span id="verifiedWinnerHeader" style="color: var(--yellow); font-size: 8px; font-weight: 900; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">🏆 VERIFIED</span>
+            <span id="verifiedCardSerial" style="color: var(--teal); font-size: 8px; font-weight: 800; flex-shrink: 0;"></span>
+          </div>
+          <div class="mirror-grid" id="verifiedMirrorGrid"></div>
+        </div>
       </div>
     </div>
-    <div style="display: flex; flex-direction: column; align-items: flex-end;">
-      <span style="font-size: 12px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 800;">Recent Calls</span>
-      <div class="called-rack" id="calledRack">
-        <span style="color: var(--muted); font-size: 13px;">No calls yet</span>
+
+    <!-- Right Column: Status Banner, Auto-Dab & Auto-Call Controls, Side-by-Side Resident Cards -->
+    <div class="cards-column">
+      <div class="status-banner" id="statusBanner">
+        Monitoring your 2 permanent cards for this session...
+      </div>
+
+      <div class="accessibility-bar">
+        <div style="display: flex; align-items: center; gap: 7px;">
+          <input type="checkbox" id="autoDabToggle" checked style="width: 17px; height: 17px; cursor: pointer;">
+          <label for="autoDabToggle" style="cursor: pointer; font-weight: 800; color: var(--muted);">Auto-Dab &amp; Auto-Call Bingo</label>
+        </div>
+
+        <button class="btn-bingo-top" onclick="claimBingo()">🎉 CALL BINGO!</button>
+
+        <div class="color-picker">
+          <span style="color: var(--muted); font-weight: 800;">Dabber:</span>
+          <div class="color-dot active" style="background: #00f0d2;" onclick="setDabColor('#00f0d2', this)"></div>
+          <div class="color-dot" style="background: #ff007f;" onclick="setDabColor('#ff007f', this)"></div>
+          <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
+        </div>
+      </div>
+
+      <div class="cards-container">
+        <div class="bingo-card" id="cardWrap1" data-watermark="⚡">
+          <div class="card-alert-strip" id="cardAlert1"></div>
+          <div class="theme-badge-header">
+            <span class="theme-name-display" id="themeNameDisplay1">⚡ Card #1</span>
+            <span class="card-serial" id="serial1">SR-001</span>
+          </div>
+          <div class="b-grid" id="cardGrid1"></div>
+        </div>
+        <div class="bingo-card" id="cardWrap2" data-watermark="⚡">
+          <div class="card-alert-strip" id="cardAlert2"></div>
+          <div class="theme-badge-header">
+            <span class="theme-name-display" id="themeNameDisplay2">⚡ Card #2</span>
+            <span class="card-serial" id="serial2">SR-002</span>
+          </div>
+          <div class="b-grid" id="cardGrid2"></div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="status-banner" id="statusBanner">
-    Monitoring your 2 permanent cards for this session...
-  </div>
-
-  <div class="accessibility-bar">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <input type="checkbox" id="autoDabToggle" checked style="width: 18px; height: 18px; cursor: pointer;">
-      <label for="autoDabToggle" style="cursor: pointer; font-weight: 800; color: var(--muted);">Auto-Dab (Both Cards)</label>
-    </div>
-    <div class="color-picker">
-      <span style="color: var(--muted); font-weight: 800;">Dabber Color:</span>
-      <div class="color-dot active" style="background: #00f0d2;" onclick="setDabColor('#00f0d2', this)"></div>
-      <div class="color-dot" style="background: #ff007f;" onclick="setDabColor('#ff007f', this)"></div>
-      <div class="color-dot" style="background: #f8c028;" onclick="setDabColor('#f8c028', this)"></div>
-    </div>
-  </div>
-
-  <div class="cards-container">
-    <div class="bingo-card" id="cardWrap1" data-watermark="⚡" data-mosaic="⚡ ⚡ ⚡">
-      <div class="theme-badge-header">
-        <span class="theme-name-display" id="themeNameDisplay1">⚡ Electric Teal</span>
-        <span class="card-serial" id="serial1">SR-001</span>
-      </div>
-      <div class="b-grid" id="cardGrid1"></div>
-    </div>
-    <div class="bingo-card" id="cardWrap2" data-watermark="⚡" data-mosaic="⚡ ⚡ ⚡">
-      <div class="theme-badge-header">
-        <span class="theme-name-display" id="themeNameDisplay2">⚡ Electric Teal</span>
-        <span class="card-serial" id="serial2">SR-002</span>
-      </div>
-      <div class="b-grid" id="cardGrid2"></div>
-    </div>
-  </div>
-
-  <div class="call-bar">
-    <button class="btn-bingo" onclick="claimBingo()">CALL BINGO!</button>
   </div>
 
   <div id="winModal">
     <div class="win-box">
-      <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 12px; font-size: 26px;">BINGO!</h2>
+      <h2 id="modalTitle" style="color: var(--teal); margin-bottom: 12px; font-size: 28px;">BINGO!</h2>
       <p id="modalDesc" style="color: var(--muted); margin-bottom: 24px; font-size: 16px;">Verifying claim with host...</p>
       <button class="btn-enter" style="margin-top: 0; padding: 14px;" onclick="closeModal()">Back to Cards</button>
     </div>
@@ -474,62 +708,16 @@
 
   <script>
     const themes = {
-      classic: { 
-        name: "Electric Neon Teal", short: "⚡ Electric Teal", icon: "⚡", mosaic: "⚡ ⚡ ⚡", 
-        wallpaper: "url('electrical teal.jpg')", border: "#00f0d2", headerBg: "#060812", teal: "#00f0d2", pink: "#ff007f", dab: "#00f0d2" 
-      },
-      christmas: { 
-        name: "Christmas Cheer", short: "🎄 Christmas Theme", icon: "🎄", mosaic: "🎄 ⭐ 🎁", 
-        wallpaper: "url('christmas.jpg')", border: "#2ec4b6", headerBg: "#04140b", teal: "#2ec4b6", pink: "#e71d36", dab: "#ff9f1c" 
-      },
-      thanksgiving: { 
-        name: "Thanksgiving", short: "🦃 Thanksgiving", icon: "🦃", mosaic: "🦃 🍂 🥧", 
-        wallpaper: "url('thanksgiving.jpg')", border: "#f4a261", headerBg: "#140b02", teal: "#f4a261", pink: "#e76f51", dab: "#e9c46a" 
-      },
-      birthday: { 
-        name: "Birthday Bash", short: "🎂 Birthday Party", icon: "🎂", mosaic: "🎂 🎈 🎁", 
-        wallpaper: "url('birthday.jpg')", border: "#ff70a6", headerBg: "#15041a", teal: "#ff70a6", pink: "#ff9770", dab: "#ffd166" 
-      },
-      valentine: { 
-        name: "Valentine’s Day", short: "💖 Valentine's", icon: "💖", mosaic: "💖 🌹 ✨", 
-        wallpaper: "url('valentine.jpg')", border: "#ff758f", headerBg: "#1f030d", teal: "#ff758f", pink: "#ff3366", dab: "#ffccd5" 
-      },
-      stpatricks: { 
-        name: "St. Patrick’s Day", short: "🍀 St. Patrick's", icon: "🍀", mosaic: "🍀 🪙 ☘️", 
-        wallpaper: "url('st.patrick.jpg')", border: "#52b788", headerBg: "#02120a", teal: "#52b788", pink: "#ffd166", dab: "#95d5b2" 
-      },
-      spring: { 
-        name: "Spring Blossom", short: "🌷 Spring Blossom", icon: "🌷", mosaic: "🌷 🐝 🌸", 
-        wallpaper: "url('spring.jpg')", border: "#48cae4", headerBg: "#071114", teal: "#48cae4", pink: "#ffb703", dab: "#90e0ef" 
-      },
-      summer: { 
-        name: "Summer Luau", short: "☀️ Summer Luau", icon: "🌴", mosaic: "🌴 ☀️ 🍍", 
-        wallpaper: "url('summer.jpg')", border: "#64ffda", headerBg: "#050c17", teal: "#64ffda", pink: "#ff007f", dab: "#f72585" 
-      },
-      autumn: { 
-        name: "Cozy Fall", short: "🍂 Autumn Leaves", icon: "🍂", mosaic: "🍂 ☕ 🍁", 
-        wallpaper: "url('autumn.jpg')", border: "#d4a373", headerBg: "#140c06", teal: "#d4a373", pink: "#bc6c25", dab: "#faedcd" },
-      cozyfall: { 
-        name: "Cozy Fall Festival", short: "🍁 Cozy Fall", icon: "☕", mosaic: "🍁 ☕ 🍂", 
-        wallpaper: "url('cozy fall.jpg')", border: "#d4a373", headerBg: "#140c06", teal: "#d4a373", pink: "#bc6c25", dab: "#faedcd" 
-      },
-      winter: { 
-        name: "Arctic Ice", short: "❄️ Winter Wonderland", icon: "❄️", mosaic: "❄️ ⛄ 🧊", 
-        wallpaper: "url('arctic ice.jpg')", border: "#00b4d8", headerBg: "#040912", teal: "#00b4d8", pink: "#90e0ef", dab: "#caf0f8" 
-      },
-      halloween: { 
-        name: "Spooky Bash", short: "🎃 Halloween Theme", icon: "🎃", mosaic: "🎃 👻 🦇", 
-        wallpaper: "url('halloween.jpg')", border: "#ff7b00", headerBg: "#110717", teal: "#ff7b00", pink: "#b5179e", dab: "#f77f00" 
-      },
-      patriotic: { 
-        name: "Patriotic", short: "🇺🇸 Patriotic", icon: "⭐", mosaic: "🇺🇸 ⭐ 🎆", 
-        wallpaper: "url('patriotic.jpg')", border: "#38bdf8", headerBg: "#020a17", teal: "#38bdf8", pink: "#fb7185", dab: "#facc15" 
-      },
-      happiness: { 
-        name: "Pure Happiness", short: "✨ Happiness", icon: "✨", mosaic: "✨ 💖 🌻", 
-        wallpaper: "url('happiness.jpg')", border: "#ffd166", headerBg: "#1a1506", teal: "#ffd166", pink: "#ff007f", dab: "#00f0d2" 
-      }
+      none: { short: "No Theme", icon: "", wallpaper: "none", border: "#2d3748", headerBg: "#060812", teal: "#00f0d2", pink: "#ff007f", dab: "#00f0d2" },
+      classic: { short: "⚡ Electric Teal", icon: "⚡", wallpaper: "url('electrical teal.jpg')", border: "#00f0d2", headerBg: "#060812", teal: "#00f0d2", pink: "#ff007f", dab: "#00f0d2" },
+      birthday: { short: "🎂 Birthday Party", icon: "🎂", wallpaper: "url('birthday.jpg')", border: "#ff70a6", headerBg: "#15041a", teal: "#ff70a6", pink: "#ff9770", dab: "#ffd166" },
+      happiness: { short: "✨ Happiness", icon: "✨", wallpaper: "url('happiness.jpg')", border: "#ffd166", headerBg: "#1a1506", teal: "#ffd166", pink: "#ff007f", dab: "#00f0d2" },
+      christmas: { short: "🎄 Holiday Cheer", icon: "🎄", wallpaper: "url('christmas.jpg')", border: "#2ec4b6", headerBg: "#04140b", teal: "#2ec4b6", pink: "#e71d36", dab: "#ff9f1c" },
+      patriotic: { short: "🇺🇸 Patriotic", icon: "⭐", wallpaper: "url('patriotic.jpg')", border: "#38bdf8", headerBg: "#020a17", teal: "#38bdf8", pink: "#fb7185", dab: "#facc15" },
+      summer: { short: "☀️ Summer Party", icon: "🌴", wallpaper: "url('summer.jpg')", border: "#64ffda", headerBg: "#050c17", teal: "#64ffda", pink: "#ff007f", dab: "#f72585" }
     };
+
+    const VDO_SENIOR_HOST_CAM_ID = "LiveVibeSeniorHostCam";
 
     let calledSet = new Set();
     let currentRound = 1;
@@ -537,11 +725,246 @@
     let activeSessionPin = "7722";
     let cards = [[], []];
     let cardSerials = [];
+    let autoClaimedRounds = new Set();
     let residentName = "";
     let tabletNum = "";
     window.latestCachedState = null;
     let lastSpokenBall = "";
     let cardsGenerated = false;
+    let hasJoinedArena = false;
+    let hostCamConnected = false;
+    let isShakingSync = false;
+
+    // ==========================================
+    // SYNCHRONIZED 3D SHAKER ON RESIDENT TABLET
+    // ==========================================
+    let pBalls = [];
+    let pAngle = 0;
+    let pAnimStarted = false;
+
+    function initPlayerMasterGrid() {
+      const g = document.getElementById("playerMasterGrid");
+      if (!g) return;
+      g.innerHTML = "";
+      for (let i = 1; i <= 75; i++) {
+        const d = document.createElement("div");
+        d.className = "p-grid-num";
+        d.id = `pball_${i}`;
+        d.innerText = i;
+        g.appendChild(d);
+      }
+    }
+
+    function updatePlayerMasterGrid() {
+      for (let i = 1; i <= 75; i++) {
+        const el = document.getElementById(`pball_${i}`);
+        if (el) {
+          el.classList.toggle("called", calledSet.has(i));
+        }
+      }
+      const counter = document.getElementById("playerMasterCounter");
+      if (counter) counter.innerText = `${calledSet.size} / 75`;
+    }
+
+    function initPlayer3DShaker() {
+      const canvas = document.getElementById("playerTumblerCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+
+      const palette = [
+        { letter: "B", main: "#00f0d2", dark: "#00695f", light: "#a8fff6" },
+        { letter: "I", main: "#ff007f", dark: "#8c0b49", light: "#ffb8da" },
+        { letter: "N", main: "#f8c028", dark: "#8f6900", light: "#ffeaad" },
+        { letter: "G", main: "#9d4edd", dark: "#4b1775", light: "#e5c2ff" },
+        { letter: "O", main: "#ff7a00", dark: "#8a4200", light: "#ffd2a8" }
+      ];
+
+      pBalls = [];
+      for (let i = 0; i < 18; i++) {
+        const p = palette[i % palette.length];
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        const r = Math.random() * 38;
+        pBalls.push({
+          x: r * Math.sin(phi) * Math.cos(theta),
+          y: r * Math.sin(phi) * Math.sin(theta),
+          z: r * Math.cos(phi),
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          vz: (Math.random() - 0.5) * 1.5,
+          radius: 9.5,
+          letter: p.letter,
+          colorMain: p.main,
+          colorDark: p.dark,
+          colorLight: p.light
+        });
+      }
+
+      if (!pAnimStarted) {
+        pAnimStarted = true;
+        renderPlayer3DLoop(canvas, ctx);
+      }
+    }
+
+    function renderPlayer3DLoop(canvas, ctx) {
+      const W = canvas.width;
+      const H = canvas.height;
+      const cx = W / 2;
+      const cy = H / 2;
+      const sphereR = 72;
+      const focal = 190;
+
+      ctx.clearRect(0, 0, W, H);
+
+      const bgGrad = ctx.createRadialGradient(cx - 18, cy - 18, 8, cx, cy, sphereR);
+      bgGrad.addColorStop(0, "rgba(32, 44, 88, 0.95)");
+      bgGrad.addColorStop(1, "rgba(4, 6, 16, 1)");
+      ctx.beginPath();
+      ctx.arc(cx, cy, sphereR, 0, Math.PI * 2);
+      ctx.fillStyle = bgGrad;
+      ctx.fill();
+
+      pAngle += isShakingSync ? 0.1 : 0.004;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, sphereR, 0, Math.PI * 2);
+      ctx.clip();
+
+      const gravity = isShakingSync ? 0.18 : 0.35;
+      const bounce = isShakingSync ? 0.94 : 0.45;
+      const maxR = sphereR - 11;
+
+      pBalls.forEach(b => {
+        if (isShakingSync) {
+          if (b.y > 30) {
+            b.vy -= (1.5 + Math.random() * 1.4);
+            b.vx += (Math.random() - 0.5) * 3.5;
+            b.vz += (Math.random() - 0.5) * 3.5;
+          }
+          b.vx += -b.z * 0.01;
+          b.vz += b.x * 0.01;
+        }
+        b.vy += gravity;
+        b.x += b.vx;
+        b.y += b.vy;
+        b.z += b.vz;
+        b.vx *= isShakingSync ? 0.98 : 0.9;
+        b.vy *= isShakingSync ? 0.98 : 0.9;
+        b.vz *= isShakingSync ? 0.98 : 0.9;
+
+        const dist = Math.hypot(b.x, b.y, b.z);
+        if (dist > maxR) {
+          const nx = b.x / dist, ny = b.y / dist, nz = b.z / dist;
+          b.x = nx * maxR; b.y = ny * maxR; b.z = nz * maxR;
+          const dot = b.vx * nx + b.vy * ny + b.vz * nz;
+          if (dot > 0) {
+            b.vx = (b.vx - 2 * dot * nx) * bounce;
+            b.vy = (b.vy - 2 * dot * ny) * bounce;
+            b.vz = (b.vz - 2 * dot * nz) * bounce;
+          }
+        }
+      });
+
+      const sorted = [...pBalls].sort((a, b) => b.z - a.z);
+      sorted.forEach(b => {
+        const scale = focal / (focal + b.z);
+        const sx = cx + b.x * scale;
+        const sy = cy + b.y * scale;
+        const sr = b.radius * scale;
+
+        const grad = ctx.createRadialGradient(sx - sr * 0.35, sy - sr * 0.35, sr * 0.1, sx, sy, sr);
+        grad.addColorStop(0, b.colorLight);
+        grad.addColorStop(0.4, b.colorMain);
+        grad.addColorStop(1, b.colorDark);
+
+        ctx.beginPath();
+        ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.fillStyle = "#fff";
+        ctx.font = `900 ${Math.max(8, Math.round(sr * 0.75))}px system-ui, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(b.letter, sx, sy);
+      });
+
+      ctx.restore();
+      ctx.beginPath();
+      ctx.arc(cx, cy, sphereR - 2, 0, Math.PI * 2);
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = isShakingSync ? "#ff007f" : "#00f0d2";
+      ctx.stroke();
+
+      requestAnimationFrame(() => renderPlayer3DLoop(canvas, ctx));
+    }
+
+    function syncHostCamera(hostIsLive, hostCamId) {
+      const camFrame = document.getElementById("hostCamViewIframe");
+      const offlineText = document.getElementById("hostCamOfflineText");
+      const badge = document.getElementById("hostCamStatusBadge");
+
+      if (!hostIsLive) {
+        if (hostCamConnected) {
+          camFrame.src = "about:blank";
+          camFrame.style.display = "none";
+          offlineText.style.display = "block";
+          badge.innerText = "● CAM OFF";
+          badge.style.background = "#4a5568";
+          hostCamConnected = false;
+        }
+        return;
+      }
+
+      if (!hostCamConnected) {
+        const camStream = hostCamId || VDO_SENIOR_HOST_CAM_ID;
+        camFrame.src = `https://vdo.ninja/?view=${encodeURIComponent(camStream)}&solo&cleanoutput&autoplay`;
+        camFrame.style.display = "block";
+        offlineText.style.display = "none";
+        badge.innerText = "● HOST LIVE";
+        badge.style.background = "#e53e3e";
+        hostCamConnected = true;
+      }
+    }
+
+    function renderVerifiedCardMirror(inspectedData) {
+      const box = document.getElementById("verifiedCardMirror");
+      const grid = document.getElementById("verifiedMirrorGrid");
+      const serialEl = document.getElementById("verifiedCardSerial");
+      const headerEl = document.getElementById("verifiedWinnerHeader");
+
+      if (!inspectedData || !inspectedData.matrix) {
+        box.style.display = "none";
+        return;
+      }
+
+      box.style.display = "flex";
+      const wName = inspectedData.playerName ? `${inspectedData.playerName}` : "VERIFIED";
+      if (headerEl) headerEl.innerText = `🏆 ${wName}`;
+      serialEl.innerText = `#${inspectedData.cardNum}`;
+      grid.innerHTML = "";
+
+      ['B','I','N','G','O'].forEach(l => {
+        const h = document.createElement("div");
+        h.style.cssText = "background:#090c19; color:var(--teal); font-weight:900; font-size:7.5px; text-align:center; padding:1px 0; border-radius:2px;";
+        h.innerText = l;
+        grid.appendChild(h);
+      });
+
+      inspectedData.matrix.forEach(row => {
+        row.forEach(cell => {
+          const d = document.createElement("div");
+          if (cell.val === "FREE") {
+            d.className = "mirror-tile free";
+            d.innerText = "★";
+          } else {
+            d.className = cell.dabbed ? "mirror-tile dabbed" : "mirror-tile";
+            d.innerText = cell.val;
+          }
+          grid.appendChild(d);
+        });
+      });
+    }
 
     function enableAudioEngine() {
       if ('speechSynthesis' in window) {
@@ -574,12 +997,16 @@
         window.speechSynthesis.speak(dummy);
       }
 
+      hasJoinedArena = true;
       residentName = document.getElementById("pName").value.trim();
       tabletNum = document.getElementById("pTablet").value.trim();
       
       document.getElementById("playerNameDisplay").innerText = residentName;
       document.getElementById("tabletDisplay").innerText = tabletNum;
       document.getElementById("loginScreen").style.display = "none";
+
+      initPlayerMasterGrid();
+      initPlayer3DShaker();
       
       if (!cardsGenerated) {
         generateUniqueCards();
@@ -625,12 +1052,10 @@
       card2.style.backgroundPosition = "center";
 
       card1.setAttribute("data-watermark", t.icon);
-      card1.setAttribute("data-mosaic", t.mosaic);
       card2.setAttribute("data-watermark", t.icon);
-      card2.setAttribute("data-mosaic", t.mosaic);
 
-      document.getElementById("themeNameDisplay1").innerText = t.short;
-      document.getElementById("themeNameDisplay2").innerText = t.short;
+      document.getElementById("themeNameDisplay1").innerText = `${t.short} • Card 1`;
+      document.getElementById("themeNameDisplay2").innerText = `${t.short} • Card 2`;
 
       const banner = document.getElementById("customBanner");
       const bannerText = document.getElementById("customBannerText");
@@ -722,6 +1147,12 @@
       }
     }
 
+    function toggleManualDab(cardIdx, r, c, tile) {
+      const m = cards[cardIdx];
+      m[r][c].dabbed = !m[r][c].dabbed;
+      tile.classList.toggle("dabbed", m[r][c].dabbed);
+    }
+
     window.handleBroadcast = function(data) {
       if (!data) return;
       window.latestCachedState = data;
@@ -729,6 +1160,18 @@
       document.getElementById("connectionStatus").style.color = "var(--teal)";
 
       if (data.roomPin) activeSessionPin = String(data.roomPin).trim();
+
+      isShakingSync = (data.latest === "SHAKING");
+      const shakerTag = document.getElementById("shakerStatusTag");
+      if (shakerTag) shakerTag.innerText = isShakingSync ? "Shaking..." : "Ready";
+
+      if (hasJoinedArena) {
+        syncHostCamera(
+          data.hostVideoLive === true,
+          data.vdoHostCamStream || VDO_SENIOR_HOST_CAM_ID
+        );
+        renderVerifiedCardMirror(data.inspectedCard || null);
+      }
 
       if (data.theme) {
         applyTheme(data.theme, data.customMessage || "");
@@ -741,11 +1184,18 @@
         evaluatePlayerStatus();
       }
 
+      if (data.latest === "SHAKING") {
+        document.getElementById("ballAnnounce").innerText = "Shaking...";
+        return;
+      }
+
       if (data.latest === "NEW_GAME" || data.latest === "RESET") {
         calledSet.clear();
+        autoClaimedRounds.clear();
+        updatePlayerMasterGrid();
         document.getElementById("activeBall").innerText = "-";
         document.getElementById("ballAnnounce").innerText = data.latest === "RESET" ? "New Session Started" : `Starting ${currentRoundName}`;
-        document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 12px;">Board cleared</span>';
+        document.getElementById("calledRack").innerHTML = '<span style="color: var(--muted); font-size: 10px;">Cleared</span>';
         
         for (let i = 0; i < 2; i++) {
           for (let r = 0; r < 5; r++) {
@@ -769,10 +1219,11 @@
 
       if (data.called) {
         calledSet = new Set(data.called);
+        updatePlayerMasterGrid();
         document.getElementById("totalDrawnCount").innerText = `${calledSet.size} / 75 drawn`;
         renderRack(data.called);
         if (document.getElementById("autoDabToggle").checked) {
-          applyAutoDab();
+          applyAutoDabAndCheckBingo();
         }
       }
 
@@ -782,12 +1233,12 @@
         return;
       }
 
-      if (data.latest && data.latest !== "NEW_GAME" && data.latest !== "RESET" && data.latest !== lastSpokenBall) {
+      if (data.latest && data.latest !== "NEW_GAME" && data.latest !== "RESET" && data.latest !== "SHAKING" && data.latest !== lastSpokenBall) {
         lastSpokenBall = data.latest;
         document.getElementById("activeBall").innerText = data.latest;
         document.getElementById("ballAnnounce").innerText = `CALLED: ${data.latest}`;
 
-        if ('speechSynthesis' in window) {
+        if (data.autoVoice !== false && 'speechSynthesis' in window) {
           const cleanText = data.latest.replace("-", " ");
           const utter = new SpeechSynthesisUtterance(cleanText);
           utter.rate = 0.85;
@@ -800,7 +1251,7 @@
     function renderRack(nums) {
       const rack = document.getElementById("calledRack");
       rack.innerHTML = "";
-      const rev = [...nums].reverse().slice(0, 8);
+      const rev = [...nums].reverse().slice(0, 3);
       rev.forEach(n => {
         const div = document.createElement("div");
         div.className = "mini-ball";
@@ -809,12 +1260,12 @@
       });
     }
 
-    function applyAutoDab() {
+    function applyAutoDabAndCheckBingo() {
       for (let i = 0; i < 2; i++) {
         const mat = cards[i];
         for (let r = 0; r < 5; r++) {
           for (let c = 0; c < 5; c++) {
-            if (mat[r][c].val !== "FREE" && calledSet.has(mat[r][c].val)) {
+            if (mat[r][c].val !== "FREE" && calledSet.has(mat[r][c].val) && !mat[r][c].dabbed) {
               mat[r][c].dabbed = true;
               const tile = document.getElementById(`c${i+1}_${r}_${c}`);
               if (tile) tile.classList.add("dabbed");
@@ -823,28 +1274,88 @@
         }
       }
       evaluatePlayerStatus();
+      checkAndAutoCallBingo();
+    }
+
+    function checkAndAutoCallBingo() {
+      if (calledSet.size === 0) return;
+      const roundKey = `${currentRound}_${currentRoundName}`;
+      if (autoClaimedRounds.has(roundKey)) return;
+
+      let winningCards = [];
+      for (let i = 0; i < 2; i++) {
+        if (checkWin(cards[i], currentRound)) {
+          winningCards.push(i + 1);
+        }
+      }
+
+      if (winningCards.length > 0) {
+        autoClaimedRounds.add(roundKey);
+        winningCards.forEach(cardNum => sendClaimToHost(cardNum));
+
+        const modal = document.getElementById("winModal");
+        document.getElementById("modalTitle").innerText = "BINGO CALLED AUTOMATICALLY!";
+        document.getElementById("modalTitle").style.color = "var(--teal)";
+        document.getElementById("modalDesc").innerText = `Congratulations ${residentName}! Auto-Dab detected ${currentRoundName} on Card(s) #${winningCards.join(', #')} and notified the host!`;
+        modal.style.display = "flex";
+      }
+    }
+
+    function sendClaimToHost(cardNum) {
+      if (window.db && window.dbRef && window.dbPush) {
+        window.dbPush(window.dbRef(window.db, 'senior_claims'), {
+          name: `${residentName} (${tabletNum})`,
+          cardNum: cardNum,
+          serialNum: cardSerials[cardNum-1],
+          roundName: currentRoundName,
+          cardsSnapshot: cards,
+          cardSerials: cardSerials,
+          time: Date.now() + Math.random()
+        });
+      }
     }
 
     function evaluatePlayerStatus() {
       const banner = document.getElementById("statusBanner");
+      if (!banner || cards[0].length === 0) return;
+
       let readyCards = [];
       let needOneCards = [];
       let closestCard = 1;
       let minNeeded = 99;
 
       for (let i = 0; i < 2; i++) {
+        const cardNum = i + 1;
         const needed = getCardsNeededCount(cards[i], currentRound);
+        const cardAlert = document.getElementById(`cardAlert${cardNum}`);
+
         if (needed < minNeeded) {
           minNeeded = needed;
-          closestCard = i + 1;
+          closestCard = cardNum;
         }
-        if (needed === 0) readyCards.push(i + 1);
-        else if (needed === 1) needOneCards.push(i + 1);
+        if (needed === 0) {
+          readyCards.push(cardNum);
+          if (cardAlert) {
+            cardAlert.className = "card-alert-strip bingo-hit";
+            cardAlert.innerText = `🔥 BINGO ON CARD #${cardNum}! 🔥`;
+          }
+        } else if (needed === 1) {
+          needOneCards.push(cardNum);
+          if (cardAlert) {
+            cardAlert.className = "card-alert-strip one-away";
+            cardAlert.innerText = `⚠️ 1 BALL NEEDED! ⚠️`;
+          }
+        } else {
+          if (cardAlert) {
+            cardAlert.className = "card-alert-strip";
+            cardAlert.innerText = "";
+          }
+        }
       }
 
       if (readyCards.length > 0) {
         banner.className = "status-banner bingo-ready";
-        banner.innerText = `🔥 BINGO READY ON CARD(S) #${readyCards.join(', #')}! HIT CALL BINGO! 🔥`;
+        banner.innerText = `🔥 BINGO READY ON CARD(S) #${readyCards.join(', #')}! 🔥`;
       } else if (needOneCards.length > 0) {
         banner.className = "status-banner need-one";
         banner.innerText = `⚠️ NEED 1 NUMBER ON CARD(S) #${needOneCards.join(', #')} (${currentRoundName})!`;
@@ -875,8 +1386,19 @@
         let corners = [matrix[0][0], matrix[0][4], matrix[4][0], matrix[4][4]];
         return corners.filter(c => !c.dabbed).length;
       } else if (round === 4) {
-        let linesComplete = countLines(matrix);
-        return linesComplete >= 2 ? 0 : (2 - linesComplete);
+        let lineDeficits = [];
+        for (let r = 0; r < 5; r++) lineDeficits.push(matrix[r].filter(cell => !cell.dabbed).length);
+        for (let c = 0; c < 5; c++) {
+          let m = 0;
+          for (let r = 0; r < 5; r++) if (!matrix[r][c].dabbed) m++;
+          lineDeficits.push(m);
+        }
+        let d1 = 0; for (let i = 0; i < 5; i++) if (!matrix[i][i].dabbed) d1++;
+        lineDeficits.push(d1);
+        let d2 = 0; for (let i = 0; i < 5; i++) if (!matrix[i][4-i].dabbed) d2++;
+        lineDeficits.push(d2);
+        lineDeficits.sort((a, b) => a - b);
+        return lineDeficits[0] + lineDeficits[1];
       } else if (round === 5) {
         let totalMissing = 0;
         matrix.forEach(row => row.forEach(cell => { if (!cell.dabbed) totalMissing++; }));
@@ -891,11 +1413,10 @@
         return;
       }
 
-      let winningCardNum = null;
+      let winningCardNumbers = [];
       for (let i = 0; i < 2; i++) {
         if (checkWin(cards[i], currentRound)) {
-          winningCardNum = i + 1;
-          break;
+          winningCardNumbers.push(i + 1);
         }
       }
 
@@ -903,22 +1424,14 @@
       const title = document.getElementById("modalTitle");
       const desc = document.getElementById("modalDesc");
 
-      if (winningCardNum) {
+      if (winningCardNumbers.length > 0) {
         title.innerText = "BINGO CONFIRMED!";
         title.style.color = "var(--teal)";
-        desc.innerText = `Verified ${currentRoundName} on Card #${winningCardNum} (${cardSerials[winningCardNum-1]}). Host notified!`;
+        desc.innerText = `Verified ${currentRoundName} on Card(s) #${winningCardNumbers.join(', #')}. Host notified!`;
 
-        if (window.db && window.dbRef && window.dbPush) {
-          window.dbPush(window.dbRef(window.db, 'senior_claims'), {
-            name: `${residentName} (${tabletNum})`,
-            cardNum: winningCardNum,
-            serialNum: cardSerials[winningCardNum-1],
-            roundName: currentRoundName,
-            cardsSnapshot: cards,
-            cardSerials: cardSerials,
-            time: Date.now()
-          });
-        }
+        winningCardNumbers.forEach(cardNum => {
+          sendClaimToHost(cardNum);
+        });
       } else {
         title.innerText = "Keep Playing!";
         title.style.color = "var(--pink)";
