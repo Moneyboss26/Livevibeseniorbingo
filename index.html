@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LiveVibe Senior Bingo | Turnkey Senior Community Activities</title>
+  <title>LiveVibe Senior Bingo | Zero-Burden Activity Hosting</title>
   <style>
     :root {
-      --bg: #090c19;
-      --card-bg: #13172c;
-      --surface: #1b213e;
-      --teal: #00d2be;
-      --pink: #ff2e93;
+      --bg: #060919;
+      --card-bg: #101633;
+      --surface: #161f45;
+      --teal: #00f0d2;
+      --pink: #ff007f;
       --yellow: #f8c028;
-      --text: #f0f4fc;
-      --muted: #9aa5be;
-      --border: rgba(255, 255, 255, 0.08);
+      --text: #f4f7ff;
+      --muted: #a6b2cc;
+      --border: rgba(255, 255, 255, 0.1);
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.55; font-size: 15px; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
 
+    /* Navigation */
     header {
-      background: rgba(9, 12, 25, 0.95);
+      background: rgba(6, 9, 25, 0.96);
       backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
@@ -30,9 +31,9 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-container {
-      max-width: 1200px;
+      max-width: 1060px;
       margin: 0 auto;
-      padding: 14px 20px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -40,195 +41,257 @@
     .logo-badge {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.5px;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: -0.3px;
     }
-    .logo-img { height: 44px; width: auto; max-width: 170px; object-fit: contain; }
-    .nav-links { display: flex; gap: 20px; align-items: center; font-size: 15px; font-weight: 600; }
+    .logo-img { height: 36px; width: auto; max-width: 150px; object-fit: contain; }
+    .nav-links { display: flex; gap: 18px; align-items: center; font-size: 14px; font-weight: 700; }
     .nav-links a:hover { color: var(--teal); }
 
     .btn {
-      padding: 12px 24px;
+      padding: 12px 22px;
       border-radius: 8px;
       font-weight: 800;
+      font-size: 14.5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       border: none;
       transition: transform 0.15s ease;
     }
     .btn:active { transform: scale(0.97); }
-    .btn-pink { background: var(--pink); color: #fff; box-shadow: 0 4px 20px rgba(255,46,147,0.4); }
-    .btn-teal { background: var(--teal); color: #08121d; }
+    .btn-teal { background: var(--teal); color: #06111a; }
+    .btn-pink { background: var(--pink); color: #fff; box-shadow: 0 4px 16px rgba(255, 0, 127, 0.35); }
+    .btn-outline { background: #060919; color: var(--teal); border: 1.5px solid var(--teal); }
 
+    /* Hero Section */
     .hero {
-      padding: 60px 20px 30px;
+      padding: 36px 20px 24px;
       text-align: center;
-      max-width: 900px;
+      max-width: 820px;
       margin: 0 auto;
     }
     .vet-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      padding: 6px 16px;
+      gap: 7px;
+      background: rgba(0, 240, 210, 0.1);
+      border: 1px solid rgba(0, 240, 210, 0.35);
+      padding: 5px 14px;
       border-radius: 50px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 18px;
-      color: #f0f4fc;
-      letter-spacing: 0.5px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: var(--teal);
     }
-    .vet-badge span { color: var(--teal); font-size: 16px; }
-
-    h1 { font-size: clamp(34px, 5.5vw, 56px); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
-    h1 span.pink { color: var(--pink); }
+    h1 { font-size: clamp(28px, 4.5vw, 42px); font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
     h1 span.teal { color: var(--teal); }
-    .tagline { font-size: clamp(18px, 2.5vw, 24px); color: var(--teal); font-weight: 700; margin-bottom: 16px; }
-    .hero-desc { font-size: 18px; color: var(--muted); max-width: 720px; margin: 0 auto 24px; }
+    h1 span.pink { color: var(--pink); }
+    .hero-sub { font-size: 16.5px; color: var(--muted); max-width: 680px; margin: 0 auto 22px; }
 
-    .value-grid {
+    /* 4 Core Pillars */
+    .pillars-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      max-width: 1000px;
-      margin: 30px auto;
-      text-align: left;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      max-width: 1040px;
+      margin: 0 auto 30px;
+      padding: 0 20px;
     }
-    .val-card {
+    .pillar-card {
       background: var(--card-bg);
-      padding: 24px;
-      border-radius: 12px;
       border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 16px;
     }
-    .val-card h4 { color: var(--teal); font-size: 18px; margin-bottom: 6px; }
-    .val-card p { color: var(--muted); font-size: 14px; }
+    .pillar-icon { font-size: 22px; margin-bottom: 6px; }
+    .pillar-card h3 { font-size: 16px; color: #fff; margin-bottom: 5px; }
+    .pillar-card p { font-size: 13.5px; color: var(--muted); }
 
-    /* Pricing Section */
-    .section-pricing {
-      padding: 50px 20px;
-      max-width: 840px;
+    /* Sections */
+    .section-wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .section-header { text-align: center; margin-bottom: 22px; }
+    .section-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .section-header h2 { font-size: 25px; color: #fff; margin-bottom: 6px; }
+    .section-header p { color: var(--muted); font-size: 14.5px; max-width: 640px; margin: 0 auto; }
+
+    /* 5-Game Session Breakdown */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .game-card.finale { border-color: var(--pink); background: linear-gradient(180deg, var(--card-bg), rgba(255, 0, 127, 0.12)); }
+    .game-num { font-size: 11px; font-weight: 800; color: var(--teal); text-transform: uppercase; }
+    .game-title { font-size: 16px; font-weight: 900; color: #fff; margin: 4px 0; }
+    .game-desc { font-size: 12.5px; color: var(--muted); }
+
+    /* Sanitization & Capacity Banner */
+    .ops-strip {
+      background: rgba(0, 240, 210, 0.07);
+      border: 1px solid rgba(0, 240, 210, 0.35);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      font-size: 13.5px;
+      color: #dbe6ff;
+    }
+    .ops-strip strong { color: var(--teal); }
+
+    /* Pricing Packages */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .price-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .price-card.featured {
+      border: 2px solid var(--teal);
+      box-shadow: 0 8px 30px rgba(0, 240, 210, 0.12);
+    }
+    .price-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+    .price-title { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+    .price-amount { font-size: 36px; font-weight: 900; color: #fff; line-height: 1.1; }
+    .price-amount span { font-size: 14px; color: var(--muted); font-weight: 600; }
+    .price-math {
+      background: rgba(248, 192, 40, 0.12);
+      border: 1px solid rgba(248, 192, 40, 0.45);
+      color: var(--yellow);
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin: 10px 0 12px;
+    }
+    .price-desc { font-size: 13.5px; color: var(--muted); margin-bottom: 14px; }
+    .price-list { list-style: none; margin-bottom: 20px; flex: 1; }
+    .price-list li {
+      font-size: 13.5px;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .price-list li span { color: var(--teal); font-weight: 900; }
+
+    /* Simple FAQ Grid */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .faq-item h4 { font-size: 15px; color: var(--teal); margin-bottom: 6px; }
+    .faq-item p { font-size: 13.5px; color: var(--muted); }
+
+    /* Direct Booking CTA Box */
+    .cta-box {
+      background: var(--surface);
+      border: 1.5px solid rgba(0, 240, 210, 0.35);
+      border-radius: 16px;
+      padding: 32px 24px;
+      max-width: 780px;
       margin: 0 auto;
       text-align: center;
     }
-    .pricing-card {
-      background: var(--card-bg);
-      border: 2px solid var(--teal);
-      border-radius: 20px;
-      padding: 40px 30px;
-      position: relative;
-      box-shadow: 0 10px 40px rgba(0, 210, 190, 0.15);
-    }
-    .price { font-size: 64px; font-weight: 900; color: #fff; margin: 10px 0; }
-    .price span { font-size: 20px; color: var(--muted); font-weight: 600; }
-    
-    .price-items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-      text-align: left;
-      margin: 24px 0;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-    .price-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
-    .price-item .icon { color: var(--teal); font-size: 18px; }
-
-    .role-clarity-box {
-      background: rgba(0, 210, 190, 0.08);
-      border: 1px solid var(--teal);
-      border-radius: 10px;
-      padding: 16px 20px;
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
       margin-top: 20px;
-      text-align: left;
-      font-size: 13px;
-      line-height: 1.6;
     }
-
-    /* Facility Inquiry Form */
-    .section-form {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 40px 30px;
-      text-align: center;
-    }
-    .section-form h2 { font-size: 28px; color: #fff; margin-bottom: 8px; }
-    .section-form p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      text-align: left;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group.full-width { grid-column: 1 / -1; }
-    .form-group label { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
-    .form-group input, .form-group select, .form-group textarea {
-      background: #060812;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 12px 14px;
-      color: #fff;
+    .cta-buttons .btn {
+      min-width: 210px;
+      padding: 14px 24px;
       font-size: 15px;
-      outline: none;
     }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--teal);
+    .contact-sub {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    /* Contact Section */
-    .section-contact {
-      background: #090c19;
-      padding: 50px 20px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-    }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 800px;
-      margin: 24px auto 0;
-    }
-    .contact-box {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-    .contact-box h5 { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-    .contact-box a { color: var(--teal); font-size: 18px; font-weight: 700; word-break: break-all; }
-
+    /* Footer & Legal Modals */
     footer {
-      background: #060812;
-      padding: 30px 20px;
+      background: #040612;
+      padding: 24px 20px;
       text-align: center;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12.5px;
+      border-top: 1px solid var(--border);
+    }
+    .legal-links {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
     }
     .legal-btn {
       background: none;
       border: none;
-      color: var(--muted);
+      color: var(--teal);
       text-decoration: underline;
       cursor: pointer;
-      font-size: 13px;
-      margin: 0 8px;
+      font-size: 12.5px;
+      font-weight: 700;
     }
-    .legal-btn:hover { color: var(--teal); }
-
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(6px);
       display: none;
       align-items: center;
@@ -240,13 +303,15 @@
       background: var(--card-bg);
       border: 2px solid var(--teal);
       border-radius: 14px;
-      max-width: 650px;
+      max-width: 620px;
       width: 100%;
       max-height: 85vh;
       overflow-y: auto;
-      padding: 30px;
+      padding: 26px;
       text-align: left;
     }
+    .modal-content h3 { color: var(--teal); font-size: 18px; margin-bottom: 12px; }
+    .modal-content p { font-size: 13.5px; color: #dbe6ff; margin-bottom: 10px; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -254,181 +319,251 @@
   <header>
     <div class="nav-container">
       <div class="logo-badge">
-        <img src="logo.png" alt="LiveVibe Senior Bingo" class="logo-img" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-block';">
-        <svg id="logoFallback" width="44" height="44" viewBox="0 0 100 100" style="display:none; vertical-align:middle;">
-          <circle cx="50" cy="50" r="46" fill="#13172c" stroke="#00d2be" stroke-width="4"/>
-          <circle cx="50" cy="50" r="36" fill="none" stroke="#ff2e93" stroke-width="3"/>
-          <text x="50" y="44" fill="#00d2be" font-size="12" font-weight="900" text-anchor="middle">LIVEVIBE</text>
-          <text x="50" y="64" fill="#ff2e93" font-size="16" font-weight="900" text-anchor="middle">SENIOR</text>
-        </svg>
+        <img src="logo.png" alt="LiveVibe Senior Bingo" class="logo-img" onerror="this.style.display='none';">
         <span>LiveVibe Senior Bingo</span>
       </div>
       <nav class="nav-links">
-        <a href="#services">Services</a>
-        <a href="#pricing">Facility Plan</a>
-        <a href="#inquiry">Book A Demo</a>
-        <a href="#contact">Contact</a>
+        <a href="#benefits">Why Facilities Love It</a>
+        <a href="#session">5-Game Format</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#book">Schedule</a>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- Hero -->
     <section class="hero">
-      <div class="vet-badge">
-        <span>★</span> Proudly Veteran-Owned & Operated Business
-      </div>
-      <h1>Energize Your <span class="teal">Senior Community</span> Activities</h1>
-      <p class="tagline">Turnkey, interactive digital bingo sessions designed specifically for assisted living & memory care communities.</p>
-      <p class="hero-desc">
-        We provide up to 30 pre-configured tablets, dedicated mobile cellular Wi-Fi, professional caller equipment with audio speaker amplification, and high-energy live hosting. Zero burden on your activity staff.
+      <div class="vet-badge">★ Veteran-Owned • Serving Southern Maryland Senior Communities</div>
+      <h1>Zero-Burden Interactive Bingo. <span class="teal">We Bring Everything.</span> <span class="pink">Residents Just Play.</span></h1>
+      <p class="hero-sub">
+        Built for short-staffed Activity Directors in Assisted Living, Memory Care, and Senior Centers. We arrive with 30 pre-paired tablets, our own cellular hotspot, amplified audio, and a live host—leaving zero setup or IT work for your staff.
       </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="#book" class="btn btn-pink">Schedule a Session</a>
+        <a href="#pricing" class="btn btn-teal">View Pricing</a>
+      </div>
     </section>
 
-    <!-- Services Grid -->
-    <section id="services" style="padding: 0 20px;">
-      <div class="value-grid">
-        <div class="val-card">
-          <h4>📱 Up to 30 Tablets & Wi-Fi Provided</h4>
-          <p>We supply sanitized, large-font touchscreen tablets powered by our own independent LTE hotspot. No facility Wi-Fi password, IT setup, or logins required.</p>
+    <!-- 4 Core Strengths -->
+    <section class="pillars-grid" id="benefits">
+      <div class="pillar-card">
+        <div class="pillar-icon">🙌</div>
+        <h3>100% Zero Staff Burden</h3>
+        <p>Your staff never sets up equipment, troubleshoots screens, or calls numbers. Our Live Host handles arrival, tablet distribution, calling, prize verification, and teardown.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🔒</div>
+        <h3>No Facility Wi-Fi, IT, or Logins</h3>
+        <p>We bring our own private cellular hotspot and pre-logged-in tablets. Residents never type passwords, and your facility's secure network is never touched.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">👆</div>
+        <h3>Built for Arthritis &amp; Low Vision</h3>
+        <p>Large-print, high-contrast 8–10" tablet displays feature automatic dabbing and automatic Bingo alerts—eliminating dropped chips, messy ink daubers, and missed wins.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🎙️</div>
+        <h3>Amplified Calling &amp; 3D Ball Shaker</h3>
+        <p>Our Live Host calls every number clearly over an amplified speaker while our synchronized 3D digital ball shaker displays large, easy-to-read calls on every screen.</p>
+      </div>
+    </section>
+
+    <!-- 5-Game Session Structure & Operational Standards -->
+    <section class="section-wrap" id="session">
+      <div class="section-header">
+        <span class="section-tag">Structured 60–75 Minute Activity</span>
+        <h2>What Happens in a 5-Game Session</h2>
+        <p>Every visit includes five complete, paced Bingo games using the same two large-print cards per tablet—no confusing card swaps between games.</p>
+      </div>
+
+      <div class="games-grid">
+        <div class="game-card">
+          <div class="game-num">Game 1</div>
+          <div class="game-title">Classic Line</div>
+          <div class="game-desc">Warm-up round: any horizontal, vertical, or diagonal line.</div>
         </div>
-        <div class="val-card">
-          <h4>✨ High-Contrast Auto-Dab</h4>
-          <p>Designed specifically for seniors with low vision or arthritis. Auto-dab ensures no numbers are missed, keeping every resident engaged, confident, and smiling.</p>
+        <div class="game-card">
+          <div class="game-num">Game 2</div>
+          <div class="game-title">Classic Line</div>
+          <div class="game-desc">Second standard line round to build momentum and group energy.</div>
         </div>
-        <div class="val-card">
-          <h4>🎙️ Amplified On-Site Calling</h4>
-          <p>Authentic ball shaker cage, dedicated audio amplification so every resident hears calls clearly, and patient live hosting give activity directors a guaranteed, stress-free program.</p>
+        <div class="game-card">
+          <div class="game-num">Game 3</div>
+          <div class="game-title">Four Corners</div>
+          <div class="game-desc">Fast-paced round matching all four outer corner squares.</div>
+        </div>
+        <div class="game-card">
+          <div class="game-num">Game 4</div>
+          <div class="game-title">Double Bingo</div>
+          <div class="game-desc">Any two completed lines on the same card for an extra challenge.</div>
+        </div>
+        <div class="game-card finale">
+          <div class="game-num" style="color: var(--pink);">Game 5 • Finale</div>
+          <div class="game-title" style="color: var(--pink);">Grand Coverall</div>
+          <div class="game-desc">Full-card blackout finale celebrating all session winners.</div>
+        </div>
+      </div>
+
+      <div class="ops-strip">
+        <div>
+          <strong>📱 30-Tablet Session Capacity:</strong> Every session includes <strong>30 dedicated tablets</strong> (1 tablet per resident for up to 30 individual players, or up to 60 residents with optional buddy-play sharing).
+        </div>
+        <div>
+          <strong>🧼 Hospital-Grade Sanitization:</strong> Every tablet, protective case, and microphone is sanitized before and after every session using <strong>EPA List N hospital-grade disinfectant wipes</strong>.
         </div>
       </div>
     </section>
 
-    <!-- Turnkey Pricing -->
-    <section class="section-pricing" id="pricing">
-      <div class="pricing-card">
-        <h3 style="color: var(--teal); text-transform: uppercase; font-size: 16px; letter-spacing: 1px;">Turnkey Community Subscription</h3>
-        <div class="price">$425 <span>/ Month</span></div>
-        <p style="color: var(--muted);">Includes 2 dedicated on-site hosted sessions every month</p>
+    <!-- Pricing Clarity Section -->
+    <section class="section-wrap" id="pricing">
+      <div class="section-header">
+        <span class="section-tag">Simple Activity Budget Pricing</span>
+        <h2>Facility Packages &amp; Per-Session Math</h2>
+        <p>Less than typical outside live musicians or specialty entertainers ($300–$450+ per visit)—with 30 sanitized tablets and live hosting included.</p>
+      </div>
 
-        <div class="price-items">
-          <div class="price-item"><span class="icon">✓</span> Up to 30 Tablets Provided</div>
-          <div class="price-item"><span class="icon">✓</span> Independent Cellular Wi-Fi Included</div>
-          <div class="price-item"><span class="icon">✓</span> Accommodates up to 30 Active Residents</div>
-          <div class="price-item"><span class="icon">✓</span> 5 Full Interactive Game Rounds</div>
-          <div class="price-item"><span class="icon">✓</span> Live Host, Shaker Cage & Audio Speaker</div>
-          <div class="price-item"><span class="icon">✓</span> Sanitized Hardware & Full Setup</div>
-        </div>
-
-        <div class="role-clarity-box">
-          <strong style="color: var(--teal);">Operational Clarity:</strong>
-          <ul style="margin-left: 18px; margin-top: 6px; color: var(--muted);">
-            <li><strong>Vendor Provides:</strong> All hardware (tablets, hotspot, tumbler machine, speaker amplification), interactive software, and live hosting.</li>
-            <li><strong>Facility Provides:</strong> Community room space, tables/chairs, and any resident novelty prizes (e.g., snacks, dollar-store gifts, ribbons, treats).</li>
+      <div class="pricing-grid">
+        <!-- Single-Session Trial -->
+        <div class="price-card">
+          <div class="price-badge">No Monthly Commitment</div>
+          <div class="price-title">Single-Session Trial</div>
+          <div class="price-amount">$245 <span>/ single visit</span></div>
+          <div class="price-math">~$8.15 per resident (across 30 tablets)</div>
+          <p class="price-desc">Ideal for Activity Directors who want to test resident engagement firsthand before adding it to the monthly activity calendar.</p>
+          <ul class="price-list">
+            <li><span>✓</span> 1 Live-Hosted 60–75 Minute Session (5 Full Games)</li>
+            <li><span>✓</span> 30 sanitized, pre-paired 8–10" tablets</li>
+            <li><span>✓</span> Dedicated cellular hotspot (zero facility Wi-Fi needed)</li>
+            <li><span>✓</span> Live Host, amplified speaker &amp; 3D digital ball shaker</li>
+            <li><span>✓</span> Facility supplies small resident prizes or treats</li>
           </ul>
+          <a href="mailto:ccbizhub@att.net?subject=LiveVibe%20Senior%20Bingo%20-%20Single%20Trial%20Session%20Inquiry&body=Hello%20LiveVibe%20Senior%20Bingo%2C%0A%0AWe%20would%20like%20to%20inquire%20about%20booking%20a%20Single-Session%20Trial%20(%24245).%0A%0AFacility%20Name%3A%20%0AContact%20Name%20%26%20Title%3A%20%0APhone%20Number%3A%20%0APreferred%20Date%20%26%20Time%3A%20%0AEstimated%20Residents%20(up%20to%2030%20tablets)%3A%20%0A%0AThank%20you!" class="btn btn-teal" style="width: 100%;">Email to Book Trial Session</a>
         </div>
 
-        <a href="#inquiry" class="btn btn-pink" style="font-size: 18px; padding: 16px 36px; margin-top: 24px;">Schedule Free Facility Demo</a>
+        <!-- Bi-Weekly Monthly Series -->
+        <div class="price-card featured">
+          <div class="price-badge">Most Popular • Save $65/Month</div>
+          <div class="price-title">Bi-Weekly Activity Series</div>
+          <div class="price-amount">$425 <span>/ month (2 sessions)</span></div>
+          <div class="price-math">Equals $212.50 per session (~$7.08 per resident)</div>
+          <p class="price-desc">Lock in two recurring monthly dates on your calendar—giving residents a dependable, high-energy social event every other week.</p>
+          <ul class="price-list">
+            <li><span>✓</span> 2 Live-Hosted Sessions per month (10 total games)</li>
+            <li><span>✓</span> 30 sanitized, pre-paired 8–10" tablets per visit</li>
+            <li><span>✓</span> Custom birthday &amp; resident celebration screen banners</li>
+            <li><span>✓</span> Auto-Dab &amp; Auto-Bingo accessibility for all skill levels</li>
+            <li><span>✓</span> Priority recurring calendar scheduling</li>
+          </ul>
+          <a href="mailto:ccbizhub@att.net?subject=LiveVibe%20Senior%20Bingo%20-%20Bi-Weekly%20Series%20Inquiry&body=Hello%20LiveVibe%20Senior%20Bingo%2C%0A%0AWe%20would%20like%20to%20inquire%20about%20reserving%20the%20Bi-Weekly%20Activity%20Series%20(%24425%2Fmonth).%0A%0AFacility%20Name%3A%20%0AContact%20Name%20%26%20Title%3A%20%0APhone%20Number%3A%20%0APreferred%20Days%20%26%20Times%3A%20%0AEstimated%20Residents%20(up%20to%2030%20tablets)%3A%20%0A%0AThank%20you!" class="btn btn-pink" style="width: 100%;">Email to Reserve Series</a>
+        </div>
       </div>
     </section>
 
-    <!-- Facility Inquiry Form -->
-    <section class="section-form" id="inquiry">
-      <h2>Inquire For Your Community</h2>
-      <p>Schedule a complimentary 20-minute on-site demonstration for your activity department.</p>
+    <!-- Simple FAQ Section -->
+    <section class="section-wrap" id="faq">
+      <div class="section-header">
+        <span class="section-tag">Common Questions</span>
+        <h2>Activity Director FAQ</h2>
+      </div>
 
-      <form name="facility-inquiry" method="POST" data-netlify="true">
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Community / Facility Name</label>
-            <input type="text" name="Facility Name" required placeholder="e.g. Sunrise Senior Living">
-          </div>
-          <div class="form-group">
-            <label>Contact Person & Title</label>
-            <input type="text" name="Contact Name" required placeholder="e.g. Sarah Jenkins, Activity Director">
-          </div>
-          <div class="form-group">
-            <label>Work Email</label>
-            <input type="email" name="Email" required placeholder="sjenkins@community.com">
-          </div>
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="Phone" required placeholder="e.g. 571-435-4865">
-          </div>
-          <div class="form-group">
-            <label>Care Type</label>
-            <select name="Care Type">
-              <option value="Assisted Living">Assisted Living</option>
-              <option value="Independent Living">Independent Living</option>
-              <option value="Memory Care">Memory Care</option>
-              <option value="Adult Day Care">Adult Day Care</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Estimated Residents</label>
-            <input type="text" name="Estimated Residents" placeholder="e.g. 15-30 residents">
-          </div>
-          <div class="form-group full-width">
-            <label>Questions or Preferred Demo Dates</label>
-            <textarea name="Notes" rows="3" placeholder="Tell us about your current activity schedule or when you'd like an on-site demo..."></textarea>
-          </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Do we need to connect to our building's Wi-Fi?</h4>
+          <p>No. We bring our own dedicated cellular hotspot. Your IT department does not need to approve devices or share network passwords.</p>
         </div>
-        <button type="submit" class="btn btn-teal" style="margin-top: 24px; padding: 14px 38px; font-size: 16px;">
-          Submit Facility Request
-        </button>
-      </form>
+        <div class="faq-item">
+          <h4>What if a resident has arthritis or trouble tapping?</h4>
+          <p>Every tablet runs in Auto-Dab and Auto-Bingo mode. Numbers mark themselves automatically and alert the host the moment a resident hits Bingo.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How many residents can play at once?</h4>
+          <p>We provide 30 dedicated tablets per session—enough for 30 individual residents, or up to 60 residents if pairs share a tablet.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Who provides the prizes for the winners?</h4>
+          <p>Your facility supplies all resident prizes, snacks, or small gift items. We provide the entertainment hosting, tablets, and software.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How early does the host arrive?</h4>
+          <p>Our Live Host arrives 20 minutes before start time to sanitize and distribute tablets, and handles complete collection and cleanup afterward.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What if we need to reschedule a session?</h4>
+          <p>Facilities can reschedule any session at no charge with at least 48 hours' notice—ideal if a building experiences a quarantine or calendar conflict.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="section-contact" id="contact">
-      <h3 style="color: var(--teal); margin-bottom: 6px;">Direct Activity Office</h3>
-      <p style="color: var(--muted); font-size: 14px;">Operated by Wealth Driven Hub, LLC d/b/a LiveVibe Senior Bingo</p>
+    <!-- Direct Contact & One-Tap Booking Section -->
+    <section class="section-wrap" id="book">
+      <div class="cta-box">
+        <span class="section-tag">Southern Maryland Service Area</span>
+        <h2 style="font-size: 26px; color: #fff; margin-bottom: 8px;">Ready to Schedule Your Facility Session?</h2>
+        <p style="color: var(--muted); font-size: 14.5px; max-width: 600px; margin: 0 auto;">
+          Serving Charles, St. Mary's, Calvert, and Prince George's Counties. Tap below to send a pre-filled booking email, call, or text us directly.
+        </p>
 
-      <div class="contact-grid">
-        <div class="contact-box">
-          <h5>Phone</h5>
-          <a href="tel:5714354865">571-435-4865</a>
+        <div class="cta-buttons">
+          <a href="mailto:ccbizhub@att.net?subject=LiveVibe%20Senior%20Bingo%20-%20Activity%20Booking%20Inquiry&body=Hello%20LiveVibe%20Senior%20Bingo%2C%0A%0AWe%20would%20like%20to%20check%20availability%20for%20our%20senior%20community.%0A%0AFacility%20Name%3A%20%0AContact%20Name%20%26%20Title%3A%20%0APhone%20Number%3A%20%0APackage%20Interest%20(Trial%20%24245%20or%20Bi-Weekly%20%24425%2Fmo)%3A%20%0APreferred%20Day%20%26%20Time%3A%20%0A%0AThank%20you!" class="btn btn-pink">
+            ✉️ Email Booking Inquiry
+          </a>
+          <a href="tel:5714354865" class="btn btn-teal">
+            📞 Call 571-435-4865
+          </a>
+          <a href="sms:5714354865?body=Hi%20LiveVibe%20Senior%20Bingo%2C%20I%27m%20interested%20in%20scheduling%20a%20senior%20bingo%20session%20at%20our%20facility." class="btn btn-outline">
+            💬 Text 571-435-4865
+          </a>
         </div>
-        <div class="contact-box">
-          <h5>Email</h5>
-          <a href="mailto:cmcbizhub@att.net">cmcbizhub@att.net</a>
-        </div>
-        <div class="contact-box">
-          <h5>Service Area</h5>
-          <span style="color: var(--teal); font-size: 18px; font-weight: 700;">Charles County & DMV</span>
-        </div>
+
+        <p class="contact-sub">
+          Direct Email: <a href="mailto:ccbizhub@att.net" style="color: var(--teal); font-weight: 700;">ccbizhub@att.net</a> • Phone / Text: <a href="tel:5714354865" style="color: var(--teal); font-weight: 700;">571-435-4865</a>
+        </p>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 LiveVibe Senior Bingo. A Veteran-Owned Business. All rights reserved.</p>
-    <div style="margin-top: 10px;">
-      <button class="legal-btn" onclick="openModal('termsModal')">Service Agreement Terms</button>
+    <p>&copy; 2026 LiveVibe Senior Bingo. All rights reserved. Veteran-Owned Small Business.</p>
+    <div class="legal-links">
+      <button class="legal-btn" onclick="openModal('termsModal')">Terms &amp; Conditions</button>
+      <button class="legal-btn" onclick="openModal('refundModal')">Cancellation &amp; Refund Policy</button>
       <button class="legal-btn" onclick="openModal('privacyModal')">Privacy Policy</button>
-      <!-- Linked to seniorhost.html -->
-      <a href="seniorhost.html" style="color: var(--muted); text-decoration: underline; font-size: 13px; margin-left: 12px;" target="_blank">Host Station Login</a>
     </div>
+    <p style="font-size: 11.5px; margin-top: 4px;">Recreational activity entertainment vendor. Facilities supply all resident prizes or treats; zero cash buy-ins or wagering.</p>
   </footer>
 
-  <!-- Modal: Commercial Service Agreement Terms -->
+  <!-- Modal: Terms & Conditions -->
   <div class="modal-overlay" id="termsModal">
     <div class="modal-content">
-      <h3 style="color: var(--teal); margin-bottom: 12px;">Commercial Service Agreement Terms</h3>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">• <strong>Vendor Scope:</strong> LiveVibe Senior Bingo operates strictly as an independent recreational entertainment vendor providing turnkey activity hosting, tablet equipment, dedicated wireless cellular data, calling hardware, and audio amplification to senior living communities.</p>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">• <strong>No Gambling / Resident Fees:</strong> No tickets or cards are ever sold to residents, family members, or facility guests. All activities are 100% recreational social programming funded via the facility's activity budget.</p>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">• <strong>Resident Prizes:</strong> All resident prizes, novelty items, ribbons, or treats are supplied directly by the client facility. LiveVibe Senior Bingo does not supply monetary or physical prizes for resident gameplay.</p>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">• <strong>Invoicing & Cancellation:</strong> Monthly subscriptions ($425/month for 2 sessions) are billed net-30 directly to the facility. Agreements may be cancelled or paused by either party with a standard 30-day written notice.</p>
-      <button class="btn btn-teal" style="margin-top: 14px;" onclick="closeModal('termsModal')">Close</button>
+      <h3>Terms &amp; Conditions</h3>
+      <p><strong>1. Scope of Service:</strong> LiveVibe Senior Bingo provides on-site live interactive Bingo hosting, 30 sanitized tablets, a dedicated cellular hotspot, and amplified audio for scheduled 60–75 minute facility activity sessions.</p>
+      <p><strong>2. Hardware Care:</strong> All 30 tablets remain the property of LiveVibe Senior Bingo and are distributed and collected by our Live Host during each session.</p>
+      <p><strong>3. Prizes &amp; Compliance:</strong> LiveVibe Senior Bingo operates strictly as a recreational activity vendor. Residents play free of charge, and the host facility supplies all non-cash resident prizes, snacks, or treats.</p>
+      <button class="btn btn-teal" style="margin-top: 10px;" onclick="closeModal('termsModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Modal: Cancellation & Refund Policy -->
+  <div class="modal-overlay" id="refundModal">
+    <div class="modal-content">
+      <h3>Cancellation &amp; Refund Policy</h3>
+      <p><strong>1. Free Rescheduling (48+ Hours' Notice):</strong> Facilities may reschedule any single or bi-weekly session at zero penalty with at least 48 hours' advance notice (including facility health lockdowns or weather closures).</p>
+      <p><strong>2. Cancellations &amp; Refunds:</strong> Single-session bookings canceled at least 72 hours prior to the scheduled start time receive a 100% refund. Monthly bi-weekly series may be paused or canceled anytime prior to the next monthly billing cycle.</p>
+      <p><strong>3. Same-Day Facility Lockdowns:</strong> If a facility experiences an unexpected same-day health quarantine, we will gladly credit and reschedule your session at no additional fee.</p>
+      <button class="btn btn-teal" style="margin-top: 10px;" onclick="closeModal('refundModal')">Close</button>
     </div>
   </div>
 
   <!-- Modal: Privacy Policy -->
   <div class="modal-overlay" id="privacyModal">
     <div class="modal-content">
-      <h3 style="color: var(--teal); margin-bottom: 12px;">Privacy Policy</h3>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">• Community contact details collected via this site are used exclusively for scheduling demonstrations and commercial vendor communication.</p>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">• We never store resident personal identifying information, medical data, or care details on our tablets or web platforms.</p>
-      <button class="btn btn-teal" style="margin-top: 14px;" onclick="closeModal('privacyModal')">Close</button>
+      <h3>Privacy Policy</h3>
+      <p><strong>1. Facility &amp; Resident Privacy:</strong> LiveVibe Senior Bingo does not collect, store, or sell resident medical records, personal contact details, or photos.</p>
+      <p><strong>2. Tablet Display Names:</strong> First names or tablet numbers entered during a session are used solely to display live Bingo winners on the room screen and are wiped immediately at the end of each session.</p>
+      <p><strong>3. Contact Information:</strong> Activity Director names, phone numbers, and email addresses shared via email, call, or text are used strictly to confirm and invoice scheduled facility sessions. Questions? Email <a href="mailto:ccbizhub@att.net" style="color: var(--teal); text-decoration: underline;">ccbizhub@att.net</a>.</p>
+      <button class="btn btn-teal" style="margin-top: 10px;" onclick="closeModal('privacyModal')">Close</button>
     </div>
   </div>
 
@@ -436,5 +571,6 @@
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
   </script>
+
 </body>
 </html>
